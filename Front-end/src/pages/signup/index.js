@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from "../../components/loader";
+import styles from '../signin/styles';
 
 const Signup = () => {
     const [user, setUser] = useState();
@@ -47,7 +48,7 @@ const Signup = () => {
                 }
             })
             .catch((error) => {
-                localStorage.setItem('user',null)
+                localStorage.setItem('user', null)
                 console.error('Error:', error);
             })
             .finally(() => {
@@ -58,27 +59,32 @@ const Signup = () => {
     return (
         <>
             {loading && <Loader />}
-            <div className='bg-white min-h-screen flex flex-row items-center justify-between w-full overflow-x-hidden'>
-                <div className='flex flex-col items-center bg-white px-12 py-6 rounded-xl min-w-[50%] ml-20'>
+            <div className={styles.container}>
+                <div className={styles.card}>
+
                     <div>
-                        <p className='text-[30px] font-bold mb-[8px] gradient-text font-sans'>
-                            Welcome back
+
+                        <p className={styles.welcome}>
+                            Welcome. Sign up here!
                         </p>
-                        <p className='text-[#67748e] font-normal text-[16px] font-sans'>
+
+                        <p className={styles.desc}>
                             Enter your email and password to sign up
                         </p>
-                        <p className='text-[12px] text-[#344767] font-semibold ml-1 font-sans mt-[22px]'>
+
+                        <p className={styles.title}>
                             Email
                         </p>
                         <input placeholder='Email' onChange={(e) => setEmail(e.target.value)} value={email}
-                            className='border-[1px] border-[#d0d0d0] rounded-[7px] text-[12px] h-[40px] w-[318px] my-2 px-[12px] py-[8px] outline-none font-sans' />
-                        <p className='text-[12px] text-[#344767] font-semibold ml-1 mt-[8px] font-sans'>
+                            className={styles.input} />
+
+                        <p className={styles.title}>
                             Password
                         </p>
                         <input placeholder='Password' onChange={(e) => setPassword(e.target.value)} value={password}
-                            className='border-[1px] border-[#d0d0d0] rounded-[7px] text-[12px] h-[40px] w-[318px] my-2 px-[12px] py-[8px] outline-none font-sans' /><br />
+                            className={styles.input} /><br />
 
-                        <div className="flex flex-row items-center justify-start mt-2">
+                        <div className={styles.switchWrapper}>
                             <label className="switch">
                                 <input
                                     type="checkbox"
@@ -87,31 +93,34 @@ const Signup = () => {
                                 />
                                 <span className="slider"></span>
                             </label>
-                            <p className="pt-2 text-[#344767] font-normal text-[14px] ml-3 font-sans">
+                            <p className={styles.switch}>
                                 Admin
                             </p>
                         </div>
-                        <button className='text-white gradient-button outline-none mt-3 w-[318px] shadow-md my-1 hover:bg-[#000060]v font-sans'
-                            style={{ borderRadius: '7px', padding: '11px 20px', fontSize: '12px', fontWeight: '600' }}
+
+                        <button className={styles.signin}
                             onClick={handleSignup}>
                             SIGN UP
                         </button>
+
                     </div>
-                    <div className="flex flex-col sm:flex-row flex-wrap min-w-[50vw] items-center justify-center mt-3">
+
+                    <div className={styles.singupWrapper}>
                         <p className="text-[#67748e] text-[14px]v font-sans">
                             Don't have an account?
                         </p>
-                        <p className="ml-1 -mt-4 sm:mt-0 text-[13px] gradient-text font-medium cursor-pointer hover:text-[#63b3ed] font-sans"
+                        <p className={styles.signup}
                             onClick={() => navigate('/')}>
                             Sign in
                         </p>
                     </div>
+
                 </div>
 
                 <img
                     alt='imag'
                     src="/assets/curved6.jpg"
-                    className="h-screen w-[700px] -mr-[200px] transform -skew-x-12 rounded-bl-2xl"
+                    className={styles.bgImage}
                 />
 
             </div>

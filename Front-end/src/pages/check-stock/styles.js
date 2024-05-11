@@ -1,0 +1,26 @@
+const styles = {
+    container: 'flex flex-col lg:flex-row min-h-screen items-center justify-evenly w-full bg-gray-400 shadow-lg border-[1px] border-[#e5e5e5] py-4 gap-y-6',
+    firstBlock: 'p-4 rounded-xl h-fit lg:min-h-[90vh] w-[85%] lg:w-[45%] bg-white border-[1px] border-[#c5c5c5]',
+    secondBlock: 'py-3 lg:mt-0 rounded-xl px-4 min-h-[85vh] w-[85%] lg:w-[45%] bg-white border-[1px] border-[#c5c5c5]',
+    closeIcon:'absolute right-11 sm:right-16 lg:right-14 h-[22px] w-[22px] cursor-pointer',
+    header: 'flex flex-row items-center justify-between',
+    headingBox: 'flex flex-row items-center justify-between bg-[#e9e9e9] gap-x-2 border-[1px] border-[#e0e0e0] py-2 w-fit px-2 lg:px-3',
+    headingTitle: 'font-sans font-bold text-[18px] text-black my-auto',
+    dataContainer: 'bg-[#e9e9e9] px-3 mt-5 border-[1px] border-[#e5e5e5]',
+    dataList: 'flex flex-row items-center my-2 justify-between py-[7px] border-[1px] border-[#e5e5e5] bg-white px-3',
+    itemDetails: 'my-auto font-sans font-semibold text-black',
+    viewButton: 'bg-[#006400] hover:bg-[#004400] px-[13px] py-[3px] rounded-[5px] text-white font-sans text-[13px] font-medium',
+    itemInfo: 'font-sans font-bold text-black text-[13px] h-fit min-h-[12px',
+    infoWrapper: 'flex flex-col w-[65%] px-4 h-fit',
+    imageInfo: 'flex flex-row items-center  overflow-hidden flex-wrap',
+    URLsBlock: 'bg-sky-50 h-fit w-full px-4 py-3 mt-3 border-[1px] border-sky-100',
+    URLsTitle: 'bg-sky-200 w-fit px-2 py-[2px] border-[1px] border-[#202020] rounded-[8px] text-black font-sans font-semibold text-[14px]',
+    URLsWrapper: 'flex flex-row items-start',
+    URLIndex: 'font-semibold font-sans text-[#202020] text-[13px] mr-3',
+    URL: 'font-sans hover:underline text-[14px] font-normal',
+    buttonsWrapper: 'flex flex-row items-center justify-between mt-3',
+    status: 'flex flex-row font-sans text-[16px] font-semibold text-[#252525]',
+    statusVal: 'ml-1 text-[15px] mt-[1px]',
+    buttonStyle: 'px-[13px] py-[3px] rounded-[5px] text-white font-sans font-medium'
+}
+export default styles;
