@@ -3,7 +3,6 @@ import Signin from "../pages/signin";
 import Dashboard from "../pages/dashboard";
 import Signup from "../pages/signup";
 import Home from "../pages/Home";
-// import Test from "../test";
 import Layout from "../components/layout";
 import UpdateStock from "../pages/update-stock";
 import CheckStock from "../pages/check-stock";
@@ -13,7 +12,6 @@ const AppRoutes = () => {
         <Router>
             <Routes>
                 <Route path='/' element={<Signin />} />
-                {/* <Route path='/test' element={<Test />} /> */}
                 <Route path='/signup' element={<Signup />} />
                 <Route path="/home" element={<Home />} />
                 <Route
