@@ -6,11 +6,28 @@ import Home from "../pages/Home";
 import Layout from "../components/layout";
 import UpdateStock from "../pages/update-stock";
 import CheckStock from "../pages/check-stock";
+import { useEffect } from "react";
+
+const AUTHORIZED_PATHS = [
+    { path: '/', element: <Signin /> },
+    { path: '/signup', element: <Signup /> },
+]
 
 const AppRoutes = () => {
+    useEffect(() => {
+        // const userSt
+    }, [])
+
     return (
         <Router>
             <Routes>
+                <Route path='/' element={<Signin />} />
+                <Route path='/signup' element={<Signup />} />
+
+                {AUTHORIZED_PATHS.map((path, index) => {
+                    <Route path={path.path} element={path.element} />
+                })}
+                {/*                 
                 <Route path='/' element={<Signin />} />
                 <Route path='/signup' element={<Signup />} />
                 <Route path="/home" element={<Home />} />
@@ -20,7 +37,7 @@ const AppRoutes = () => {
                         <Layout>
                             <Dashboard />
                         </Layout>}
-                />                
+                />
                 <Route
                     path="/update-stock"
                     element={
@@ -28,13 +45,13 @@ const AppRoutes = () => {
                             <UpdateStock />
                         </Layout>}
                 />
-                  <Route
+                <Route
                     path="/check-stock"
                     element={
                         <Layout>
                             <CheckStock />
                         </Layout>}
-                />
+                /> */}
             </Routes>
         </Router>
     )

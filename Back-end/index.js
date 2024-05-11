@@ -169,8 +169,6 @@ app.get("/get-image", (req, resp) => {
 app.post("/update-status", (req, resp) => {
   const { id, newStatus } = req.body;
   const sql = 'UPDATE fulldata SET status = ? WHERE id = ?';
-  // const newStatus = 'Accepted';
-
   pool.query(sql, [newStatus, id], (err, result) => {
     if (err) {
       console.error('Error updating status:', err);

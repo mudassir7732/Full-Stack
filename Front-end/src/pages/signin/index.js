@@ -36,13 +36,9 @@ const Signin = () => {
             })
             .then((response) => {
                 if (response?.data?.userExist === true) {
-                    // if (remember) {
-                        const user = JSON.stringify({ email: email, password: password })
-                        localStorage.setItem('user', user)
-                    // }
-                    // else {
-                    //     localStorage.setItem('user', null)
-                    // }
+                    console.log(response?.data,' = Data')
+                    const user = JSON.stringify({ email: email, password: password})
+                    localStorage.setItem('user', user)
                     navigate('/dashboard')
                 } else {
                     setExist("User does not exist!");
@@ -107,7 +103,7 @@ const Signin = () => {
                             Don't have an account?
                         </p>
                         <p className="ml-1 -mt-4 sm:mt-0 text-[13px] gradient-text font-medium cursor-pointer hover:text-[#63b3ed] font-sans"
-                        onClick={()=>navigate('/signup')}>
+                            onClick={() => navigate('/signup')}>
                             Sign up
                         </p>
                     </div>
