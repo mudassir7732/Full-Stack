@@ -111,6 +111,7 @@ const upload = multer({ storage: storage }).single("user_file");
 app.post("/upload-data", upload, (req, resp) => {
   const { filename, path: filePath } = req.file;
   const { name, description } = req.body;
+  const status = "Pending";
 
   const supplierURLs = Object.keys(req.body)
     .filter((key) => key.startsWith("supplier_url_"))
@@ -122,9 +123,9 @@ app.post("/upload-data", upload, (req, resp) => {
 
   const date = new Date().toLocaleString();
   const imageUrl = `${req.protocol}://${req.get('host')}/${filePath}`;
-  const sql = 'INSERT INTO data (filename, imageURL, name, description, supplierURLs, videoURLs, date) VALUES (?, ?, ?, ?, ?, ?, ?)';
+  const sql = 'INSERT INTO fulldata (filename, imageURL, name, description, supplierURLs, videoURLs, status, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 
-  pool.query(sql, [filename, imageUrl, name, description, JSON.stringify(supplierURLs), JSON.stringify(videoURLs), date], (err, result) => {
+  pool.query(sql, [filename, imageUrl, name, description, JSON.stringify(supplierURLs), JSON.stringify(videoURLs), status, date], (err, result) => {
     if (err) {
       console.error('Error storing image:', err);
       resp.status(500).json({ message: 'Internal Server Error' });

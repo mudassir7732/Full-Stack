@@ -89,13 +89,13 @@ const CheckStock = () => {
               Accepted
             </p>
             <p className=' font-sans font-bold text-[18px] text-black my-auto'>
-              0
+              
             </p>
           </div>
 
           <div className='flex flex-row items-center justify-between bg-[#e9e9e9] gap-x-2 py-2 w-fit lg:px-3 border-[1px] border-[#e0e0e0] '>
             <p className=' font-sans font-bold text-[18px] text-black my-auto'>
-              Rejected
+              Pending
             </p>
             <p className=' font-sans font-bold text-[18px] text-black my-auto'>
               0
