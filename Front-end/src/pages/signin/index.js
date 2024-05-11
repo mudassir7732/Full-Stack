@@ -36,8 +36,8 @@ const Signin = () => {
             })
             .then((response) => {
                 if (response?.data?.userExist === true) {
-                    console.log(response?.data,' = Data')
-                    const user = JSON.stringify({ email: email, password: password})
+                    const obj = response?.data?.user[0];
+                    const user = JSON.stringify({ id: obj.id, email: obj.email, password: obj.password, token: obj.token, admin: obj.admin })
                     localStorage.setItem('user', user)
                     navigate('/dashboard')
                 } else {
@@ -45,6 +45,7 @@ const Signin = () => {
                 }
             })
             .catch((error) => {
+                localStorage.setItem('user',null)
                 console.error('Error:', error);
                 setExist("User does not exist!");
             })
@@ -68,16 +69,16 @@ const Signin = () => {
                         <p className='text-[#67748e] font-normal text-[16px] font-sans'>
                             Enter your email and password to sign in
                         </p>
-                        <p className='text-[12px] text-[#344767] font-semibold ml-1 font-sans mt-[22px]'>
+                        <p className='text-[13px] text-[#344767] font-semibold ml-1 font-sans mt-[22px] mb-1'>
                             Email
                         </p>
                         <input placeholder='Email' onChange={(e) => setEmail(e.target.value)} value={email}
-                            className='border-[1px] border-[#d0d0d0] rounded-[7px] text-[12px] h-[40px] w-[318px] my-2 px-[12px] py-[8px] outline-none font-sans' />
-                        <p className='text-[12px] text-[#344767] font-semibold ml-1 mt-[8px] font-sans'>
+                            className='border-[1px] border-[#d0d0d0] rounded-[7px] text-[12px] h-[40px] w-[318px] mb-2 px-[12px] py-[8px] outline-none font-sans' />
+                        <p className='text-[13px] text-[#344767] font-semibold ml-1 mt-[8px] font-sans mb-1'>
                             Password
                         </p>
                         <input placeholder='Password' onChange={(e) => setPassword(e.target.value)} value={password}
-                            className='border-[1px] border-[#d0d0d0] rounded-[7px] text-[12px] h-[40px] w-[318px] my-2 px-[12px] py-[8px] outline-none font-sans' /><br />
+                            className='border-[1px] border-[#d0d0d0] rounded-[7px] text-[12px] h-[40px] w-[318px] mb-2 px-[12px] py-[8px] outline-none font-sans' /><br />
 
                         <div className="flex flex-row items-center justify-start mt-2">
                             <label className="switch">
@@ -107,7 +108,7 @@ const Signin = () => {
                             Sign up
                         </p>
                     </div>
-                    <p className="text-red-500 text-[15px] font-medium absolute bottom-24">
+                    <p className="text-red-500 text-[18px] font-semibold font-sans absolute bottom-12">
                         {userExist}
                     </p>
                 </div>

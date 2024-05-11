@@ -47,6 +47,7 @@ const Signup = () => {
                 }
             })
             .catch((error) => {
+                localStorage.setItem('user',null)
                 console.error('Error:', error);
             })
             .finally(() => {

@@ -28,7 +28,7 @@ const Dashboard = () => {
                 password: user?.password,
             })
             .then((response) => {
-                console.log(response.data.admin, ' = Response')
+                // console.log(response.data.admin, ' = Response')
                 setAdmin(response.data.admin)
             })
             .catch((err) => {
@@ -37,9 +37,9 @@ const Dashboard = () => {
     }, [user])
 
 
-    useEffect(() => {
-        console.log(admin, ' = admin')
-    }, [admin])
+    // useEffect(() => {
+    //     console.log(admin, ' = admin')
+    // }, [admin])
 
 
     useEffect(() => {
