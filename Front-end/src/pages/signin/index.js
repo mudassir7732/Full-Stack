@@ -31,32 +31,44 @@ const Signin = () => {
 
     const handleSignin = () => {
         setLoading(true)
-        axios
-            .post(`http://127.0.0.1:5000/signin`, {
-                email: email,
-                password: password,
-            })
-            .then((response) => {
-                if (response?.data?.userExist === true) {
-                    const obj = response?.data?.user[0];
-                    const user = JSON.stringify({ id: obj.id, email: obj.email, password: obj.password, token: obj.token, admin: obj.admin })
-                    localStorage.setItem('user', user)
-                    navigate('/dashboard')
-                } else {
+        try {
+            axios
+                .post(`http://127.0.0.1:5000/signin`, {
+                    email: email,
+                    password: password,
+                })
+                .then((response) => {
+                    console.log(response?.data?.user, ' = Response')
+                    if (response?.data?.user) {
+                        const obj = response?.data?.user;
+                        const user = JSON.stringify({ id: obj.id, email: obj.email, password: obj.password, token: obj.token, admin: obj.admin })
+                        localStorage.setItem('user', user)
+                        if (obj?.admin === 0) {
+                            navigate('/dashboard')
+                        }
+                        else if (obj?.admin === 1){
+                            navigate('/update-stock');
+                        }
+                    }
+                    else {
+                        setExist("User does not exist!");
+                    }
+                })
+                .catch((error) => {
+                    localStorage.setItem('user', null)
+                    console.error('Error:', error);
                     setExist("User does not exist!");
-                }
-            })
-            .catch((error) => {
-                localStorage.setItem('user', null)
-                console.error('Error:', error);
-                setExist("User does not exist!");
-            })
-            .finally(() => {
-                setTimeout(() => {
-                    setExist('');
-                }, 3000);
-                setLoading(false);
-            });
+                })
+                .finally(() => {
+                    setTimeout(() => {
+                        setExist('');
+                    }, 3000);
+                    setLoading(false);
+                });
+        }
+        catch (err) {
+            console.log(err, ' = Error')
+        }
     }
 
     return (

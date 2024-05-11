@@ -20,36 +20,48 @@ const AUTHORIZED_PATHS = [
 ]
 
 const AppRoutes = () => {
-    const [user, setUser] = useState(null);
+    const [admin, setAdmin] = useState(null);
 
     useEffect(() => {
-        const userString = localStorage.getItem('user');
-        const user = JSON.parse(userString);
-        axios.post(`http://127.0.0.1:5000/status`, {
-            email: user.email, password: user.password
-        })
-            .then((res) => {
-                console.log(res.data?.userAdmin, ' = data');
-                setUser(res?.data?.userAdmin);
-            })
-            .catch((err) => {
-                setUser(0)
-            })
+        try {
+            const userString = localStorage.getItem('user');
+            let user = null;
+            if (userString !== null) {
+                user = JSON.parse(userString);
+            }
+            console.log(user,' = UserJSON')
+            setAdmin(user.admin)
+
+        //     axios.post(`http://127.0.0.1:5000/signin`, {
+        //         email: user.email, password: user.password
+        //     })
+        //         .then((res) => {
+        //             console.log(res.data?.user?.admin, ' = data');
+        //             setAdmin(res?.data?.user);
+        //         })
+        //         .catch((err) => {
+        //             setAdmin(0)
+        //         })
+        }
+        catch (err) {
+            console.log(err, ' = Error')
+        }
+
     }, [])
 
     useEffect(() => {
-        console.log(user, ' = User')
-    }, [user])
+        console.log(admin, ' = User in routes    ')
+    }, [admin])
 
     return (
         <Router>
             <Routes>
                 <Route path='/' element={<Signin />} />
                 <Route path='/signup' element={<Signup />} />
-                {(user === 0 || user === 1) && AUTHORIZED_PATHS.map((path, index) => (
+                {admin === 0 && AUTHORIZED_PATHS.map((path, index) => (
                     <Route key={index} path={path.path} element={<Layout>{path.element}</Layout>} />
                 ))}
-                {user === 1 && ADMIN_PATHS.map((path, index) => (
+                {admin ===  1 && ADMIN_PATHS.map((path, index) => (
                     <Route key={index} path={path.path} element={<Layout>{path.element}</Layout>} />
                 ))}
                 <Route path='*' element={<ErrorPage />} />

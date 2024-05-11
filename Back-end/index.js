@@ -74,10 +74,10 @@ app.post("/signin", function (req, res) {
       return;
     }
     if (result.length > 0) {
-      res.json({ userExist: true, user:result });
+      res.json({ userExist: true, user: result[0] });
     }
     else {
-      res.json({ userExist: false });
+      res.json({ userExist: false, user:'not-user' });
     }
     // return res.json(result);
   });
