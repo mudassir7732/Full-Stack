@@ -44,8 +44,9 @@ app.post('/register', (req, res) => {
 
 app.post("/status", function (req, res) {
   const { email, password } = req.body;
+  const sql = 'SELECT * FROM registration WHERE email = ? AND password = ? AND admin = 1';
 
-  const sql = 'SELECT admin FROM registration WHERE email = ? AND password = ?';
+  // const sql = 'SELECT admin FROM registration WHERE email = ? AND password = ?';
   pool.query(sql, [email, password], (err, result) => {
     if (err) {
       console.error('Error checking status:', err);
@@ -137,11 +138,8 @@ app.post("/upload-data", upload, (req, resp) => {
 });
 
 
-
-
-
 app.get("/get-data", (req, resp) => {
-  const sql = 'SELECT * FROM data';
+  const sql = 'SELECT * FROM fulldata';
 
   pool.query(sql, (err, result) => {
     if (err) {
@@ -151,9 +149,6 @@ app.get("/get-data", (req, resp) => {
     return resp.json(result);
   });
 });
-
-
-
 
 
 app.get("/get-image", (req, resp) => {
@@ -170,7 +165,26 @@ app.get("/get-image", (req, resp) => {
 
 
 
-const PORT = process.env.PORT || 5000;
+
+app.post("/update-status", (req, resp) => {
+  const { id, newStatus } = req.body;
+  const sql = 'UPDATE fulldata SET status = ? WHERE id = ?';
+  // const newStatus = 'Accepted';
+
+  pool.query(sql, [newStatus, id], (err, result) => {
+    if (err) {
+      console.error('Error updating status:', err);
+      resp.status(500).json({ message: 'Internal Server Error' });
+      return;
+    }
+    console.log('Status updated successfully');
+    resp.status(200).json({ message: 'Status updated successfully' });
+  });
+});
+
+
+
+const PORT = process.env.PORT || 5000;  
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });

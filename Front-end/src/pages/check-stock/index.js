@@ -3,6 +3,8 @@ import axios from 'axios';
 
 const CheckStock = () => {
   const [data, setData] = useState();
+  const [accepted, setAccepted] = useState(0);
+  const [rejected, setRejected] = useState(0);
   const [suppliers, setSuppliers] = useState([]);
   const [videos, setVideos] = useState([]);
   const [image, setImage] = useState();
@@ -10,27 +12,49 @@ const CheckStock = () => {
 
 
   useEffect(() => {
-    axios.get('http://localhost:5000/get-data')
+    getData();
+  }, []);
+
+  const getData = async () => {
+    await axios.get('http://localhost:5000/get-data')
       .then(response => {
-        console.log(response.data, ' = Response')
+        // console.log(response.data, ' = Response')
         setData(response.data)
       })
       .catch(error => {
         console.error('Error fetching images:', error);
       });
-  }, []);
+  }
+
+  // useEffect(() => {
+  //   axios.get('http://localhost:5000/get-image')
+  //     .then(response => {
+  //       console.log(response.data, ' = Response2')
+
+  //       setImage(response?.data[1])
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching images:', error);
+  //     });
+  // }, []);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/get-image')
-      .then(response => {
-        console.log(response.data, ' = Response2')
-
-        setImage(response?.data[1])
+    if (data) {
+      let rejectedCounter = 0;
+      let acceptedCounter = 0;
+      data.map((item) => {
+        if (item.status === 'Rejected') {
+          rejectedCounter = rejectedCounter + 1;
+        }
+        else if (item.status === 'Accepted') {
+          acceptedCounter = acceptedCounter + 1;
+        }
+        return null;
       })
-      .catch(error => {
-        console.error('Error fetching images:', error);
-      });
-  }, []);
+      setRejected(rejectedCounter);
+      setAccepted(acceptedCounter);
+    }
+  }, [data])
 
   const handleClick = (id) => {
     console.log(id, ' = id');
@@ -58,21 +82,27 @@ const CheckStock = () => {
     }
 
     if (details?.imageURL) {
-      setImage('http://localhost:5000/uploads/'+details?.filename)
+      setImage('http://localhost:5000/uploads/' + details?.filename)
       // console.log(details, ' = Image Details');
     }
   }, [details]);
 
-  useEffect(()=>{
-    console.log(image, ' - Image')
-  },[image])
+  const updateStatus = async (id, status) => {
+    axios.post('http://localhost:5000/update-status', { id: id, newStatus: status })
+      .then((res) => {
+        console.log(res, ' = Result')
+        getData();
+      })
+      .catch((err) => {
+        console.log(err, ' = Error')
+      })
+  }
 
 
   return (
     <div className='flex flex-col lg:flex-row min-h-screen items-start justify-evenly w-full bg-gray-400 shadow-lg border-[1px] border-[#e5e5e5] py-4 gap-y-6'>
 
-      <div className='border-[1px] p-4 rounded-xl h-fit lg:min-h-[85vh] w-[85%] lg:w-[45%] bg-white'>
-
+      <div className='p-4 rounded-xl h-fit lg:min-h-[85vh] w-[85%] lg:w-[45%] bg-white border-[1px] border-[#c5c5c5]'>
         <div className='flex flex-row items-center justify-between'>
 
           <div className='flex flex-row items-center justify-between bg-[#e9e9e9] gap-x-2 border-[1px] border-[#e0e0e0] py-2 w-fit lg:px-3'>
@@ -89,16 +119,16 @@ const CheckStock = () => {
               Accepted
             </p>
             <p className=' font-sans font-bold text-[18px] text-black my-auto'>
-              
+              {accepted}
             </p>
           </div>
 
           <div className='flex flex-row items-center justify-between bg-[#e9e9e9] gap-x-2 py-2 w-fit lg:px-3 border-[1px] border-[#e0e0e0] '>
             <p className=' font-sans font-bold text-[18px] text-black my-auto'>
-              Pending
+              Rejected
             </p>
             <p className=' font-sans font-bold text-[18px] text-black my-auto'>
-              0
+              {rejected}
             </p>
           </div>
 
@@ -122,15 +152,15 @@ const CheckStock = () => {
       </div>
 
 
-      <div className='border-[1px] py-3 lg:mt-0 rounded-xl px-4 min-h-[85vh] w-[85%] lg:w-[45%] bg-white'>
+      <div className=' py-3 lg:mt-0 rounded-xl px-4 min-h-[85vh] w-[85%] lg:w-[45%] bg-white border-[1px] border-[#c5c5c5]'>
         {
           details &&
 
           <div className='flex flex-row items-center  overflow-hidden flex-wrap'>
             {/* <div className='w-[35%] bg-sky-200'> */}
-              {/* {image && */}
-                <img src='http://localhost:5000/uploads/dp round.jpg' alt="Close Icon" className='h-[120px]' />
-              {/* } */}
+            {/* {image && */}
+            <img src='http://localhost:5000/uploads/dp round.jpg' alt="Close Icon" className='h-[120px]' />
+            {/* } */}
             {/* </div> */}
             <div className='flex flex-col w-[65%] px-4 h-fit'>
               <p className='font-sans font-bold text-black text-[13px] h-fit min-h-[12px]'>
@@ -148,29 +178,29 @@ const CheckStock = () => {
             </div>
           </div>
         }
-        <div className='bg-sky-50 min-h-[150px] w-full px-4 py-3 mt-3 border-[1px] border-sky-100'>
-          <p className='bg-sky-200 w-fit px-3 py-1 border-[1px] border-[#202020] rounded-[8px] text-black font-sans font-semibold text-[16px]'>
+        <div className='bg-sky-50 h-fit w-full px-4 py-3 mt-3 border-[1px] border-sky-100'>
+          <p className='bg-sky-200 w-fit px-2 py-[2px] border-[1px] border-[#202020] rounded-[8px] text-black font-sans font-semibold text-[14px]'>
             Suppliers URLs
           </p>
           {suppliers && videos.map((url, index) => (
             <div className='flex flex-row items-start'>
               <p className='font-semibold font-sans text-[#202020] text-[13px] mr-3'>{index + 1 + ")   "}</p>
-              <a href={url} target='_blank' className='font-sans text-[14px] font-normal ' >
+              <a href={url} target='_blank' className='font-sans hover:underline text-[14px] font-normal ' >
                 {url}
               </a>
             </div>
           ))}
         </div>
 
-        <div className='bg-sky-50 min-h-[150px] w-full px-4 py-3 mt-3 border-[1px] border-sky-100'>
-          <p className='bg-sky-200 w-fit px-3 py-1 border-[1px] border-[#202020] rounded-[8px] text-black font-sans font-semibold text-[16px]'>
+        <div className='bg-sky-50 h-fit w-full px-4 py-3 mt-3 border-[1px] border-sky-100'>
+          <p className='bg-sky-200 w-fit px-2 py-[2px] border-[1px] border-[#202020] rounded-[8px] text-black font-sans font-semibold text-[14px]'>
             Videos URLs
           </p>
           <p className='font-sans'>
             {videos && videos.map((url, index) => (
               <div className='flex flex-row items-start'>
                 <p className='font-semibold font-sans text-[#202020] text-[13px] mr-3'>{index + 1 + ")   "}</p>
-                <a href={url} target='_blank' className='font-sans text-[14px] font-normal ' >
+                <a href={url} target='_blank' className='font-sans hover:underline text-[14px] font-normal ' >
                   {url}
                 </a>
               </div>
@@ -179,16 +209,23 @@ const CheckStock = () => {
           </p>
         </div>
 
-        <div className='flex flex-row items-center justify-end mt-3'>
-          <button className='bg-[#ff0000] hover:bg-[#ee0000] mx-4 px-[13px] py-[3px] rounded-[5px] text-white font-sans font-medium' onClick={() => handleClick()}>
-            Reject
-          </button>
+        {
+          details &&
+          <div className='flex flex-row items-center justify-end mt-3'>
+            {(details.status === 'Accepted' || details.status === 'Pending') &&
+              <button className='bg-[#ff0000] hover:bg-[#ee0000] px-[13px] py-[3px] rounded-[5px] text-white font-sans font-medium' onClick={() => updateStatus(details.id, 'Rejected')}>
+                Reject
+              </button>
+            }
 
-          <button className='bg-[#006400] hover:bg-[#004400] px-[13px] py-[3px] rounded-[5px] text-white font-sans font-medium' onClick={() => handleClick()}>
-            Accept
-          </button>
+            {details.status !== 'Accepted' &&
+              <button className='bg-[#006400] hover:bg-[#004400] ml-4 px-[13px] py-[3px] rounded-[5px] text-white font-sans font-medium' onClick={() => updateStatus(details.id, 'Accepted')}>
+                Accept
+              </button>
+            }
 
-        </div>
+          </div>
+        }
 
       </div>
     </div>
