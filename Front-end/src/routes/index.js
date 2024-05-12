@@ -29,7 +29,6 @@ const AppRoutes = () => {
             if (userString !== null) {
                 user = JSON.parse(userString);
             }
-            console.log(user,' = UserJSON')
             setAdmin(user.admin)
         }
         catch (err) {
