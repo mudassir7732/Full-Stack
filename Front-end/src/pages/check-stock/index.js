@@ -30,18 +30,6 @@ const CheckStock = () => {
       });
   }
 
-  // useEffect(() => {
-  //   axios.get('http://localhost:5000/get-image')
-  //     .then(response => {
-  //       console.log(response.data, ' = Response2')
-
-  //       setImage(response?.data[1])
-  //     })
-  //     .catch(error => {
-  //       console.error('Error fetching images:', error);
-  //     });
-  // }, []);
-
   useEffect(() => {
     if (data) {
       let rejectedCounter = 0;
