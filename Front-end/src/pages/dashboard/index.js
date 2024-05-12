@@ -4,12 +4,9 @@ import "../../assets/soft-ui-dashboard.css";
 import Chart from 'chart.js/auto';
 import axios from 'axios';
 
-
 const Dashboard = () => {
-
     const [admin, setAdmin] = useState(0);
     const [user, setUser] = useState();
-
 
     useEffect(() => {
         const userString = localStorage.getItem('user');
@@ -20,7 +17,6 @@ const Dashboard = () => {
         setUser(parsedUser);
     }, [])
 
-
     useEffect(() => {
         axios
             .post(`http://127.0.0.1:5000/status`, {
@@ -28,19 +24,12 @@ const Dashboard = () => {
                 password: user?.password,
             })
             .then((response) => {
-                // console.log(response.data.admin, ' = Response')
                 setAdmin(response.data.admin)
             })
             .catch((err) => {
                 setAdmin(false);
             })
     }, [user])
-
-
-    // useEffect(() => {
-    //     console.log(admin, ' = admin')
-    // }, [admin])
-
 
     useEffect(() => {
         const ctx = document.getElementById('chart-bars').getContext('2d');
