@@ -25,21 +25,10 @@ const ValidationSchema = yup.object().shape({
 const UpdateStock = () => {
   const [supplierURLs, setSupplierURLs] = useState(0);
   const [videoURLs, setVideoURLs] = useState(0);
-  const [data, setData] = useState();
   const [supplierURL, setSupplierURL] = useState([]);
   const [videoURL, setVideoURL] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   axios.get('http://localhost:5000/get-image')
-  //     .then(response => {
-  //       setData(response.data[1])
-  //     })
-  //     .catch(error => {
-  //       console.error('Error fetching images:', error);
-  //     });
-  // }, []);
 
   const handleVideoURLs = (value, index) => {
     setVideoURL(prevVideoURLs => {
