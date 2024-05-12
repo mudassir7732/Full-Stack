@@ -5,7 +5,6 @@ import Signup from "../pages/signup";
 import Layout from "../components/layout";
 import UpdateStock from "../pages/update-stock";
 import { useEffect, useState } from "react";
-import axios from 'axios';
 import CheckStock from "../pages/check-stock";
 import ErrorPage from "../pages/error-page";
 
