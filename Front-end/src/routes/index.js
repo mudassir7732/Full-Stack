@@ -31,17 +31,6 @@ const AppRoutes = () => {
             }
             console.log(user,' = UserJSON')
             setAdmin(user.admin)
-
-        //     axios.post(`http://127.0.0.1:5000/signin`, {
-        //         email: user.email, password: user.password
-        //     })
-        //         .then((res) => {
-        //             console.log(res.data?.user?.admin, ' = data');
-        //             setAdmin(res?.data?.user);
-        //         })
-        //         .catch((err) => {
-        //             setAdmin(0)
-        //         })
         }
         catch (err) {
             console.log(err, ' = Error')
