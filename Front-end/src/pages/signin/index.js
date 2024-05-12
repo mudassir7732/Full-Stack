@@ -38,7 +38,6 @@ const Signin = () => {
                     password: password,
                 })
                 .then((response) => {
-                    console.log(response?.data?.user, ' = Response')
                     if (response?.data?.user) {
                         const obj = response?.data?.user;
                         const user = JSON.stringify({ id: obj.id, email: obj.email, password: obj.password, token: obj.token, admin: obj.admin })
