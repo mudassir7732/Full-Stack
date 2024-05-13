@@ -106,78 +106,74 @@ const CheckStock = () => {
         <div className={styles.firstBlock}>
 
 
-        <div className="row">
-                        <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-                            <div className="card">
-                                <div className="card-body p-3">
-                                    <div className="row">
-                                        <div className="col-8">
-                                            <div className="numbers">
-                                                <p className="text-sm mb-0 text-capitalize font-sans font-weight-bold">Today's Money</p>
-                                                <h5 className="font-weight-bolder mb-0 font-sans">
-                                                    $53,000
-                                                    <span className="text-success text-sm font-weight-bolder font-sans ml-1">+55%</span>
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div className="col-4 text-end">
-                                            <div className="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                                                <i className="ni ni-money-coins text-lg opacity-5"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-                            <div className="card">
-                                <div className="card-body p-3">
-                                    <div className="row">
-                                        <div className="col-8">
-                                            <div className="numbers">
-                                                <p className="text-sm mb-0 text-capitalize font-weight-bold font-sans">Today's Users</p>
-                                                <h5 className="font-weight-bolder mb-0 font-sans">
-                                                    2,300
-                                                    <span className="text-success text-sm font-weight-bolder font-sans ml-1">+3%</span>
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div className="col-4 text-end">
-                                            <div className="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                                                <i className="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-xl-3 col-sm-6">
-                            <div className="card">
-                                <div className="card-body p-3">
-                                    <div className="row">
-                                        <div className="col-8">
-                                            <div className="numbers">
-                                                <p className="text-sm mb-0 text-capitalize font-weight-bold">Sales</p>
-                                                <h5 className="font-weight-bolder mb-0 font-sans">
-                                                    $103,430
-                                                    <span className="text-success text-sm font-weight-bolder font-sans ml-1">+5%</span>
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div className="min-w-6 border-2">
-                                            {/* <div className="icon icon-shape h-2 w-9 bg-gradient-primary"> */}
-                                              <div className='bg-gradient-primary h-10 w-10 icon-shape'>
-                                                {/* <i className="ni ni-cart text-lg opacity-10" aria-hidden="true"></i> */}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+          <div className="row">
+            <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+              <div className="card">
+                <div className="card-body p-3">
+                  <div className="row">
+                    <div className="col-8">
+                      <div className="numbers">
+                        <p className="text-sm mb-0 text-capitalize font-sans font-weight-bold">Today's Money</p>
+                        <h5 className="font-weight-bolder mb-0 font-sans">
+                          $53,000
+                          <span className="text-success text-sm font-weight-bolder font-sans ml-1">+55%</span>
+                        </h5>
+                      </div>
                     </div>
-
-
-
+                    <div className="col-4 text-end">
+                      <div className="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                        <i className="ni ni-money-coins text-lg opacity-5"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+              <div className="card">
+                <div className="card-body p-3">
+                  <div className="row">
+                    <div className="col-8">
+                      <div className="numbers">
+                        <p className="text-sm mb-0 text-capitalize font-weight-bold font-sans">Today's Users</p>
+                        <h5 className="font-weight-bolder mb-0 font-sans">
+                          2,300
+                          <span className="text-success text-sm font-weight-bolder font-sans ml-1">+3%</span>
+                        </h5>
+                      </div>
+                    </div>
+                    <div className="col-4 text-end">
+                      <div className="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                        <i className="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-xl-3 col-sm-6">
+              <div className="card">
+                <div className="card-body p-3">
+                  <div className="row">
+                    <div className="col-8">
+                      <div className="numbers">
+                        <p className="text-sm mb-0 text-capitalize font-weight-bold">Sales</p>
+                        <h5 className="font-weight-bolder mb-0 font-sans">
+                          $103,430
+                          <span className="text-success text-sm font-weight-bolder font-sans ml-1">+5%</span>
+                        </h5>
+                      </div>
+                    </div>
+                    <div className="col-4 text-end">
+                      <div className="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                        <i className="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div className={styles.header}>
 
@@ -230,8 +226,8 @@ const CheckStock = () => {
         {
           details &&
           <div className={styles.secondBlock}>
-            <img  src='/assets/icons/close.png' className={styles.closeIcon}
-            onClick={()=>setDetails()} />
+            <img src='/assets/icons/close.png' className={styles.closeIcon}
+              onClick={() => setDetails()} />
 
             <div className={styles.imageInfo}>
               {/* <div className='w-[35%] bg-sky-200'> */}
