@@ -97,14 +97,12 @@ const CheckStock = () => {
 
 
   return (
-
     <>
       {loading && <Loader />}
 
       <div className={styles.container}>
 
         <div className={styles.firstBlock}>
-
 
           <div className="row">
             <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
@@ -230,11 +228,9 @@ const CheckStock = () => {
               onClick={() => setDetails()} />
 
             <div className={styles.imageInfo}>
-              {/* <div className='w-[35%] bg-sky-200'> */}
               {/* {image && */}
               <img src='http://localhost:5000/uploads/dp round.jpg' alt="Close Icon" className='h-[120px]' />
               {/* } */}
-              {/* </div> */}
               <div className={styles.infoWrapper}>
                 <p className={styles.itemInfo}>
                   {details?.name}
