@@ -9,7 +9,7 @@ const mysql = require("mysql");
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use('/uploadss', express.static('uploads'));
+app.use('/uploads', express.static('uploads'));
 app.use(cors());
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true }));
