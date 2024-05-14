@@ -7,6 +7,8 @@ import UpdateStock from "../pages/update-stock";
 import { useEffect, useState } from "react";
 import CheckStock from "../pages/check-stock";
 import ErrorPage from "../pages/error-page";
+import AdminRoutes from "./adminRoutes";
+import AuthorizedRoutes from "./authorizedRoutes";
 
 const ADMIN_PATHS = [
     { path: '/update-stock', element: <UpdateStock /> },
@@ -19,37 +21,40 @@ const AUTHORIZED_PATHS = [
 ]
 
 const AppRoutes = () => {
-    const [admin, setAdmin] = useState(null);
+    //     const [admin, setAdmin] = useState(null);
 
-    useEffect(() => {
-        try {
-            const userString = localStorage.getItem('user');
-            let user = null;
-            if (userString !== null) {
-                user = JSON.parse(userString);
-            }
-            setAdmin(user.admin)
-        }
-        catch (err) {
-            console.log(err, ' = Error')
-        }
+    //     useEffect(() => {
+    //         try {
+    //             const userString = localStorage.getItem('user');
+    //             let user = null;
+    //             if (userString !== null) {
+    //                 user = JSON.parse(userString);
+    //             }
+    //             setAdmin(user.admin)
+    //         }
+    //         catch (err) {
+    //             console.log(err, ' = Error')
+    //         }
 
-    }, [])
+    //     }, [])
 
-    useEffect(() => {
-        console.log(admin, ' = User in routes    ')
-    }, [admin])
+    // useEffect(() => {
+    //     console.log(admin, ' = User in routes    ')
+    // }, [admin])
 
     return (
         <Router>
             <Routes>
                 <Route path='/' element={<Signin />} />
                 <Route path='/signup' element={<Signup />} />
-                {admin === 0 && AUTHORIZED_PATHS.map((path, index) => (
-                    <Route key={index} path={path.path} element={<Layout>{path.element}</Layout>} />
+                
+                {AUTHORIZED_PATHS?.map((path, index) => (
+                    <Route key={index} path={path.path}
+                        element={<AuthorizedRoutes><Layout>{path.element}</Layout></AuthorizedRoutes>} />
                 ))}
-                {admin ===  1 && ADMIN_PATHS.map((path, index) => (
-                    <Route key={index} path={path.path} element={<Layout>{path.element}</Layout>} />
+                {ADMIN_PATHS?.map((path, index) => (
+                    <Route key={index} path={path.path}
+                        element={<AdminRoutes><Layout>{path.element}</Layout></AdminRoutes>} />
                 ))}
                 <Route path='*' element={<ErrorPage />} />
             </Routes>
