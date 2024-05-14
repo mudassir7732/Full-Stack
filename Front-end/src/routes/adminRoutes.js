@@ -12,18 +12,20 @@ const AdminRoutes = ({children}) => {
                 user = JSON.parse(userString);
             }
             admin = user?.admin;
-            console.log(admin,' = Admin')
+            // console.log(admin,' = Admin')
         }
         catch (err) {
             console.log(err, ' = Error')
         }
     }, [])
 
-    if(admin === 1){
+    // if(admin === 1){
+        // return 1
         return children
-    }
-    else{
-        return <ErrorPage />
-    }
+    // }
+    // else{
+        // return 5
+        // return <ErrorPage />
+    // }
 }
 export default AdminRoutes;

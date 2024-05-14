@@ -7,56 +7,57 @@ import UpdateStock from "../pages/update-stock";
 import { useEffect, useState } from "react";
 import CheckStock from "../pages/check-stock";
 import ErrorPage from "../pages/error-page";
-import AdminRoutes from "./adminRoutes";
-import AuthorizedRoutes from "./authorizedRoutes";
+import Loader from "../components/loader";
 
-const ADMIN_PATHS = [
-    { path: '/update-stock', element: <UpdateStock /> },
-    { path: '/check-stock', element: <CheckStock /> },
+const ADMIN_ROUTES = [
+    { path: '/update-stock', element: <Layout><UpdateStock /></Layout> },
+    { path: '/check-stock', element: <Layout><CheckStock /></Layout> },
 ]
 
-const AUTHORIZED_PATHS = [
-    { path: '/dashboard', element: <Dashboard /> },
+const REGISTERED_USER_ROUTES = [
+    { path: '/dashboard', element: <Layout><Dashboard /></Layout> },
     { path: '/signup', element: <Signup /> },
 ]
 
 const AppRoutes = () => {
-    //     const [admin, setAdmin] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [authorizedRoutes, setAuthorizedRoutes] = useState([
+        { path: '/', element: <Signin /> },
+        { path: '/signup', element: <Signup /> },
+        { path: '*', element: <ErrorPage /> }
+    ])
 
-    //     useEffect(() => {
-    //         try {
-    //             const userString = localStorage.getItem('user');
-    //             let user = null;
-    //             if (userString !== null) {
-    //                 user = JSON.parse(userString);
-    //             }
-    //             setAdmin(user.admin)
-    //         }
-    //         catch (err) {
-    //             console.log(err, ' = Error')
-    //         }
 
-    //     }, [])
-
-    // useEffect(() => {
-    //     console.log(admin, ' = User in routes    ')
-    // }, [admin])
+    useEffect(() => {
+        setLoading(true);
+        try {
+            const userString = localStorage.getItem('user');
+            let user = null;
+            if (userString !== null) {
+                user = JSON.parse(userString);
+                if (user?.admin === 0) {
+                    setAuthorizedRoutes(authorizedRoutes.concat(REGISTERED_USER_ROUTES))
+                }
+                else if (user?.admin === 1) {
+                    setAuthorizedRoutes(authorizedRoutes.concat(ADMIN_ROUTES));
+                }
+            }
+        }
+        catch (err) {
+            console.log(err, ' = Error')
+        }
+        finally {
+            setLoading(false);
+        }
+    }, []);
 
     return (
         <Router>
+            {loading && <Loader />}
             <Routes>
-                <Route path='/' element={<Signin />} />
-                <Route path='/signup' element={<Signup />} />
-                
-                {AUTHORIZED_PATHS?.map((path, index) => (
-                    <Route key={index} path={path.path}
-                        element={<AuthorizedRoutes><Layout>{path.element}</Layout></AuthorizedRoutes>} />
+                {authorizedRoutes?.map((route, index) => (
+                    <Route key={index} path={route.path} element={route.element} />
                 ))}
-                {ADMIN_PATHS?.map((path, index) => (
-                    <Route key={index} path={path.path}
-                        element={<AdminRoutes><Layout>{path.element}</Layout></AdminRoutes>} />
-                ))}
-                <Route path='*' element={<ErrorPage />} />
             </Routes>
         </Router>
     )

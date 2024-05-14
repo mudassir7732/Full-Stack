@@ -19,11 +19,11 @@ const AuthorizedRoutes = ({ children }) => {
         }
     }, [])
 
-    if (admin === 0) {
+    // if (admin === 0) {
         return children
-    }
-    else {
-        return <ErrorPage />
-    }
+    // }
+    // else {
+        // return <ErrorPage />
+    // }
 }
 export default AuthorizedRoutes;
