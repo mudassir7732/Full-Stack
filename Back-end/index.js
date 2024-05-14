@@ -25,22 +25,53 @@ const pool = mysql.createPool({
 const secretKey = process.env.SECRET_KEY;
 
 
+// app.post('/register', (req, res) => {
+//   const {name, email, password, role } = req.body;
+
+//   const sql = 'INSERT INTO registeredusers (name, email, password, role, token) VALUES (?, ?, ?, ?, ?)';
+//   const token = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
+
+//   pool.query(sql, [name, email, password, role, token], (err, result) => {
+//     if (err) {
+//       console.error('Error registering user:', err);
+//       res.status(500).json({ message: 'Internal Server Error' });
+//       return;
+//     }
+//     res.status(201).json({ message: 'User registered successfully', name, email, password, role, token });
+//   });
+// });
+
+
 app.post('/register', (req, res) => {
-  const { email, password, admin } = req.body;
-
-  const sql = 'INSERT INTO registration (email, password, admin, token) VALUES (?, ?, ?, ?)';
-  const token = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
-
-  pool.query(sql, [email, password, admin, token], (err, result) => {
-    if (err) {
-      console.error('Error registering user:', err);
+  const { name, email, password, role } = req.body;
+  const checkEmailSql = 'SELECT * FROM registeredusers WHERE email = ?';
+  pool.query(checkEmailSql, [email], (checkErr, checkResult) => {
+    if (checkErr) {
+      console.error('Error checking email:', checkErr);
       res.status(500).json({ message: 'Internal Server Error' });
       return;
     }
-    console.log('User registered successfully');
-    res.status(201).json({ message: 'User registered successfully', token });
+    
+    if (checkResult.length > 0) {
+      res.json('Already registered')
+      res.status(400).json({ message: 'Already registered' });
+      return;
+    }
+
+    const token = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
+    const insertSql = 'INSERT INTO registeredusers (name, email, password, role, token) VALUES (?, ?, ?, ?, ?)';
+    pool.query(insertSql, [name, email, password, role, token], (insertErr, insertResult) => {
+      if (insertErr) {
+        console.error('Error registering user:', insertErr);
+        res.status(500).json({ message: 'Internal Server Error' });
+        return;
+      }
+      
+      res.status(201).json({ message: 'User registered successfully', name, email, password, role, token });
+    });
   });
 });
+
 
 app.post("/status", function (req, res) {
   const { email, password } = req.body;
@@ -57,7 +88,7 @@ app.post("/status", function (req, res) {
       const adminValue = result[0].admin;
       res.json({ userAdmin: result[0].admin });
     } else {
-      res.json({ userAdmin: "not-user"});
+      res.json({ userAdmin: "not-user" });
     }
   });
 });
@@ -66,7 +97,7 @@ app.post("/status", function (req, res) {
 app.post("/signin", function (req, res) {
   const { email, password } = req.body;
 
-  const sql = 'SELECT * FROM registration WHERE email = ? AND password = ?';
+  const sql = 'SELECT * FROM registeredusers WHERE email = ? AND password = ?';
   pool.query(sql, [email, password], (err, result) => {
     if (err) {
       console.error('Error signing in:', err);
@@ -77,7 +108,7 @@ app.post("/signin", function (req, res) {
       res.json({ userExist: true, user: result[0] });
     }
     else {
-      res.json({ userExist: false, user:'not-user' });
+      res.json({ userExist: false, user: 'not-user' });
     }
     // return res.json(result);
   });
@@ -94,10 +125,6 @@ const verifyToken = (req, res, next) => {
     next();
   });
 };
-
-
-
-
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -152,6 +179,19 @@ app.get("/get-data", (req, resp) => {
 });
 
 
+app.get("/get-users", (req, resp) => {
+  const sql = 'SELECT * FROM registration';
+
+  pool.query(sql, (err, result) => {
+    if (err) {
+      console.error('Error fetching images:', err);
+      resp.status(500).json({ message: 'Internal Server Error' });
+    }
+    return resp.json(result);
+  });
+});
+
+
 app.get("/get-image", (req, resp) => {
   const sql = 'SELECT * FROM storedimages';
 
@@ -178,7 +218,7 @@ app.post("/update-status", (req, resp) => {
   });
 });
 
-const PORT = process.env.PORT || 5000;  
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });

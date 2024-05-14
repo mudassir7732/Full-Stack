@@ -4,10 +4,12 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from "../../components/loader";
 import styles from "./styles";
+import CustomSnackbar from "../../components/snackbar";
 
 
 const Signin = () => {
     const [user, setUser] = useState();
+    const [error, setError] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [userExist, setExist] = useState('');
@@ -37,16 +39,25 @@ const Signin = () => {
                     email: email,
                     password: password,
                 })
-                .then((response) => {
-                    if (response?.data?.user) {
-                        const obj = response?.data?.user;
-                        const user = JSON.stringify({ id: obj.id, email: obj.email, password: obj.password, token: obj.token, admin: obj.admin })
-                        localStorage.setItem('user', user)
-                        if (obj?.admin === 0) {
-                            navigate('/dashboard')
+                .then((res) => {
+                    if (res?.data?.user) {
+                        // console.log(res.data?.user?.role, ' = data')
+                        console.log(res.data?.user, ' = data')
+                        if (res?.data?.user === 'not-user') {
+                            setError('Email not registered')
                         }
-                        else if (obj?.admin === 1){
-                            navigate('/update-stock');
+                        else {
+                            const obj = res?.data?.user;
+                            
+                            const user = JSON.stringify({ id: obj.id, email: obj.email, password: obj.password, token: obj.token, role: obj.role })
+                            localStorage.setItem('user', user);
+                            // console.log(res?.data?.user?.role, ' = Role')
+                            if (res?.data?.user?.role === 'user') {
+                                navigate('/dashboard');
+                            }
+                            else if (res?.data?.user?.role === 'admin') {
+                                navigate('/update-stock');
+                            }
                         }
                     }
                     else {
@@ -75,6 +86,9 @@ const Signin = () => {
             {loading && <Loader />}
 
             <div className={styles.container}>
+                {error &&
+                    <CustomSnackbar message={error} />
+                }
                 <div className={styles.card}>
 
                     <div>
@@ -99,7 +113,6 @@ const Signin = () => {
                         <input placeholder='Password' onChange={(e) => setPassword(e.target.value)} value={password}
                             className={styles.input} /><br />
 
-
                         <div className={styles.switchWrapper}>
                             <label className="switch">
                                 <input
@@ -114,13 +127,11 @@ const Signin = () => {
                             </p>
                         </div>
 
-
                         <button className={styles.signin}
                             onClick={handleSignin}>
                             SIGN IN
                         </button>
                     </div>
-
 
                     <div className={styles.singupWrapper}>
                         <p className="text-[#67748e] text-[14px] font-sans">
