@@ -6,27 +6,27 @@ import AdminSidebar from "./sidebar/adminSidebar";
 const Layout = ({ children }) => {
     const userString = localStorage.getItem('user');
     let user = null;
-    if (userString){
+    if (userString) {
         user = JSON.parse(userString);
     }
-    console.log(user, ' = Role')
 
     return (
-        <div className="flex flex-row">
-            {user?.role && user?.role === 'user' &&
-                <Sidebar />
-                // <AdminSidebar />
-            }
-            {user && user?.role === 'admin' && (
-                <AdminSidebar />
-            )}
-            <div className="min-h-screen w-full">
-                <Header />
-                <div className="min-h-[100vh] flex flex-col justify-center items-center">
+        <div className="flex flex-col h-[100vh] w-full overflow-hidden">
+            <Header />
+
+            <div className="flex flex-row max-h-screen w-full mt-[8vh] h-[100vh]">
+                {user?.role && user?.role === 'user' &&
+                    <Sidebar />
+                }
+                {user && user?.role === 'admin' && (
+                    <AdminSidebar />
+                )}
+                <div className="flex flex-col items-center justify-center py-4 ml-[300px] overflow-scroll w-full">
                     {children}
                 </div>
-                <Footer />
+                {/* <Footer /> */}
             </div>
+
         </div>
     )
 }

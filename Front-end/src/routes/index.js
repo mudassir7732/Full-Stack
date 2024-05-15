@@ -36,7 +36,6 @@ const AppRoutes = () => {
             let user = null;
             if (userString) {
                 user = JSON.parse(userString);
-                console.log(user, ' = User')
                 if (user?.role === 'user') {
                     setAuthorizedRoutes(authorizedRoutes.concat(REGISTERED_USER_ROUTES))
                 }

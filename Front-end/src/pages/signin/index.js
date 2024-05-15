@@ -31,7 +31,7 @@ const Signin = () => {
         setPassword(user?.password)
     }, [user])
 
-    const handleSignin = async() => {
+    const handleSignin = async () => {
         setLoading(true)
         await axios
             .post(`http://127.0.0.1:5000/signin`, {
@@ -40,8 +40,6 @@ const Signin = () => {
             })
             .then((res) => {
                 if (res?.data?.user) {
-                    // console.log(res.data?.user?.role, ' = data')
-                    // console.log(res.data?.user, ' = data')
                     if (res?.data?.user === 'not-user') {
                         setError('Email not registered')
                     }
@@ -50,7 +48,6 @@ const Signin = () => {
 
                         const user = JSON.stringify({ id: obj.id, email: obj.email, password: obj.password, token: obj.token, role: obj.role })
                         localStorage.setItem('user', user);
-                        // console.log(res?.data?.user?.role, ' = Role')
                         if (res?.data?.user?.role === 'user') {
                             navigate('/dashboard');
                         }
