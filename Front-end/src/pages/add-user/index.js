@@ -17,7 +17,6 @@ const AddUser = () => {
     const [users, setUsers] = useState([]);
     const [details, setDetails] = useState(null);
 
-
     useEffect(() => {
         setLoading(true);
         getData();
@@ -195,7 +194,7 @@ const AddUser = () => {
                                 Add Here!
                             </p>
                             <img src='/assets/icons/close.png' alt='close_icon' className="h-[24px] w-[24px] cursor-pointer"
-                                onClick={() => setPopup(false)} />
+                                onClick={() => { setPopup(false); setDetails(null) }} />
                         </div>
                         <div className="p-3">
                             <p className={styles2.title}>

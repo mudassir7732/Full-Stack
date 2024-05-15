@@ -4,8 +4,15 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from "../../components/loader";
 import styles from "./styles";
+import styles2 from '../update-stock/styles';
 import CustomSnackbar from "../../components/snackbar";
+import { Form, Formik } from 'formik';
+import * as yup from 'yup';
 
+const ValidationSchema = yup.object().shape({
+    email: yup.string().email().required('Email Required'),
+    password: yup.string().required('Password Required')
+})
 
 const Signin = () => {
     const [user, setUser] = useState();
@@ -31,12 +38,17 @@ const Signin = () => {
         setPassword(user?.password)
     }, [user])
 
-    const handleSignin = async () => {
+    const INTIIAL_VALUES = {
+        email:email,
+        password: password
+    }
+
+    const handleSignin = async (values) => {
         setLoading(true)
         await axios
             .post(`http://127.0.0.1:5000/signin`, {
-                email: email,
-                password: password,
+                email: values.email,
+                password: values.password,
             })
             .then((res) => {
                 if (res?.data?.user) {
@@ -83,47 +95,65 @@ const Signin = () => {
                 }
                 <div className={styles.card}>
 
-                    <div>
+                    <Formik initialValues={INTIIAL_VALUES} validationSchema={ValidationSchema} onSubmit={handleSignin}>
+                        {({ handleChange, values, errors, touched }) => (
+                            <Form>
+                                <div>
+                                    <p className={styles.welcome}>
+                                        Welcome back
+                                    </p>
 
-                        <p className={styles.welcome}>
-                            Welcome back
-                        </p>
+                                    <p className={styles.desc}>
+                                        Enter your email and password to sign in
+                                    </p>
 
-                        <p className={styles.desc}>
-                            Enter your email and password to sign in
-                        </p>
+                                    <p className={styles.title}>
+                                        Email
+                                    </p>
+                                    <input name='email' value={values.email} onChange={handleChange} placeholder='Email'
+                                        className={styles.input} />
 
-                        <p className={styles.title}>
-                            Email
-                        </p>
-                        <input placeholder='Email' onChange={(e) => setEmail(e.target.value)} value={email}
-                            className={styles.input} />
+                                    {errors.email && touched.email && (
+                                        <p className={styles2.error}>
+                                            {errors.email?.toString()}
+                                        </p>
+                                    )}
 
-                        <p className={styles.title}>
-                            Password
-                        </p>
-                        <input placeholder='Password' onChange={(e) => setPassword(e.target.value)} value={password}
-                            className={styles.input} /><br />
+                                    <p className={styles.title}>
+                                        Password
+                                    </p>
+                                    <input name='password' value={values.password} onChange={handleChange} placeholder='Password'
+                                        className={styles.input} />
 
-                        <div className={styles.switchWrapper}>
-                            <label className="switch">
-                                <input
-                                    type="checkbox"
-                                    checked={remember}
-                                    onChange={(e) => setRemember(e.target.checked)}
-                                />
-                                <span className="slider"></span>
-                            </label>
-                            <p className={styles.switch}>
-                                Remember me
-                            </p>
-                        </div>
+                                    {errors.password && touched.password && (
+                                        <p className={styles2.error}>
+                                            {errors.password?.toString()}
+                                        </p>
+                                    )}
 
-                        <button className={styles.signin}
-                            onClick={handleSignin}>
-                            SIGN IN
-                        </button>
-                    </div>
+                                    <div className={styles.switchWrapper}>
+                                        <label className="switch">
+                                            <input
+                                                type="checkbox"
+                                                checked={remember}
+                                                onChange={(e) => setRemember(e.target.checked)}
+                                            />
+                                            <span className="slider"></span>
+                                        </label>
+                                        <p className={styles.switch}>
+                                            Remember me
+                                        </p>
+                                    </div>
+
+                                    <button type='submit' className={styles.signin}
+                                        onClick={handleSignin}>
+                                        SIGN IN
+                                    </button>
+                                </div>
+
+                            </Form>
+                        )}
+                    </Formik>
 
                     <div className={styles.singupWrapper}>
                         <p className="text-[#67748e] text-[14px] font-sans">

@@ -114,7 +114,7 @@ const UpdateStock = () => {
                   <p className={styles.title}>
                     Product Name
                   </p>
-                  <input name='name' values={values.name} placeholder='Enter name...'
+                  <input name='name' value={values.name} placeholder='Enter name...'
                     className={`${styles.input} rounded-r-[5px]`}
                     onChange={handleChange} />
                   {errors.name && touched.name && errors.name && (
