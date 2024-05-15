@@ -12,7 +12,6 @@ const AddUser = () => {
     const [password, setPassword] = useState('');
     const [role, setRole] = useState(false);
     const [error, setError] = useState('');
-    const [popup, setPopup] = useState(false);
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState([]);
     const [details, setDetails] = useState(null);
@@ -38,7 +37,6 @@ const AddUser = () => {
         if (item) {
             setDetails(item);
         }
-        setPopup(true);
     }
 
     useEffect(() => {
@@ -66,7 +64,6 @@ const AddUser = () => {
             })
             .finally(() => {
                 setLoading(false);
-                setPopup(false);
             });
     };
 
@@ -112,7 +109,6 @@ const AddUser = () => {
             })
             .finally(() => {
                 setLoading(false);
-                setPopup(false);
             });
     }
 
@@ -121,7 +117,7 @@ const AddUser = () => {
             {loading && <Loader />}
             {error && <CustomSnackbar message={error} />}
             <div>
-                {popup === false &&
+                {details === null &&
                     <div className="bg-[#eff1fa] px-6 py-4 my-4 border-[1px] border-[#e0e0e0] shadow-lg rounded-[20px]">
                         <div className='flex flex-row items-center justify-between px-2'>
                             <p className="text-[26px] font-bold font-sans text-[#000080] underline">
@@ -129,7 +125,7 @@ const AddUser = () => {
                             </p>
 
                             <button className={`bg-[#006400] hover:bg-[#004400] py-2 ${styles.buttonStyle}`}
-                                onClick={() => setPopup(true)}>
+                                onClick={() => setDetails(null)}>
                                 Add New User
                             </button>
                         </div>
@@ -187,14 +183,14 @@ const AddUser = () => {
                 }
 
                 {
-                    popup &&
+                    details !== null &&
                     <div className=' flex flex-col items-center justify-center p-4 bg-[#eff1fa] shadow-lg rounded-[18px] border-[1px]'>
                         <div className="flex flex-row items-center justify-between w-full px-2">
                             <p className="text-[22px] pt-2 mb-0 font-bold font-sans text-[#000080]">
                                 Add Here!
                             </p>
                             <img src='/assets/icons/close.png' alt='close_icon' className="h-[24px] w-[24px] cursor-pointer"
-                                onClick={() => { setPopup(false); setDetails(null) }} />
+                                onClick={() => setDetails(null)} />
                         </div>
                         <div className="p-3">
                             <p className={styles2.title}>

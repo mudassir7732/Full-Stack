@@ -11,9 +11,7 @@ const CheckStock = () => {
   const [rejected, setRejected] = useState(0);
   const [suppliers, setSuppliers] = useState([]);
   const [videos, setVideos] = useState([]);
-  const [image, setImage] = useState();
-  const [details, setDetails] = useState();
-  const [popup, setPopup] = useState(false);
+  const [details, setDetails] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -55,7 +53,6 @@ const CheckStock = () => {
     if (item) {
       setDetails(item);
     }
-    setPopup(true);
   };
 
   useEffect(() => {
@@ -74,10 +71,6 @@ const CheckStock = () => {
       } catch (error) {
         console.error("Error parsing video URLs:", error);
       }
-    }
-
-    if (details?.imageURL) {
-      setImage('http://localhost:5000/uploads/' + details?.filename)
     }
     setLoading(false);
   }, [details]);
@@ -104,7 +97,7 @@ const CheckStock = () => {
       <div className='h-full w-fit pb-6'>
 
 
-        {popup === false &&
+        {details === null &&
           <div className="bg-[#eff1fa] border-[1px] p-5 border-[#e0e0e0] shadow-lg rounded-[20px]">
             <div className={styles.header}>
 
@@ -161,7 +154,7 @@ const CheckStock = () => {
                       </TableCell>
                       <TableCell>
                         <button id={1} className={styles.viewButton}
-                          onClick={() => handleClick(1)}
+                          onClick={() => handleClick(item?.id)}
                         >
                           View
                         </button>
@@ -175,13 +168,13 @@ const CheckStock = () => {
         }
 
         {
-          popup &&
+          details !== null &&
           <>
           <div className="bg-[#eff1fa] px-5 w-full border-[1px] border-[#e0e0e0] shadow-lg rounded-[20px]">
 
-            <img src='/assets/icons/close.png'
+            <img src='/assets/icons/close.png' alt='close_icon'
               className='h-[22px] w-[22px] cursor-pointer ml-[100%] mt-4'
-              onClick={() => {setDetails(); setPopup(false)}}
+              onClick={() => setDetails(null)}
             />
 
             <dviv className={styles.imageInfo}>
