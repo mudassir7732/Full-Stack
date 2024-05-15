@@ -73,6 +73,49 @@ app.post('/register', (req, res) => {
 });
 
 
+app.put('/update/:userId', (req, res) => {
+  const userId = req.params.userId;
+  const { name, email, password, role } = req.body;
+
+  const updateSql = 'UPDATE registeredusers SET name = ?, email = ?, password = ?, role = ? WHERE id = ?';
+  pool.query(updateSql, [name, email, password, role, userId], (updateErr, updateResult) => {
+    if (updateErr) {
+      console.error('Error updating user:', updateErr);
+      res.status(500).json({ message: 'Internal Server Error' });
+      return;
+    }
+
+    if (updateResult.affectedRows === 0) {
+      res.status(404).json({ message: 'User not found' });
+      return;
+    }
+
+    res.status(200).json({ message: 'User updated successfully' });
+  });
+});
+
+
+app.delete('/delete/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  const deleteSql = 'DELETE FROM registeredusers WHERE id = ?';
+  pool.query(deleteSql, [userId], (deleteErr, deleteResult) => {
+    if (deleteErr) {
+      console.error('Error deleting user:', deleteErr);
+      res.status(500).json({ message: 'Internal Server Error' });
+      return;
+    }
+
+    if (deleteResult.affectedRows === 0) {
+      res.status(404).json({ message: 'User not found' });
+      return;
+    }
+
+    res.status(200).json({ message: 'User deleted successfully' });
+  });
+});
+
+
 app.post("/status", function (req, res) {
   const { email, password } = req.body;
   const sql = 'SELECT * FROM registration WHERE email = ? AND password = ?';
