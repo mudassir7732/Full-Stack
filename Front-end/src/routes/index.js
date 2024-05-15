@@ -4,61 +4,31 @@ import Dashboard from "../pages/dashboard";
 import Signup from "../pages/signup";
 import Layout from "../components/layout";
 import UpdateStock from "../pages/update-stock";
-import { useEffect, useState } from "react";
 import CheckStock from "../pages/check-stock";
 import ErrorPage from "../pages/error-page";
-import Loader from "../components/loader";
 import AddUser from "../pages/add-user";
-
-const ADMIN_ROUTES = [
-    { path: '/update-stock', element: <Layout><UpdateStock /></Layout> },
-    { path: '/check-stock', element: <Layout><CheckStock /></Layout> },
-    { path: '/add-user', element: <Layout><AddUser /></Layout> },
-]
-
-const REGISTERED_USER_ROUTES = [
-    { path: '/dashboard', element: <Layout><Dashboard /></Layout> },
-    { path: '/dashboard', element: <Layout><Dashboard /></Layout> },
-]
+import AdminGuard from "./adminGuard";
+import UserGuard from "./userGuard";
 
 const AppRoutes = () => {
-    const [loading, setLoading] = useState(false);
-    const [authorizedRoutes, setAuthorizedRoutes] = useState([
-        { path: '/', element: <Signin /> },
-        { path: '/signup', element: <Signup /> },
-        { path: '*', element: <ErrorPage /> }
-    ]);
-
-    useEffect(() => {
-        setLoading(true);
-        try {
-            const userString = localStorage.getItem('user');
-            let user = null;
-            if (userString) {
-                user = JSON.parse(userString);
-                if (user?.role === 'user') {
-                    setAuthorizedRoutes(authorizedRoutes.concat(REGISTERED_USER_ROUTES))
-                }
-                else if (user?.role === 'admin') {
-                    setAuthorizedRoutes(authorizedRoutes.concat(ADMIN_ROUTES));
-                }
-            }
-        }
-        catch (err) {
-            console.log(err, ' = Error')
-        }
-        finally {
-            setLoading(false);
-        }
-    }, []);
-
     return (
         <Router>
-            {loading && <Loader />}
             <Routes>
-                {authorizedRoutes?.map((route, index) => (
-                    <Route key={index} path={route.path} element={route.element} />
-                ))}
+                <Route path={'/signup'} element={<Signup />} />
+                <Route path={'/'} element={<Signin />} />
+                <Route path="/dashboard"
+                    element={
+                        <UserGuard>
+                            <Layout>
+                                <Dashboard />
+                            </Layout>
+                        </UserGuard>
+                    }
+                />
+                <Route path="/update-stock" element={<AdminGuard><Layout> <UpdateStock /></Layout></AdminGuard>} />
+                <Route path='/check-stock' element={<AdminGuard><Layout><CheckStock /></Layout></AdminGuard>} />
+                .<Route path='/add-user' element={<AdminGuard><Layout><AddUser /></Layout></AdminGuard>} />
+                <Route path='*' element={<ErrorPage />} />
             </Routes>
         </Router>
     )

@@ -25,6 +25,23 @@ const pool = mysql.createPool({
 const secretKey = process.env.SECRET_KEY;
 
 
+// app.post('/register', (req, res) => {
+//   const {name, email, password, role } = req.body;
+
+//   const sql = 'INSERT INTO registeredusers (name, email, password, role, token) VALUES (?, ?, ?, ?, ?)';
+//   const token = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
+
+//   pool.query(sql, [name, email, password, role, token], (err, result) => {
+//     if (err) {
+//       console.error('Error registering user:', err);
+//       res.status(500).json({ message: 'Internal Server Error' });
+//       return;
+//     }
+//     res.status(201).json({ message: 'User registered successfully', name, email, password, role, token });
+//   });
+// });
+
+
 app.post('/register', (req, res) => {
   const { name, email, password, role } = req.body;
   const checkEmailSql = 'SELECT * FROM registeredusers WHERE email = ?';
@@ -101,9 +118,9 @@ app.delete('/delete/:userId', (req, res) => {
 
 app.post("/status", function (req, res) {
   const { email, password } = req.body;
-  const sql = 'SELECT * FROM registration WHERE email = ? AND password = ?';
+  const sql = 'SELECT * FROM registeredusers WHERE email = ? AND password = ?';
 
-  // const sql = 'SELECT admin FROM registration WHERE email = ? AND password = ?';
+  // const sql = 'SELECT admin FROM registeredusers WHERE email = ? AND password = ?';
   pool.query(sql, [email, password], (err, result) => {
     if (err) {
       console.error('Error checking status:', err);
