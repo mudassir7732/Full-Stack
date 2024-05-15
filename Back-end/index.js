@@ -180,7 +180,7 @@ app.get("/get-data", (req, resp) => {
 
 
 app.get("/get-users", (req, resp) => {
-  const sql = 'SELECT * FROM registration';
+  const sql = 'SELECT * FROM registeredusers';
 
   pool.query(sql, (err, result) => {
     if (err) {

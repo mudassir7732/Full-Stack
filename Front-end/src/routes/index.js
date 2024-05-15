@@ -18,7 +18,7 @@ const ADMIN_ROUTES = [
 
 const REGISTERED_USER_ROUTES = [
     { path: '/dashboard', element: <Layout><Dashboard /></Layout> },
-    // { path: '/dashboard', element: <Layout><Dashboard /></Layout> },
+    { path: '/dashboard', element: <Layout><Dashboard /></Layout> },
 ]
 
 const AppRoutes = () => {
@@ -34,7 +34,7 @@ const AppRoutes = () => {
         try {
             const userString = localStorage.getItem('user');
             let user = null;
-            if (userString !== null) {
+            if (userString) {
                 user = JSON.parse(userString);
                 console.log(user, ' = User')
                 if (user?.role === 'user') {

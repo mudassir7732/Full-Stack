@@ -31,54 +31,49 @@ const Signin = () => {
         setPassword(user?.password)
     }, [user])
 
-    const handleSignin = () => {
+    const handleSignin = async() => {
         setLoading(true)
-        try {
-            axios
-                .post(`http://127.0.0.1:5000/signin`, {
-                    email: email,
-                    password: password,
-                })
-                .then((res) => {
-                    if (res?.data?.user) {
-                        // console.log(res.data?.user?.role, ' = data')
-                        console.log(res.data?.user, ' = data')
-                        if (res?.data?.user === 'not-user') {
-                            setError('Email not registered')
-                        }
-                        else {
-                            const obj = res?.data?.user;
-                            
-                            const user = JSON.stringify({ id: obj.id, email: obj.email, password: obj.password, token: obj.token, role: obj.role })
-                            localStorage.setItem('user', user);
-                            // console.log(res?.data?.user?.role, ' = Role')
-                            if (res?.data?.user?.role === 'user') {
-                                navigate('/dashboard');
-                            }
-                            else if (res?.data?.user?.role === 'admin') {
-                                navigate('/update-stock');
-                            }
-                        }
+        await axios
+            .post(`http://127.0.0.1:5000/signin`, {
+                email: email,
+                password: password,
+            })
+            .then((res) => {
+                if (res?.data?.user) {
+                    // console.log(res.data?.user?.role, ' = data')
+                    // console.log(res.data?.user, ' = data')
+                    if (res?.data?.user === 'not-user') {
+                        setError('Email not registered')
                     }
                     else {
-                        setExist("User does not exist!");
+                        const obj = res?.data?.user;
+
+                        const user = JSON.stringify({ id: obj.id, email: obj.email, password: obj.password, token: obj.token, role: obj.role })
+                        localStorage.setItem('user', user);
+                        // console.log(res?.data?.user?.role, ' = Role')
+                        if (res?.data?.user?.role === 'user') {
+                            navigate('/dashboard');
+                        }
+                        else if (res?.data?.user?.role === 'admin') {
+                            navigate('/update-stock');
+                        }
                     }
-                })
-                .catch((error) => {
-                    localStorage.setItem('user', null)
-                    console.error('Error:', error);
+                }
+                else {
                     setExist("User does not exist!");
-                })
-                .finally(() => {
-                    setTimeout(() => {
-                        setExist('');
-                    }, 3000);
-                    setLoading(false);
-                });
-        }
-        catch (err) {
-            console.log(err, ' = Error')
-        }
+                }
+            })
+            .catch((error) => {
+                localStorage.setItem('user', null)
+                console.error('Error:', error);
+                setExist("User does not exist!");
+            })
+            .finally(() => {
+                setTimeout(() => {
+                    setExist('');
+                }, 3000);
+                setLoading(false);
+            });
     }
 
     return (
