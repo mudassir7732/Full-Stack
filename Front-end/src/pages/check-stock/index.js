@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 import axios from 'axios';
 import Loader from '../../components/loader';
 import styles from './styles';
@@ -12,7 +13,7 @@ const CheckStock = () => {
   const [videos, setVideos] = useState([]);
   const [image, setImage] = useState();
   const [details, setDetails] = useState();
-
+  const [popup, setPopup] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -32,6 +33,7 @@ const CheckStock = () => {
 
   useEffect(() => {
     if (data) {
+      console.log(data, ' = Data')
       let rejectedCounter = 0;
       let acceptedCounter = 0;
       data.map((item) => {
@@ -49,11 +51,11 @@ const CheckStock = () => {
   }, [data])
 
   const handleClick = (id) => {
-    console.log(id, ' = id');
     const item = data.find((item, index) => item.id === id);
     if (item) {
       setDetails(item);
     }
+    setPopup(true);
   };
 
   useEffect(() => {
@@ -99,64 +101,90 @@ const CheckStock = () => {
     <>
       {loading && <Loader />}
 
-      <div className={styles.container}>
-        <div className={styles.firstBlock}>
-          <div className={styles.header}>
+      <div className='h-full w-fit pb-6'>
 
-            <div className={styles.headingBox}>
-              <p className={styles.headingTitle}>
-                Total
-              </p>
-              <p className={styles.headingTitle}>
-                {data?.length}
-              </p>
-            </div>
 
-            <div className={styles.headingBox}>
-              <p className={styles.headingTitle}>
-                Accepted
-              </p>
-              <p className={styles.headingTitle}>
-                {accepted}
-              </p>
-            </div>
+        {popup === false &&
+          <div className="bg-[#eff1fa] border-[1px] p-5 border-[#e0e0e0] shadow-lg rounded-[20px]">
+            <div className={styles.header}>
 
-            <div className={styles.headingBox}>
-              <p className={styles.headingTitle}>
-                Rejected
-              </p>
-              <p className={styles.headingTitle}>
-                {rejected}
-              </p>
-            </div>
-
-          </div>
-
-          <div className={styles.dataContainer}>
-            {data?.map((item, index) => (
-              <div key={index} className={styles.dataList}>
-                <p className={styles.itemDetails}>
-                  {item.name}
+              <div className={styles.headingBox}>
+                <p className={styles.headingTitle}>
+                  Total
                 </p>
-                <p className={styles.itemDetails}>
-                  {item.date}
+                <p className={styles.headingTitle}>
+                  {data?.length}
                 </p>
-                <button id={item.id} className={styles.viewButton} onClick={() => handleClick(item.id)}>
-                  View
-                </button>
               </div>
-            ))}
+
+              <div className={styles.headingBox}>
+                <p className={styles.headingTitle}>
+                  Accepted
+                </p>
+                <p className={styles.headingTitle}>
+                  {accepted}
+                </p>
+              </div>
+
+              <div className={styles.headingBox}>
+                <p className={styles.headingTitle}>
+                  Rejected
+                </p>
+                <p className={styles.headingTitle}>
+                  {rejected}
+                </p>
+              </div>
+
+            </div>
+
+            <TableContainer sx={{ borderRadius: '10px', border: '1px solid #e0e0e0', marginTop: '3vh' }}>
+              <Table>
+                <TableHead sx={{ backgroundColor: '#000080' }}>
+                  <TableRow>
+                    <TableCell sx={{ fontWeight: '700', fontSize: '15px', color: '#fff' }} >
+                      Name
+                    </TableCell>
+                    <TableCell sx={{ fontWeight: '700', fontSize: '15px', color: '#fff' }} >
+                      Date
+                    </TableCell>
+                    <TableCell></TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data?.map((item, index) => (
+                    <TableRow sx={{ backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#fff' }}>
+                      <TableCell>
+                        {item?.name}
+                      </TableCell>
+                      <TableCell>
+                        {item?.date}
+                      </TableCell>
+                      <TableCell>
+                        <button id={1} className={styles.viewButton}
+                          onClick={() => handleClick(1)}
+                        >
+                          View
+                        </button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </div>
-        </div>
+        }
 
         {
-          details &&
-          <div className={styles.secondBlock}>
-            <img src='/assets/icons/close.png' className={styles.closeIcon}
-              onClick={() => setDetails()} 
-              />
+          popup &&
+          <>
+          <div className="bg-[#eff1fa] px-5 w-full border-[1px] border-[#e0e0e0] shadow-lg rounded-[20px]">
 
-            <div className={styles.imageInfo}>
+            <img src='/assets/icons/close.png'
+              className='h-[22px] w-[22px] cursor-pointer ml-[100%] mt-4'
+              onClick={() => {setDetails(); setPopup(false)}}
+            />
+
+            <dviv className={styles.imageInfo}>
               <img src={`http://localhost:5000/uploads/${details?.filename}`} alt="Close Icon" className='h-[120px]' />
               <div className={styles.infoWrapper}>
                 <p className={styles.itemInfo}>
@@ -172,7 +200,7 @@ const CheckStock = () => {
                   {details?.id}
                 </p>
               </div>
-            </div>
+            </dviv>
 
             <div className={styles.URLsBlock}>
               <p className={styles.URLsTitle}>
@@ -232,6 +260,8 @@ const CheckStock = () => {
               </div>
             }
           </div>
+          <div className='h-6'/>
+          </>
         }
       </div>
     </>

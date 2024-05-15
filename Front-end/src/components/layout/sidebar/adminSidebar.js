@@ -11,7 +11,7 @@ const ADMIN_ROUTES = [
 const AdminSidebar = () => {
     const navigate = useNavigate();
     return (
-        <div className="fixed h-[92vh] bg-gray-200 border-r-[1px] border-[#e0e0e0] w-[200px] lg:w-[250px]">
+        <div className="fixed h-[92vh] bg-gray-200 border-r-[1px] border-[#d9d9d9] w-[200px] lg:w-[250px]">
             <p className="text-[24px] my-5 w-fit mx-auto font-bold font-sans text-black">
                 Admin Panel
             </p>

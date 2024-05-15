@@ -14,7 +14,7 @@ const Header = () => {
     }
 
     return (
-        <div className="fixed w-full min-h-[8vh] border-[1px] bg-blue-950 flex flex-row items-center justify-between px-6">
+        <div className="fixed w-full z-50 min-h-[8vh] border-[1px] bg-blue-950 flex flex-row items-center justify-between px-6">
             <p className="my-auto font-sans text-white font-bold text-[22px]">
                 Header
             </p>

@@ -20,7 +20,9 @@ const Layout = ({ children }) => {
                     <AdminSidebar />
                 )}
                 <div className="flex items-center justify-center w-[82%] overflow-y-scroll ml-[200px] lg:ml-[250px] min-h-[92vh]">
-                    {children}
+                    <div className="flex flex-col items-center justify-center pt-4 w-full h-[92vh]">
+                        {children}
+                    </div>
                 </div>
             </div>
         </div>
