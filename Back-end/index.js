@@ -110,7 +110,6 @@ app.post("/signin", function (req, res) {
     else {
       res.json({ userExist: false, user: 'not-user' });
     }
-    // return res.json(result);
   });
 });
 

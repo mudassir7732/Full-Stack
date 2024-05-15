@@ -4,6 +4,7 @@ import axios from 'axios';
 import Loader from "../../components/loader";
 
 const AddUser = () => {
+    const [popup, setPopup] = useState(false);
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const [details, setDetails] = useState(null);
@@ -46,7 +47,7 @@ const AddUser = () => {
 
                 <div className={styles.firstBlock}>
                     <div className='flex flex-row justify-end px-2'>
-                        <button className={`bg-[#006400] hover:bg-[#004400] ml-4 ${styles.buttonStyle}`}>
+                        <button className={`bg-[#006400] hover:bg-[#004400] ml-4 ${styles.buttonStyle}`} onClick={()=>setPopup(true)}>
                             Add New User
                         </button>
                     </div>
@@ -71,7 +72,7 @@ const AddUser = () => {
                 </div>
 
                 {
-                    details &&
+                    popup &&
                     <div className={styles.secondBlock}>
                         <img src='/assets/icons/close.png' className={styles.closeIcon}
                             onClick={() => setDetails()}

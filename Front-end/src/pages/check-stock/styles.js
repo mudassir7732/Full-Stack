@@ -1,8 +1,8 @@
 const styles = {
-    container: 'flex flex-col lg:flex-row min-h-screen items-center justify-evenly w-full bg-gray-400 shadow-lg border-[1px] border-[#e5e5e5] py-4 gap-y-6',
+    container: 'flex flex-col lg:flex-row items-center justify-evenly w-full bg-gray-400 shadow-lg border-[1px] border-[#e5e5e5] py-3',
     firstBlock: 'p-4 rounded-xl h-fit lg:min-h-[90vh] w-[85%] lg:w-[45%] bg-white border-[1px] border-[#c5c5c5]',
-    secondBlock: 'py-3 lg:mt-0 rounded-xl px-4 min-h-[85vh] w-[85%] lg:w-[45%] bg-white border-[1px] border-[#c5c5c5]',
-    closeIcon:'absolute right-11 sm:right-16 lg:right-14 h-[22px] w-[22px] cursor-pointer',
+    secondBlock: 'py-3 rounded-xl px-2 lg:px-4 w-[85%] lg:w-[45%] bg-white border-[1px] border-[#c5c5c5]',
+    closeIcon:'absolute right-11 sm:right-20 lg:right-16 h-[22px] w-[22px] cursor-pointer',
     header: 'flex flex-row items-center justify-between',
     headingBox: 'flex flex-row items-center justify-between bg-[#e9e9e9] gap-x-2 border-[1px] border-[#e0e0e0] py-2 w-fit px-2 lg:px-3',
     headingTitle: 'font-sans font-bold text-[18px] text-black my-auto',
