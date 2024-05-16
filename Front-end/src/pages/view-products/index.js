@@ -77,7 +77,7 @@ const ViewProducts = () => {
 
   const updateStatus = async (id, status) => {
     setLoading(true);
-    axios.post('http://localhost:5000/update-status', { id: id, newStatus: status })
+    axios.post('http://localhost:5000/update-product-status', { id: id, newStatus: status })
       .then((res) => {
         console.log(res, ' = Result')
         getData();

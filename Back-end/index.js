@@ -25,22 +25,6 @@ const pool = mysql.createPool({
 const secretKey = process.env.SECRET_KEY;
 
 
-// app.post('/register', (req, res) => {
-//   const {name, email, password, role } = req.body;
-
-//   const sql = 'INSERT INTO registeredusers (name, email, password, role, token) VALUES (?, ?, ?, ?, ?)';
-//   const token = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
-
-//   pool.query(sql, [name, email, password, role, token], (err, result) => {
-//     if (err) {
-//       console.error('Error registering user:', err);
-//       res.status(500).json({ message: 'Internal Server Error' });
-//       return;
-//     }
-//     res.status(201).json({ message: 'User registered successfully', name, email, password, role, token });
-//   });
-// });
-
 app.post('/register', (req, res) => {
   const { name, email, password, role } = req.body;
   const checkEmailSql = 'SELECT * FROM registeredusers WHERE email = ?';
@@ -69,7 +53,6 @@ app.post('/register', (req, res) => {
     });
   });
 });
-
 
 
 app.put('/update/:userId', (req, res) => {
@@ -115,27 +98,6 @@ app.delete('/delete/:userId', (req, res) => {
 });
 
 
-app.post("/status", function (req, res) {
-  const { email, password } = req.body;
-  const sql = 'SELECT * FROM registeredusers WHERE email = ? AND password = ?';
-
-  // const sql = 'SELECT admin FROM registeredusers WHERE email = ? AND password = ?';
-  pool.query(sql, [email, password], (err, result) => {
-    if (err) {
-      console.error('Error checking status:', err);
-      res.status(500).json({ message: 'Internal Server Error' });
-      return;
-    }
-    if (result.length > 0) {
-      const adminValue = result[0].admin;
-      res.json({ userAdmin: result[0].admin });
-    } else {
-      res.json({ userAdmin: "not-user" });
-    }
-  });
-});
-
-
 app.post("/signin", function (req, res) {
   const { email, password } = req.body;
 
@@ -155,17 +117,6 @@ app.post("/signin", function (req, res) {
   });
 });
 
-
-const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization;
-  if (!token) return res.status(401).json({ message: "Unauthorized" });
-
-  jwt.verify(token, secretKey, (err, decoded) => {
-    if (err) return res.status(401).json({ message: "Invalid token" });
-    req.user = decoded;
-    next();
-  });
-};
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -233,19 +184,7 @@ app.get("/get-users", (req, resp) => {
 });
 
 
-app.get("/get-image", (req, resp) => {
-  const sql = 'SELECT * FROM storedimages';
-
-  pool.query(sql, (err, result) => {
-    if (err) {
-      console.error('Error fetching images:', err);
-      resp.status(500).json({ message: 'Internal Server Error' });
-    }
-    return resp.json(result);
-  });
-});
-
-app.post("/update-status", (req, resp) => {
+app.post("/update-product-status", (req, resp) => {
   const { id, newStatus } = req.body;
   const sql = 'UPDATE products SET status = ? WHERE id = ?';
   pool.query(sql, [newStatus, id], (err, result) => {
