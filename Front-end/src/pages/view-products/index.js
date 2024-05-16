@@ -133,7 +133,7 @@ const ViewProducts = () => {
 
               <TableContainer sx={{ borderRadius: '10px', border: '1px solid #e0e0e0', marginTop: '3vh' }}>
                 <Table>
-                  <TableHead sx={{ backgroundColor: '#000080' }}>
+                  <TableHead sx={{ backgroundColor: '#000053' }}>
                     <TableRow>
                       <TableCell sx={{ fontWeight: '700', fontSize: '15px', color: '#fff' }} >
                         Name
