@@ -16,7 +16,7 @@ const ValidationSchema = yup.object().shape({
 })
 
 const Signup = () => {
-    const [error, setError] = useState('');
+    const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -28,7 +28,6 @@ const Signup = () => {
     }
 
     const handleSignup = (values) => {
-        console.log(values, ' = Values')
         if (values) {
             setLoading(true);
             axios
@@ -39,10 +38,9 @@ const Signup = () => {
                     role: values.role ? 'admin' : 'user',
                 })
                 .then((res) => {
-                    if (res?.data === 'Already registered') {
-                        setError('Email already registered')
-                    }
-                    else {
+                    const a = res?.data?.message;
+                    setMessage(a);
+                    if (res?.data?.message === 'Successfully Registered') {
                         const obj = res.data;
                         const user = JSON.stringify({ name: obj.name, email: obj.email, password: obj.password, role: obj.role, token: obj.token });
                         localStorage.setItem('user', user)
@@ -57,22 +55,26 @@ const Signup = () => {
                 .catch((error) => {
                     localStorage.setItem('user', null)
                     console.error(error, ' = Error');
-                    setError(error?.message);
+                    setMessage(error?.message);
                 })
                 .finally(() => {
                     setLoading(false);
+                    setTimeout(() => {
+                        setMessage('');
+                    }, 4000);
                 });
         }
     }
 
     return (
         <>
+            {message &&
+                <CustomSnackbar message={message} />
+            }
             {loading && <Loader />}
 
             <div className={styles.container}>
-                {error &&
-                    <CustomSnackbar message={error} />
-                }
+
                 <div className={styles.card}>
 
                     <Formik initialValues={INTIIAL_VALUES} validationSchema={ValidationSchema} onSubmit={handleSignup}>

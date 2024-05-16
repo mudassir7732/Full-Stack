@@ -34,9 +34,9 @@ app.post('/register', (req, res) => {
       res.status(500).json({ message: 'Internal Server Error' });
       return;
     }
-    
+
     if (checkResult.length > 0) {
-      res.status(400).json({ message: 'Already Registered' });
+      res.json({ message: 'Email Already Registered' });
       return;
     }
 
@@ -48,8 +48,7 @@ app.post('/register', (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
         return;
       }
-      
-      res.status(201).json({ message: 'User registered successfully', name, email, password, role, token });
+      res.json({ message: 'Successfully Registered', name, email, password, role, token });
     });
   });
 });
@@ -98,22 +97,29 @@ app.delete('/delete/:userId', (req, res) => {
 });
 
 
+
 app.post("/signin", function (req, res) {
   const { email, password } = req.body;
 
-  const sql = 'SELECT * FROM registeredusers WHERE email = ? AND password = ?';
-  pool.query(sql, [email, password], (err, result) => {
+  const sql = 'SELECT * FROM registeredusers WHERE email = ?';
+  pool.query(sql, [email], (err, result) => {
     if (err) {
       console.error('Error signing in:', err);
       res.status(500).json({ message: 'Internal Server Error' });
       return;
     }
-    if (result.length > 0) {
-      res.json({ userExist: true, user: result[0] });
+    if (!result || result.length === 0) {
+      res.json({ userExist: false, message: 'Email not registered' });
+      return;
     }
-    else {
-      res.json({ userExist: false, user: 'not-user' });
+    const user = result[0];
+
+    if (user.password !== password) {
+      res.json({ userExist: true, message: 'Password Incorrect' });
+      return;
     }
+
+    res.json({ userExist: true, user: user, message: 'success' });
   });
 });
 
@@ -152,7 +158,6 @@ app.post("/upload-data", upload, (req, resp) => {
       resp.status(500).json({ message: 'Internal Server Error' });
       return;
     }
-    console.log('success');
     resp.status(200).json({ message: 'Data stored successfully' });
   });
 });
@@ -193,7 +198,6 @@ app.post("/update-product-status", (req, resp) => {
       resp.status(500).json({ message: 'Internal Server Error' });
       return;
     }
-    console.log('Status updated successfully');
     resp.status(200).json({ message: 'Status updated successfully' });
   });
 });

@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import styles from './styles';
 import Loader from '../../components/loader';
+import CustomSnackbar from '../../components/snackbar';
 
 const INITIAL_VALUES = {
   name: '',
@@ -27,6 +28,7 @@ const AddProduct = () => {
   const [videoURLs, setVideoURLs] = useState(0);
   const [supplierURL, setSupplierURL] = useState([]);
   const [videoURL, setVideoURL] = useState([]);
+  const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -63,20 +65,23 @@ const AddProduct = () => {
         navigate('/view-products')
       })
       .catch((err) => {
-        console.log(err, ' = Error')
+        setMessage(err?.message);
       })
       .finally(() => {
         setLoading(false);
+        setTimeout(() => {
+          setMessage('');
+        }, 4000);
       })
   };
 
 
   return (
     <>
+      {message && <CustomSnackbar message={message} />}
       {loading && <Loader />}
-      <div className='flex flex-col items-center justify-center py-6'>
+      <div className='flex flex-col items-center justify-center '>
         <div className={styles.container}>
-
           <p className={styles.heading}>
             Content Management System
           </p>

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import Loader from "../components/loader";
 import ErrorPage from "../pages/error-page";
+import CustomSnackbar from "../components/snackbar";
 
 const AdminGuard = ({ children }) => {
     const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState('');
     const [role, setRole] = useState();
 
     useEffect(() => {
@@ -16,10 +18,13 @@ const AdminGuard = ({ children }) => {
             }
         }
         catch (err) {
-            console.log(err);
+            setMessage(err?.message)
         }
         finally {
             setLoading(false);
+            setTimeout(() => {
+                setMessage('');
+            }, 4000);
         }
     }, []);
 
@@ -29,6 +34,7 @@ const AdminGuard = ({ children }) => {
 
     return (
         <>
+            {message && <CustomSnackbar message={message} />}
             {role === 'admin' ? children : <ErrorPage />}
         </>
     );

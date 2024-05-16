@@ -11,13 +11,13 @@ import * as yup from 'yup';
 
 
 const ValidationSchema = yup.object().shape({
-    name:yup.string().required('Name Required'),
+    name: yup.string().required('Name Required'),
     email: yup.string().email().required('Email Required'),
     password: yup.string().required('Password Required')
 })
 
 const AddUser = () => {
-    const [error, setError] = useState('');
+    const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState([]);
     const [popup, setPopup] = useState(false);
@@ -42,7 +42,12 @@ const AddUser = () => {
                 setUsers(response?.data)
             })
             .catch(error => {
-                console.error('Error fetching images:', error);
+                setMessage(error?.message);
+            })
+            .finally(() => {
+                setTimeout(() => {
+                    setMessage('');
+                }, 4000);
             });
     }
 
@@ -54,12 +59,7 @@ const AddUser = () => {
         }
     }
 
-    useEffect(() => {
-        console.log(details, ' = details')
-    }, [details])
-
     const handleUpdate = (values) => {
-        console.log(values, ' = Values in update')
         setLoading(true);
         axios
             .put(`http://localhost:5000/update/${details?.id}`, {
@@ -69,36 +69,37 @@ const AddUser = () => {
                 role: values?.role ? 'admin' : 'user',
             })
             .then((res) => {
-                console.log(res.data, ' = Data')
-                setError('Successfully Updated');
+                setMessage(res?.data?.message);
                 getData();
             })
             .catch((error) => {
-                localStorage.setItem('user', null);
-                console.error(error, ' = Error');
-                setError(error?.message);
+                setMessage(error?.message);
             })
             .finally(() => {
                 setPopup(false);
                 setDetails(null);
                 setLoading(false);
+                setTimeout(() => {
+                    setMessage('');
+                }, 4000);
             });
     };
 
     const handleDelete = (userId) => {
         setLoading(true);
         axios.delete(`http://localhost:5000/delete/${userId}`)
-            .then((response) => {
-                console.log(response.data, ' = Response');
-                setError('User deleted successfully');
+            .then((res) => {
+                setMessage(res?.data?.message);
                 getData();
             })
             .catch((error) => {
-                console.error('Error deleting user:', error);
-                setError(error?.response?.data?.message || 'An error occurred while deleting user');
+                setMessage(error?.message || 'An error occurred while deleting user');
             })
             .finally(() => {
                 setLoading(false);
+                setTimeout(() => {
+                    setMessage('');
+                }, 4000);
             });
     };
 
@@ -113,29 +114,27 @@ const AddUser = () => {
                 role: values?.role ? 'admin' : 'user',
             })
             .then((res) => {
-                if (res?.users === 'Already registered') {
-                    setError('Email already registered')
-                }
-                else {
-                    setError('Successfully Added')
-                }
+                const a = res?.data?.message;
+                setMessage(a);
             })
             .catch((error) => {
                 localStorage.setItem('user', null)
-                console.error(error, ' = Error');
-                setError(error?.message);
+                setMessage(error?.message);
             })
             .finally(() => {
                 getData();
                 setLoading(false);
                 setPopup(false);
+                setTimeout(() => {
+                    setMessage('');
+                }, 4000);
             });
     }
 
     return (
         <>
             {loading && <Loader />}
-            {error && <CustomSnackbar message={error} />}
+            {message && <CustomSnackbar message={message} />}
             <div>
                 {popup === false &&
                     <div className="bg-[#eff1fa] px-6 py-4 my-4 border-[1px] border-[#e0e0e0] shadow-lg rounded-[20px]">
@@ -282,7 +281,7 @@ const AddUser = () => {
                                         </div>
 
                                         <button className={styles2.signin} type='submit'>
-                                            {details === null ? 'Sign Up' : 'Update'}
+                                            {details === null ? 'Register' : 'Update'}
                                         </button>
                                     </div>
                                 </div>

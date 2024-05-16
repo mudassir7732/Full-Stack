@@ -12,13 +12,13 @@ const CustomSnackbar = ({ message }) => {
 
             setTimeout(() => {
                 setOpen(false);
-            }, 5000);
+            }, 4000);
         }
     }, [message, messageState]);
 
     return (
         <Snackbar
-            sx={{}}
+            sx={{mt:'40px'}}
             className='w-fit'
             anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             open={open}

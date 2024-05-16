@@ -3,6 +3,7 @@ import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from
 import axios from 'axios';
 import Loader from '../../components/loader';
 import styles from './styles';
+import CustomSnackbar from '../../components/snackbar';
 
 const ViewProducts = () => {
   const [data, setData] = useState();
@@ -10,6 +11,7 @@ const ViewProducts = () => {
   const [loading, setLoading] = useState(false);
   const [rejected, setRejected] = useState(0);
   const [suppliers, setSuppliers] = useState([]);
+  const [message, setMessage] = useState('');
   const [videos, setVideos] = useState([]);
   const [details, setDetails] = useState(null);
 
@@ -25,13 +27,17 @@ const ViewProducts = () => {
         setData(response.data)
       })
       .catch(error => {
-        console.error('Error fetching images:', error);
+        setMessage(error?.message)
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setMessage('');
+        }, 4000);
       });
   }
 
   useEffect(() => {
     if (data) {
-      console.log(data, ' = Data')
       let rejectedCounter = 0;
       let acceptedCounter = 0;
       data.map((item) => {
@@ -61,7 +67,12 @@ const ViewProducts = () => {
       try {
         setSuppliers(JSON.parse(details.supplierURLs));
       } catch (error) {
-        console.error("Error parsing supplier URLs:", error);
+        setMessage(error?.message)
+      }
+      finally {
+        setTimeout(() => {
+          setMessage('');
+        }, 4000);
       }
     }
 
@@ -79,20 +90,24 @@ const ViewProducts = () => {
     setLoading(true);
     axios.post('http://localhost:5000/update-product-status', { id: id, newStatus: status })
       .then((res) => {
-        console.log(res, ' = Result')
+        setMessage(res?.data?.message);
         getData();
       })
       .catch((err) => {
-        console.log(err, ' = Error')
+        setMessage(err?.message)
       })
       .finally(() => {
         setDetails(null);
         setLoading(false);
+        setTimeout(() => {
+          setMessage('');
+        }, 4000);
       })
   }
 
   return (
     <>
+      {message && <CustomSnackbar message={message} />}
       {loading && <Loader />}
 
       <div className='flex items-center h-fit justify-center w-fit py-4 '>

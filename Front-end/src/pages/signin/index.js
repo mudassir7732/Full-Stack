@@ -16,10 +16,9 @@ const ValidationSchema = yup.object().shape({
 
 const Signin = () => {
     const [user, setUser] = useState();
-    const [error, setError] = useState('');
+    const [message, setMessage] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [userExist, setExist] = useState('');
     const [loading, setLoading] = useState(false);
     const [remember, setRemember] = useState(false);
     const navigate = useNavigate();
@@ -39,7 +38,7 @@ const Signin = () => {
     }, [user])
 
     const INTIIAL_VALUES = {
-        email:email,
+        email: email,
         password: password
     }
 
@@ -51,37 +50,31 @@ const Signin = () => {
                 password: values.password,
             })
             .then((res) => {
-                if (res?.data?.user) {
-                    if (res?.data?.user === 'not-user') {
-                        setError('Email not registered')
+                const a = res?.data?.message;
+                setMessage(a);
+                if (res?.data?.message === 'success') {
+                    const obj = res?.data?.user;
+                    const user = JSON.stringify({ id: obj.id, email: obj.email, password: obj.password, token: obj.token, role: obj.role })
+                    localStorage.setItem('user', user);
+                    if (res?.data?.user?.role === 'user') {
+                        navigate('/dashboard');
                     }
-                    else {
-                        const obj = res?.data?.user;
-                        const user = JSON.stringify({ id: obj.id, email: obj.email, password: obj.password, token: obj.token, role: obj.role })
-                        localStorage.setItem('user', user);
-                        if (res?.data?.user?.role === 'user') {
-                            navigate('/dashboard');
-                        }
-                        else if (res?.data?.user?.role === 'admin') {
-                            navigate('/view-products');
-                        }
+                    else if (res?.data?.user?.role === 'admin') {
+                        navigate('/view-products');
                     }
-                }
-                else {
-                    setExist("User does not exist!");
                 }
             })
             .catch((error) => {
                 localStorage.setItem('user', null)
                 console.error('Error:', error);
-                setError(error?.message)
-                setExist("User does not exist!");
+                setMessage(error?.message)
+
             })
             .finally(() => {
-                setTimeout(() => {
-                    setExist('');
-                }, 3000);
                 setLoading(false);
+                setTimeout(() => {
+                    setMessage('');
+                }, 4000);
             });
     }
 
@@ -90,8 +83,8 @@ const Signin = () => {
             {loading && <Loader />}
 
             <div className={styles.container}>
-                {error &&
-                    <CustomSnackbar message={error} />
+                {message &&
+                    <CustomSnackbar message={message} />
                 }
                 <div className={styles.card}>
 
@@ -162,10 +155,6 @@ const Signin = () => {
                             Sign up
                         </p>
                     </div>
-
-                    <p className={styles.error}>
-                        {userExist}
-                    </p>
 
                 </div>
 
