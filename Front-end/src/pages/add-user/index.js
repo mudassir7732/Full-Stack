@@ -1,21 +1,34 @@
 import { useEffect, useState } from "react";
-import styles from "../check-stock/styles";
+import styles from "../view-products/styles";
 import axios from 'axios';
 import Loader from "../../components/loader";
 import styles2 from '../signin/styles';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 import CustomSnackbar from "../../components/snackbar";
+import styles3 from '../add-product/styles';
+import { Form, Formik } from 'formik';
+import * as yup from 'yup';
+
+
+const ValidationSchema = yup.object().shape({
+    name:yup.string().required('Name Required'),
+    email: yup.string().email().required('Email Required'),
+    password: yup.string().required('Password Required')
+})
 
 const AddUser = () => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [role, setRole] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState([]);
     const [popup, setPopup] = useState(false);
     const [details, setDetails] = useState(null);
+
+    const INTIIAL_VALUES = {
+        name: details === null ? '' : details?.name,
+        email: details === null ? '' : details.email,
+        password: details === null ? '' : details.password,
+        role: details === null ? '' : details.role === 'admin' ? true : false
+    }
 
     useEffect(() => {
         setLoading(true);
@@ -45,14 +58,15 @@ const AddUser = () => {
         console.log(details, ' = details')
     }, [details])
 
-    const handleUpdate = () => {
+    const handleUpdate = (values) => {
+        console.log(values, ' = Values in update')
         setLoading(true);
         axios
             .put(`http://localhost:5000/update/${details?.id}`, {
-                name: details?.name,
-                email: details?.email,
-                password: details?.password,
-                role: details?.role,
+                name: values?.name,
+                email: values?.email,
+                password: values?.password,
+                role: values?.role ? 'admin' : 'user',
             })
             .then((res) => {
                 console.log(res.data, ' = Data')
@@ -65,9 +79,9 @@ const AddUser = () => {
                 setError(error?.message);
             })
             .finally(() => {
-                setLoading(false);
                 setPopup(false);
-                setDetails(null)
+                setDetails(null);
+                setLoading(false);
             });
     };
 
@@ -89,15 +103,14 @@ const AddUser = () => {
     };
 
 
-    const handleSignup = () => {
-        console.log(name, email, password, role, ' = Values')
+    const handleSignup = (values) => {
         setLoading(true);
         axios
             .post(`http://127.0.0.1:5000/register`, {
-                name: name,
-                email: email,
-                password: password,
-                role: role,
+                name: values?.name,
+                email: values?.email,
+                password: values?.password,
+                role: values?.role ? 'admin' : 'user',
             })
             .then((res) => {
                 if (res?.users === 'Already registered') {
@@ -115,10 +128,6 @@ const AddUser = () => {
             .finally(() => {
                 getData();
                 setLoading(false);
-                setName('');
-                setEmail('');
-                setPassword('');
-                setRole('');
                 setPopup(false);
             });
     }
@@ -195,71 +204,92 @@ const AddUser = () => {
 
                 {
                     popup &&
-                    <div className=' flex flex-col items-center justify-center p-4 bg-[#eff1fa] shadow-lg rounded-[18px] border-[1px]'>
-                        <div className="flex flex-row items-center justify-between w-full px-2">
-                            <p className="text-[22px] pt-2 mb-0 font-bold font-sans text-[#000080]">
-                                Add Here!
-                            </p>
-                            <img src='/assets/icons/close.png' alt='close_icon' className="h-[24px] w-[24px] cursor-pointer"
-                                onClick={() => setPopup(false)} />
-                        </div>
-                        <div className="p-3">
-                            <p className={styles2.title}>
-                                Name
-                            </p>
 
-                            <input
-                                placeholder='Name'
-                                onChange={(e) => details === null ? setName(e.target.value) : setDetails({...details, name : e.target.value })}
-                                value={details === null ? name : details?.name}
-                                className={styles2.input}
-                            /><br />
+                    <Formik initialValues={INTIIAL_VALUES} validationSchema={ValidationSchema} onSubmit={details === null ? handleSignup : handleUpdate}>
+                        {({ handleChange, values, errors, touched }) => (
+                            <Form>
+                                <div className=' flex flex-col items-center justify-center p-4 bg-[#eff1fa] shadow-lg rounded-[18px] border-[1px]'>
+                                    <div className="flex flex-row items-center justify-between w-full px-2">
+                                        <p className="text-[22px] pt-2 mb-0 font-bold font-sans text-[#000080]">
+                                            Add Here!
+                                        </p>
+                                        <img src='/assets/icons/close.png' alt='close_icon' className="h-[24px] w-[24px] cursor-pointer"
+                                            onClick={() => { setPopup(false); setDetails(null) }} />
+                                    </div>
+                                    <div className="p-3">
 
-                            <p className={styles2.title}>
-                                Email
-                            </p>
-                            <input placeholder='Email' 
-                            onChange={(e) => details === null ? setEmail(e.target.value) : details.email}
-                                value={details === null ? email : details.email} className={styles2.input} />
+                                        <p className={styles2.title}>
+                                            Name
+                                        </p>
+                                        <input
+                                            name='name'
+                                            placeholder='Name'
+                                            value={values.name}
+                                            onChange={handleChange}
+                                            className={styles2.input}
+                                        />
+                                        {errors.name && touched.name && (
+                                            <p className={styles3.error}>
+                                                {errors.name?.toString()}
+                                            </p>
+                                        )}
 
-                            <p className={styles2.title}>
-                                Password
-                            </p>
+                                        <p className={styles2.title}>
+                                            Email
+                                        </p>
+                                        <input placeholder='Email'
+                                            name='email'
+                                            value={values.email}
+                                            onChange={details === null ? handleChange : undefined}
+                                            className={styles2.input} />
+                                        {errors.email && touched.email && (
+                                            <p className={styles3.error}>
+                                                {errors.email?.toString()}
+                                            </p>
+                                        )}
+                                        <p className={styles2.title}>
+                                            Password
+                                        </p>
 
-                            <input
-                                placeholder='Password'
-                                onChange={(e) =>
-                                    details === null ? setPassword(e.target.value) : setDetails({ ...details, password: e.target.value })
-                                }
-                                value={details === null ? password : details.password}
-                                className={styles2.input}
-                            /><br />
+                                        <input
+                                            name='password'
+                                            placeholder='Password'
+                                            value={values.password}
+                                            onChange={handleChange}
+                                            className={styles2.input}
+                                        />
+                                        {errors.password && touched.password && (
+                                            <p className={styles3.error}>
+                                                {errors.password?.toString()}
+                                            </p>
+                                        )}
 
-                            <div className={styles2.switchWrapper}>
-                                <label className="switch">
-                                    <input
-                                        type="checkbox"
-                                        checked={details === null ? role : details.role === 'admin' ? true : false}
-                                        onChange={(e) => {
-                                            details === null
-                                                ? setRole(e.target.checked ? 'admin': 'user')
-                                                : setDetails({ ...details, role: e.target.checked ? 'admin' : 'user' });
-                                        }}
-                                    />
 
-                                    <span className="slider"></span>
-                                </label>
-                                <p className={styles2.switch}>
-                                    Admin
-                                </p>
-                            </div>
+                                        <div className={styles2.switchWrapper}>
+                                            <label className="switch">
+                                                <input
+                                                    type="checkbox"
+                                                    name='role'
+                                                    value={values.role}
+                                                    onChange={handleChange}
+                                                    checked={values.role}
+                                                />
 
-                            <button className={styles2.signin}
-                                onClick={details === null ? handleSignup : handleUpdate}>
-                                {details === null ? 'Sign Up' : 'Submit'}
-                            </button>
-                        </div>
-                    </div>
+                                                <span className="slider"></span>
+                                            </label>
+                                            <p className={styles2.switch}>
+                                                Admin
+                                            </p>
+                                        </div>
+
+                                        <button className={styles2.signin} type='submit'>
+                                            {details === null ? 'Sign Up' : 'Update'}
+                                        </button>
+                                    </div>
+                                </div>
+                            </Form>
+                        )}
+                    </Formik>
                 }
 
             </div>

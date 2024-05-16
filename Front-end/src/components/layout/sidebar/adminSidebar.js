@@ -2,8 +2,8 @@ import '../../../App.css';
 import { useNavigate } from 'react-router-dom';
 
 const ADMIN_ROUTES = [
-    { label: 'Update Stock', path: '/update-stock' },
-    { label: 'View Stock', path: '/check-stock' },
+    { label: 'Add Product', path: '/add-product' },
+    { label: 'View Products', path: '/view-products' },
     { label: 'Add User', path: '/add-user' },
     { label: 'Sign-Out', path: '/' },
 ]

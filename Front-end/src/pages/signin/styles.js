@@ -6,7 +6,7 @@ const styles = {
     title:'text-[13px] text-[#344767] font-semibold ml-1 mt-[8px] font-sans mb-1',
     input:'border-[1px] text-[#303030] font-normal border-[#d0d0d0] rounded-[7px] text-[12px] h-[40px] w-[318px] mb-2 px-[12px] py-[8px] outline-none font-sans',
     switchWrapper:'flex flex-row items-center justify-start mt-2',
-    switch:'text-[#344767] font-normal text-[14px] ml-3 font-sans',
+    switch:'text-[#344767] font-normal text-[14px] ml-3 mt-2 font-sans',
     signin:'text-white gradient-button outline-none mt-3 w-[318px] shadow-md my-1 hover:bg-[#000060]v font-sans font-semibold text-[13px] rounded-[7px]',
     singupWrapper:'flex flex-col sm:flex-row min-w-[50vw] w-fit items-center justify-center mt-3',
     signup:'ml-1 -mt-4 sm:mt-0 text-[13px] gradient-text font-medium cursor-pointer hover:text-[#63b3ed] font-sans',

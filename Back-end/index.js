@@ -193,7 +193,7 @@ app.post("/upload-data", upload, (req, resp) => {
 
   const date = new Date().toLocaleString();
   const imageUrl = `${req.protocol}://${req.get('host')}/${filePath}`;
-  const sql = 'INSERT INTO fulldata (filename, imageURL, name, description, supplierURLs, videoURLs, status, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+  const sql = 'INSERT INTO products (filename, imageURL, name, description, supplierURLs, videoURLs, status, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 
   pool.query(sql, [filename, imageUrl, name, description, JSON.stringify(supplierURLs), JSON.stringify(videoURLs), status, date], (err, result) => {
     if (err) {
@@ -208,7 +208,7 @@ app.post("/upload-data", upload, (req, resp) => {
 
 
 app.get("/get-data", (req, resp) => {
-  const sql = 'SELECT * FROM fulldata';
+  const sql = 'SELECT * FROM products';
 
   pool.query(sql, (err, result) => {
     if (err) {
@@ -247,7 +247,7 @@ app.get("/get-image", (req, resp) => {
 
 app.post("/update-status", (req, resp) => {
   const { id, newStatus } = req.body;
-  const sql = 'UPDATE fulldata SET status = ? WHERE id = ?';
+  const sql = 'UPDATE products SET status = ? WHERE id = ?';
   pool.query(sql, [newStatus, id], (err, result) => {
     if (err) {
       console.error('Error updating status:', err);

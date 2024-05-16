@@ -3,8 +3,8 @@ import Signin from "../pages/signin";
 import Dashboard from "../pages/dashboard";
 import Signup from "../pages/signup";
 import Layout from "../components/layout";
-import UpdateStock from "../pages/update-stock";
-import CheckStock from "../pages/check-stock";
+import UpdateStock from "../pages/add-product";
+import CheckStock from "../pages/view-products";
 import ErrorPage from "../pages/error-page";
 import AddUser from "../pages/add-user";
 import AdminGuard from "./adminGuard";
@@ -25,8 +25,8 @@ const AppRoutes = () => {
                         </UserGuard>
                     }
                 />
-                <Route path="/update-stock" element={<AdminGuard><Layout> <UpdateStock /></Layout></AdminGuard>} />
-                <Route path='/check-stock' element={<AdminGuard><Layout><CheckStock /></Layout></AdminGuard>} />
+                <Route path="/add-product" element={<AdminGuard><Layout> <UpdateStock /></Layout></AdminGuard>} />
+                <Route path='/view-products' element={<AdminGuard><Layout><CheckStock /></Layout></AdminGuard>} />
                 .<Route path='/add-user' element={<AdminGuard><Layout><AddUser /></Layout></AdminGuard>} />
                 <Route path='*' element={<ErrorPage />} />
             </Routes>

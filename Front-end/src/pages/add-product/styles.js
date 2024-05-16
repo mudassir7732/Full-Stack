@@ -1,5 +1,5 @@
 const styles = {
-    container:'flex flex-col items-center w-fit bg-[#eef2f8] shadow-lg rounded-[15px] border-[1px] border-[#e5e5e5] px-[38px] py-4',
+    container:'flex flex-col items-center mt-8 w-fit bg-[#eef2f8] shadow-lg rounded-[15px] border-[1px] border-[#e5e5e5] px-[38px] py-4',
     heading:'text-[32px] text-center mb-2 underline text-[#000080] font-sans font-bold',
     form:'flex flex-col lg:flex-row gap-x-20',
     title:'text-[14px] m-1 mt-3 text-black font-sans font-semibold',

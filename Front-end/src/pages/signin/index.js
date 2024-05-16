@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from "../../components/loader";
 import styles from "./styles";
-import styles2 from '../update-stock/styles';
+import styles2 from '../add-product/styles';
 import CustomSnackbar from "../../components/snackbar";
 import { Form, Formik } from 'formik';
 import * as yup from 'yup';
@@ -63,7 +63,7 @@ const Signin = () => {
                             navigate('/dashboard');
                         }
                         else if (res?.data?.user?.role === 'admin') {
-                            navigate('/update-stock');
+                            navigate('/view-products');
                         }
                     }
                 }
@@ -149,7 +149,6 @@ const Signin = () => {
                                         SIGN IN
                                     </button>
                                 </div>
-
                             </Form>
                         )}
                     </Formik>

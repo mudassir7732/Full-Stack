@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from "../../components/loader";
-import styles2 from '../update-stock/styles';
+import styles2 from '../add-product/styles';
 import styles from '../signin/styles';
 import CustomSnackbar from "../../components/snackbar";
 import { Form, Formik } from 'formik';
@@ -16,38 +16,19 @@ const ValidationSchema = yup.object().shape({
 })
 
 const Signup = () => {
-    const [user, setUser] = useState();
     const [error, setError] = useState('');
-    const [name, setName] = useState();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    const [role, setRole] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const userString = localStorage.getItem('user');
-        let parsedUser;
-        if (userString !== null) {
-            parsedUser = JSON.parse(userString);
-        }
-        setUser(parsedUser);
-    }, [])
-
-    useEffect(() => {
-        setName(user?.name)
-        setEmail(user?.email);
-        setPassword(user?.password)
-    }, [user])
-
     const INTIIAL_VALUES = {
-        name: name,
-        email: email,
-        password: password,
-        role: role
+        name: '',
+        email: '',
+        password: '',
+        role: false
     }
 
     const handleSignup = (values) => {
+        console.log(values, ' = Values')
         if (values) {
             setLoading(true);
             axios
@@ -55,7 +36,7 @@ const Signup = () => {
                     name: values.name,
                     email: values.email,
                     password: values.password,
-                    role: values.role ? 'role' : 'user',
+                    role: values.role ? 'admin' : 'user',
                 })
                 .then((res) => {
                     if (res?.data === 'Already registered') {
@@ -65,8 +46,8 @@ const Signup = () => {
                         const obj = res.data;
                         const user = JSON.stringify({ name: obj.name, email: obj.email, password: obj.password, role: obj.role, token: obj.token });
                         localStorage.setItem('user', user)
-                        if (obj.role === 'role') {
-                            navigate('/update-stock')
+                        if (obj.role === 'admin') {
+                            navigate('/add-products')
                         }
                         else if (obj.role === 'user') {
                             navigate('/dashboard')
