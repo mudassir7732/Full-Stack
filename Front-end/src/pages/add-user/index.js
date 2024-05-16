@@ -10,10 +10,11 @@ const AddUser = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState(false);
+    const [role, setRole] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState([]);
+    const [popup, setPopup] = useState(false);
     const [details, setDetails] = useState(null);
 
     useEffect(() => {
@@ -36,6 +37,7 @@ const AddUser = () => {
         const item = users.find((item, index) => item.id === id);
         if (item) {
             setDetails(item);
+            setPopup(true);
         }
     }
 
@@ -43,7 +45,7 @@ const AddUser = () => {
         console.log(details, ' = details')
     }, [details])
 
-    const handleSubmit = () => {
+    const handleUpdate = () => {
         setLoading(true);
         axios
             .put(`http://localhost:5000/update/${details?.id}`, {
@@ -64,6 +66,8 @@ const AddUser = () => {
             })
             .finally(() => {
                 setLoading(false);
+                setPopup(false);
+                setDetails(null)
             });
     };
 
@@ -86,13 +90,14 @@ const AddUser = () => {
 
 
     const handleSignup = () => {
+        console.log(name, email, password, role, ' = Values')
         setLoading(true);
         axios
             .post(`http://127.0.0.1:5000/register`, {
                 name: name,
                 email: email,
                 password: password,
-                role: role ? 'role' : 'user',
+                role: role,
             })
             .then((res) => {
                 if (res?.users === 'Already registered') {
@@ -108,7 +113,13 @@ const AddUser = () => {
                 setError(error?.message);
             })
             .finally(() => {
+                getData();
                 setLoading(false);
+                setName('');
+                setEmail('');
+                setPassword('');
+                setRole('');
+                setPopup(false);
             });
     }
 
@@ -117,7 +128,7 @@ const AddUser = () => {
             {loading && <Loader />}
             {error && <CustomSnackbar message={error} />}
             <div>
-                {details === null &&
+                {popup === false &&
                     <div className="bg-[#eff1fa] px-6 py-4 my-4 border-[1px] border-[#e0e0e0] shadow-lg rounded-[20px]">
                         <div className='flex flex-row items-center justify-between px-2'>
                             <p className="text-[26px] font-bold font-sans text-[#000080] underline">
@@ -125,7 +136,7 @@ const AddUser = () => {
                             </p>
 
                             <button className={`bg-[#006400] hover:bg-[#004400] py-2 ${styles.buttonStyle}`}
-                                onClick={() => setDetails(null)}>
+                                onClick={() => setPopup(true)}>
                                 Add New User
                             </button>
                         </div>
@@ -183,14 +194,14 @@ const AddUser = () => {
                 }
 
                 {
-                    details !== null &&
+                    popup &&
                     <div className=' flex flex-col items-center justify-center p-4 bg-[#eff1fa] shadow-lg rounded-[18px] border-[1px]'>
                         <div className="flex flex-row items-center justify-between w-full px-2">
                             <p className="text-[22px] pt-2 mb-0 font-bold font-sans text-[#000080]">
                                 Add Here!
                             </p>
                             <img src='/assets/icons/close.png' alt='close_icon' className="h-[24px] w-[24px] cursor-pointer"
-                                onClick={() => setDetails(null)} />
+                                onClick={() => setPopup(false)} />
                         </div>
                         <div className="p-3">
                             <p className={styles2.title}>
@@ -199,17 +210,16 @@ const AddUser = () => {
 
                             <input
                                 placeholder='Name'
-                                onChange={(e) =>
-                                    details === null ? setName(e.target.value) : setDetails({ ...details, name: e.target.value })
-                                }
-                                value={details === null ? password : details.name}
+                                onChange={(e) => details === null ? setName(e.target.value) : setDetails({...details, name : e.target.value })}
+                                value={details === null ? name : details?.name}
                                 className={styles2.input}
                             /><br />
 
                             <p className={styles2.title}>
                                 Email
                             </p>
-                            <input placeholder='Email' onChange={(e) => details === null ? setEmail(e.target.value) : details.password = e.target.value}
+                            <input placeholder='Email' 
+                            onChange={(e) => details === null ? setEmail(e.target.value) : details.email}
                                 value={details === null ? email : details.email} className={styles2.input} />
 
                             <p className={styles2.title}>
@@ -232,7 +242,7 @@ const AddUser = () => {
                                         checked={details === null ? role : details.role === 'admin' ? true : false}
                                         onChange={(e) => {
                                             details === null
-                                                ? setRole(e.target.checked)
+                                                ? setRole(e.target.checked ? 'admin': 'user')
                                                 : setDetails({ ...details, role: e.target.checked ? 'admin' : 'user' });
                                         }}
                                     />
@@ -245,7 +255,7 @@ const AddUser = () => {
                             </div>
 
                             <button className={styles2.signin}
-                                onClick={details === null ? handleSignup : handleSubmit}>
+                                onClick={details === null ? handleSignup : handleUpdate}>
                                 {details === null ? 'Sign Up' : 'Submit'}
                             </button>
                         </div>

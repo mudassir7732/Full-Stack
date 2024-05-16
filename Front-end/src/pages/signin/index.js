@@ -57,7 +57,6 @@ const Signin = () => {
                     }
                     else {
                         const obj = res?.data?.user;
-
                         const user = JSON.stringify({ id: obj.id, email: obj.email, password: obj.password, token: obj.token, role: obj.role })
                         localStorage.setItem('user', user);
                         if (res?.data?.user?.role === 'user') {
@@ -75,6 +74,7 @@ const Signin = () => {
             .catch((error) => {
                 localStorage.setItem('user', null)
                 console.error('Error:', error);
+                setError(error?.message)
                 setExist("User does not exist!");
             })
             .finally(() => {
@@ -145,8 +145,7 @@ const Signin = () => {
                                         </p>
                                     </div>
 
-                                    <button type='submit' className={styles.signin}
-                                        onClick={handleSignin}>
+                                    <button type='submit' className={styles.signin}>
                                         SIGN IN
                                     </button>
                                 </div>

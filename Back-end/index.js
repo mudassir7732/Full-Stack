@@ -41,7 +41,6 @@ const secretKey = process.env.SECRET_KEY;
 //   });
 // });
 
-
 app.post('/register', (req, res) => {
   const { name, email, password, role } = req.body;
   const checkEmailSql = 'SELECT * FROM registeredusers WHERE email = ?';
@@ -53,8 +52,7 @@ app.post('/register', (req, res) => {
     }
     
     if (checkResult.length > 0) {
-      res.json('Already registered')
-      res.status(400).json({ message: 'Already registered' });
+      res.status(400).json({ message: 'Already Registered' });
       return;
     }
 
@@ -71,6 +69,7 @@ app.post('/register', (req, res) => {
     });
   });
 });
+
 
 
 app.put('/update/:userId', (req, res) => {

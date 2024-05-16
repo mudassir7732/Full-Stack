@@ -241,13 +241,11 @@ const CheckStock = () => {
                       Reject
                     </button>
                   }
-
                   {details.status !== 'Accepted' &&
                     <button className={`bg-[#006400] hover:bg-[#004400] ml-4 ${styles.buttonStyle}`}
                       onClick={() => updateStatus(details.id, 'Accepted')}>
                       Accept
-                    </button>
-                  }
+                    </button>}
 
                 </div>
               </div>

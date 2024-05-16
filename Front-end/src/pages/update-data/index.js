@@ -37,21 +37,6 @@ const UpdateData = () => {
       };
             
 
-    // useEffect(() => {
-    //     axios.get('http://localhost:3001/getimage')
-    //       .then((res) => {
-    //         const blob = new Blob([new Uint8Array(res?.data[0]?.image_data?.data)], { type: 'image/png' });
-    //         const imageBlob = URL.createObjectURL(blob);
-    //         setImage(imageBlob);
-    //         console.log(imageBlob, ' = Image Blob')
-    //       })
-    //       .catch((err) => {
-    //         console.error(err);
-    //         // Handle any errors here
-    //       });
-    //   }, []);
-
-
     const handleVideoURLChange = (e, index) => {
         const newVideoURLs = [...videoURLs];
         newVideoURLs[index] = e.target.value;

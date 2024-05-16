@@ -44,43 +44,44 @@ const Signup = () => {
         name: name,
         email: email,
         password: password,
-        role:role
+        role: role
     }
 
     const handleSignup = (values) => {
-        setLoading(true);
-        axios
-            .post(`http://127.0.0.1:5000/register`, {
-                name: values.name,
-                email: values.email,
-                password: values.password,
-                role: values.role ? 'role' : 'user',
-            })
-            .then((res) => {
-                if (res?.data === 'Already registered') {
-                    setError('Email already registered')
-                }
-                else {
-                    const obj = res.data;
-                    const user = JSON.stringify({ name: obj.name, email: obj.email, password: obj.password, role: obj.role, token: obj.token });
-                    localStorage.setItem('user', user)
-                    // console.log(obj, ' = obj')
-                    if (obj.role === 'role') {
-                        navigate('/update-stock')
+        if (values) {
+            setLoading(true);
+            axios
+                .post(`http://127.0.0.1:5000/register`, {
+                    name: values.name,
+                    email: values.email,
+                    password: values.password,
+                    role: values.role ? 'role' : 'user',
+                })
+                .then((res) => {
+                    if (res?.data === 'Already registered') {
+                        setError('Email already registered')
                     }
-                    else if (obj.role === 'user') {
-                        navigate('/dashboard')
+                    else {
+                        const obj = res.data;
+                        const user = JSON.stringify({ name: obj.name, email: obj.email, password: obj.password, role: obj.role, token: obj.token });
+                        localStorage.setItem('user', user)
+                        if (obj.role === 'role') {
+                            navigate('/update-stock')
+                        }
+                        else if (obj.role === 'user') {
+                            navigate('/dashboard')
+                        }
                     }
-                }
-            })
-            .catch((error) => {
-                localStorage.setItem('user', null)
-                console.error(error, ' = Error');
-                setError(error?.message);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+                })
+                .catch((error) => {
+                    localStorage.setItem('user', null)
+                    console.error(error, ' = Error');
+                    setError(error?.message);
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
+        }
     }
 
     return (
@@ -151,7 +152,6 @@ const Signup = () => {
                                                 value={values.role}
                                                 onChange={handleChange}
                                                 checked={values.role}
-                                                // onChange={(e) => setRole(e.target.checked)}
                                             />
                                             <span className="slider"></span>
                                         </label>
@@ -160,8 +160,7 @@ const Signup = () => {
                                         </p>
                                     </div>
 
-                                    <button className={styles.signin}
-                                        onClick={handleSignup}>
+                                    <button type="submit" className={styles.signin}>
                                         SIGN UP
                                     </button>
 
