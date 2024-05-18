@@ -9,6 +9,7 @@ import ErrorPage from "../pages/error-page";
 import AddUser from "../pages/add-user";
 import AdminGuard from "./adminGuard";
 import UserGuard from "./userGuard";
+import ShopifyPage from "../pages/shopify";
 
 const AppRoutes = () => {
     return (
@@ -28,6 +29,7 @@ const AppRoutes = () => {
                 <Route path="/add-product" element={<AdminGuard><Layout> <UpdateStock /></Layout></AdminGuard>} />
                 <Route path='/view-products' element={<AdminGuard><Layout><CheckStock /></Layout></AdminGuard>} />
                 .<Route path='/add-user' element={<AdminGuard><Layout><AddUser /></Layout></AdminGuard>} />
+                <Route path='/shopify' element={<ShopifyPage />} />
                 <Route path='*' element={<ErrorPage />} />
             </Routes>
         </Router>
