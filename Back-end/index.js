@@ -25,6 +25,12 @@ const pool = mysql.createPool({
 const secretKey = process.env.SECRET_KEY;
 
 
+
+app.post('/shopify', (req, res)=>{
+  const {} = req.body;
+})
+
+
 app.post('/register', (req, res) => {
   const { name, email, password, role } = req.body;
   const checkEmailSql = 'SELECT * FROM registeredusers WHERE email = ?';
