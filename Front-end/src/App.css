@@ -27,6 +27,10 @@
   height: 0;
 }
 
+.hover-color:hover{
+  background-color: #d0d0d0 !important;
+}
+
 .slider {
   position: absolute;
   cursor: pointer;

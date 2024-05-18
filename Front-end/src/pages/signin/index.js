@@ -3,12 +3,22 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from "../../components/loader";
+import styles from "./styles";
+import styles2 from '../add-product/styles';
+import CustomSnackbar from "../../components/snackbar";
+import { Form, Formik } from 'formik';
+import * as yup from 'yup';
+
+const ValidationSchema = yup.object().shape({
+    email: yup.string().email().required('Email Required'),
+    password: yup.string().required('Password Required')
+})
 
 const Signin = () => {
     const [user, setUser] = useState();
+    const [message, setMessage] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [userExist, setExist] = useState('');
     const [loading, setLoading] = useState(false);
     const [remember, setRemember] = useState(false);
     const navigate = useNavigate();
@@ -27,99 +37,131 @@ const Signin = () => {
         setPassword(user?.password)
     }, [user])
 
-    const handleSignin = () => {
+    const INTIIAL_VALUES = {
+        email: email,
+        password: password
+    }
+
+    const handleSignin = async (values) => {
         setLoading(true)
-        axios
+        await axios
             .post(`http://127.0.0.1:5000/signin`, {
-                email: email,
-                password: password,
+                email: values.email,
+                password: values.password,
             })
-            .then((response) => {
-                if (response?.data?.userExist === true) {
-                    // if (remember) {
-                        const user = JSON.stringify({ email: email, password: password })
-                        localStorage.setItem('user', user)
-                    // }
-                    // else {
-                    //     localStorage.setItem('user', null)
-                    // }
-                    navigate('/dashboard')
-                } else {
-                    setExist("User does not exist!");
+            .then((res) => {
+                const a = res?.data?.message;
+                setMessage(a);
+                if (res?.data?.message === 'success') {
+                    const obj = res?.data?.user;
+                    const user = JSON.stringify({ id: obj.id, email: obj.email, password: obj.password, token: obj.token, role: obj.role })
+                    localStorage.setItem('user', user);
+                    if (res?.data?.user?.role === 'user') {
+                        navigate('/dashboard');
+                    }
+                    else if (res?.data?.user?.role === 'admin') {
+                        navigate('/view-products');
+                    }
                 }
             })
             .catch((error) => {
+                localStorage.setItem('user', null)
                 console.error('Error:', error);
-                setExist("User does not exist!");
+                setMessage(error?.message)
+
             })
             .finally(() => {
-                setTimeout(() => {
-                    setExist('');
-                }, 3000);
                 setLoading(false);
+                setTimeout(() => {
+                    setMessage('');
+                }, 4000);
             });
     }
 
     return (
         <>
             {loading && <Loader />}
-            <div className='bg-white min-h-screen flex flex-row items-center justify-between w-full overflow-x-hidden'>
-                <div className='flex flex-col items-center bg-white px-12 py-6 rounded-xl min-w-[50%] ml-20'>
-                    <div>
-                        <p className='text-[30px] font-bold mb-[8px] gradient-text font-sans'>
-                            Welcome back
-                        </p>
-                        <p className='text-[#67748e] font-normal text-[16px] font-sans'>
-                            Enter your email and password to sign in
-                        </p>
-                        <p className='text-[12px] text-[#344767] font-semibold ml-1 font-sans mt-[22px]'>
-                            Email
-                        </p>
-                        <input placeholder='Email' onChange={(e) => setEmail(e.target.value)} value={email}
-                            className='border-[1px] border-[#d0d0d0] rounded-[7px] text-[12px] h-[40px] w-[318px] my-2 px-[12px] py-[8px] outline-none font-sans' />
-                        <p className='text-[12px] text-[#344767] font-semibold ml-1 mt-[8px] font-sans'>
-                            Password
-                        </p>
-                        <input placeholder='Password' onChange={(e) => setPassword(e.target.value)} value={password}
-                            className='border-[1px] border-[#d0d0d0] rounded-[7px] text-[12px] h-[40px] w-[318px] my-2 px-[12px] py-[8px] outline-none font-sans' /><br />
 
-                        <div className="flex flex-row items-center justify-start mt-2">
-                            <label className="switch">
-                                <input
-                                    type="checkbox"
-                                    checked={remember}
-                                    onChange={(e) => setRemember(e.target.checked)}
-                                />
-                                <span className="slider"></span>
-                            </label>
-                            <p className="text-[#344767] font-normal text-[14px] ml-3 font-sans">
-                                Remember me
-                            </p>
-                        </div>
-                        <button className='text-white gradient-button outline-none mt-3 w-[318px] shadow-md my-1 hover:bg-[#000060]v font-sans'
-                            style={{ borderRadius: '7px', padding: '11px 20px', fontSize: '12px', fontWeight: '600' }}
-                            onClick={handleSignin}>
-                            SIGN IN
-                        </button>
-                    </div>
-                    <div className="flex flex-col sm:flex-row min-w-[50vw] w-fit items-center justify-center mt-3">
+            <div className={styles.container}>
+                {message &&
+                    <CustomSnackbar message={message} />
+                }
+                <div className={styles.card}>
+
+                    <Formik initialValues={INTIIAL_VALUES} validationSchema={ValidationSchema} onSubmit={handleSignin}>
+                        {({ handleChange, values, errors, touched }) => (
+                            <Form>
+                                <div>
+                                    <p className={styles.welcome}>
+                                        Welcome back
+                                    </p>
+
+                                    <p className={styles.desc}>
+                                        Enter your email and password to sign in
+                                    </p>
+
+                                    <p className={styles.title}>
+                                        Email
+                                    </p>
+                                    <input name='email' value={values.email} onChange={handleChange} placeholder='Email'
+                                        className={styles.input} />
+
+                                    {errors.email && touched.email && (
+                                        <p className={styles2.error}>
+                                            {errors.email?.toString()}
+                                        </p>
+                                    )}
+
+                                    <p className={styles.title}>
+                                        Password
+                                    </p>
+                                    <input name='password' value={values.password} onChange={handleChange} placeholder='Password'
+                                        className={styles.input} />
+
+                                    {errors.password && touched.password && (
+                                        <p className={styles2.error}>
+                                            {errors.password?.toString()}
+                                        </p>
+                                    )}
+
+                                    <div className={styles.switchWrapper}>
+                                        <label className="switch">
+                                            <input
+                                                type="checkbox"
+                                                checked={remember}
+                                                onChange={(e) => setRemember(e.target.checked)}
+                                            />
+                                            <span className="slider"></span>
+                                        </label>
+                                        <p className={styles.switch}>
+                                            Remember me
+                                        </p>
+                                    </div>
+
+                                    <button type='submit' className={styles.signin}>
+                                        SIGN IN
+                                    </button>
+                                </div>
+                            </Form>
+                        )}
+                    </Formik>
+
+                    <div className={styles.singupWrapper}>
                         <p className="text-[#67748e] text-[14px] font-sans">
                             Don't have an account?
                         </p>
-                        <p className="ml-1 -mt-4 sm:mt-0 text-[13px] gradient-text font-medium cursor-pointer hover:text-[#63b3ed] font-sans"
-                        onClick={()=>navigate('/signup')}>
+                        <p className={styles.signup}
+                            onClick={() => navigate('/signup')}>
                             Sign up
                         </p>
                     </div>
-                    <p className="text-red-500 text-[15px] font-medium absolute bottom-24">
-                        {userExist}
-                    </p>
+
                 </div>
 
                 <img
                     alt='imag'
                     src="/assets/curved6.jpg"
-                    className="h-screen w-[700px] -mr-[200px] transform -skew-x-12 rounded-bl-2xl"
+                    className={styles.bgImage}
                 />
 
             </div>
