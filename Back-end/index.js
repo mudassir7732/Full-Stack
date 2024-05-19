@@ -34,19 +34,19 @@ let pass = process.env.PASSWORD;
 let endpoint = 'products';
 
 let options = {
-    'method': 'GET',
-    'url': `https://${apikey}:${pass}@e0dc50-40.myshopify.com/admin/api/2024-04/${endpoint}.json`,
-    'headers': {
-        'Content-Type': 'application/json'
-    }
+  'method': 'GET',
+  'url': `https://${apikey}:${pass}@e0dc50-40.myshopify.com/admin/api/2024-04/${endpoint}.json`,
+  'headers': {
+    'Content-Type': 'application/json'
+  }
 };
 
 app.get("/getdata", (req, res) => {
-    request(options, function (error, res) {
-        if (error)
-            throw new Error(error);
-        console.log(res.body)
-    })
+  request(options, function (error, res) {
+    if (error)
+      throw new Error(error);
+    console.log(res.body)
+  })
 })
 
 
@@ -92,29 +92,31 @@ app.put('/update/:userId', (req, res) => {
   pool.query(updateSql, [name, email, password, role, userId], (updateErr, updateResult) => {
     if (updateErr) {
       console.error('Error updating user:', updateErr);
-  const { name, email, password, role } = req.body;
-  const checkEmailSql = 'SELECT * FROM registeredusers WHERE email = ?';
-  pool.query(checkEmailSql, [email], (checkErr, checkResult) => {
-    if (checkErr) {
-      console.error('Error checking email:', checkErr);
-      res.status(500).json({ message: 'Internal Server Error' });
-      return;
     }
-
-    if (checkResult.length > 0) {
-      res.json({ message: 'Email Already Registered' });
-      return;
-    }
-
-    const token = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
-    const insertSql = 'INSERT INTO registeredusers (name, email, password, role, token) VALUES (?, ?, ?, ?, ?)';
-    pool.query(insertSql, [name, email, password, role, token], (insertErr, insertResult) => {
-      if (insertErr) {
-        console.error('Error registering user:', insertErr);
+    const { name, email, password, role } = req.body;
+    const checkEmailSql = 'SELECT * FROM registeredusers WHERE email = ?';
+    pool.query(checkEmailSql, [email], (checkErr, checkResult) => {
+      if (checkErr) {
+        console.error('Error checking email:', checkErr);
         res.status(500).json({ message: 'Internal Server Error' });
         return;
       }
-      res.json({ message: 'Successfully Registered', name, email, password, role, token });
+
+      if (checkResult.length > 0) {
+        res.json({ message: 'Email Already Registered' });
+        return;
+      }
+
+      const token = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
+      const insertSql = 'INSERT INTO registeredusers (name, email, password, role, token) VALUES (?, ?, ?, ?, ?)';
+      pool.query(insertSql, [name, email, password, role, token], (insertErr, insertResult) => {
+        if (insertErr) {
+          console.error('Error registering user:', insertErr);
+          res.status(500).json({ message: 'Internal Server Error' });
+          return;
+        }
+        res.json({ message: 'Successfully Registered', name, email, password, role, token });
+      });
     });
   });
 });
@@ -148,17 +150,9 @@ app.put('/update/:userId', (req, res) => {
   });
 });
 
-
 app.delete('/delete/:userId', (req, res) => {
   const userId = req.params.userId;
 
-app.delete('/delete/:userId', (req, res) => {
-  const userId = req.params.userId;
-
-  const deleteSql = 'DELETE FROM registeredusers WHERE id = ?';
-  pool.query(deleteSql, [userId], (deleteErr, deleteResult) => {
-    if (deleteErr) {
-      console.error('Error deleting user:', deleteErr);
   const deleteSql = 'DELETE FROM registeredusers WHERE id = ?';
   pool.query(deleteSql, [userId], (deleteErr, deleteResult) => {
     if (deleteErr) {
@@ -166,13 +160,6 @@ app.delete('/delete/:userId', (req, res) => {
       res.status(500).json({ message: 'Internal Server Error' });
       return;
     }
-
-    if (deleteResult.affectedRows === 0) {
-      res.status(404).json({ message: 'User not found' });
-      return;
-    }
-
-    res.status(200).json({ message: 'User deleted successfully' });
 
     if (deleteResult.affectedRows === 0) {
       res.status(404).json({ message: 'User not found' });
@@ -184,13 +171,9 @@ app.delete('/delete/:userId', (req, res) => {
 });
 
 
-
-
 app.post("/signin", function (req, res) {
   const { email, password } = req.body;
 
-  const sql = 'SELECT * FROM registeredusers WHERE email = ?';
-  pool.query(sql, [email], (err, result) => {
   const sql = 'SELECT * FROM registeredusers WHERE email = ?';
   pool.query(sql, [email], (err, result) => {
     if (err) {
@@ -201,23 +184,13 @@ app.post("/signin", function (req, res) {
     if (!result || result.length === 0) {
       res.json({ userExist: false, message: 'Email not registered' });
       return;
-    if (!result || result.length === 0) {
-      res.json({ userExist: false, message: 'Email not registered' });
-      return;
     }
-    const user = result[0];
-
-    if (user.password !== password) {
-      res.json({ userExist: true, message: 'Password Incorrect' });
-      return;
-    const user = result[0];
 
     if (user.password !== password) {
       res.json({ userExist: true, message: 'Password Incorrect' });
       return;
     }
-
-    res.json({ userExist: true, user: user, message: 'success' });
+    const user = result[0];
 
     res.json({ userExist: true, user: user, message: 'success' });
   });
@@ -239,7 +212,6 @@ app.post("/upload-data", upload, (req, resp) => {
   const { filename, path: filePath } = req.file;
   const { name, description } = req.body;
   const status = "Pending";
-  const status = "Pending";
 
   const supplierURLs = Object.keys(req.body)
     .filter((key) => key.startsWith("supplier_url_"))
@@ -252,9 +224,7 @@ app.post("/upload-data", upload, (req, resp) => {
   const date = new Date().toLocaleString();
   const imageUrl = `${req.protocol}://${req.get('host')}/${filePath}`;
   const sql = 'INSERT INTO products (filename, imageURL, name, description, supplierURLs, videoURLs, status, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-  const sql = 'INSERT INTO products (filename, imageURL, name, description, supplierURLs, videoURLs, status, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 
-  pool.query(sql, [filename, imageUrl, name, description, JSON.stringify(supplierURLs), JSON.stringify(videoURLs), status, date], (err, result) => {
   pool.query(sql, [filename, imageUrl, name, description, JSON.stringify(supplierURLs), JSON.stringify(videoURLs), status, date], (err, result) => {
     if (err) {
       console.error('Error storing image:', err);
@@ -268,7 +238,6 @@ app.post("/upload-data", upload, (req, resp) => {
 
 app.get("/get-data", (req, resp) => {
   const sql = 'SELECT * FROM products';
-  const sql = 'SELECT * FROM products';
 
   pool.query(sql, (err, result) => {
     if (err) {
@@ -280,8 +249,6 @@ app.get("/get-data", (req, resp) => {
 });
 
 
-app.get("/get-users", (req, resp) => {
-  const sql = 'SELECT * FROM registeredusers';
 app.get("/get-users", (req, resp) => {
   const sql = 'SELECT * FROM registeredusers';
 
