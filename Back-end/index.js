@@ -25,8 +25,6 @@ const pool = mysql.createPool({
 
 const secretKey = process.env.SECRET_KEY;
 
-
-
 let request = require('request');
 
 let apikey = process.env.API_KEY;
