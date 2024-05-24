@@ -15,8 +15,10 @@ let options = {
 
 app.get("/getdata", (req, res) => {
     request(options, function (error, res) {
-        if (error)
+        if (error) {
             throw new Error(error);
+        }
         console.log(res.body)
+
     })
 })
