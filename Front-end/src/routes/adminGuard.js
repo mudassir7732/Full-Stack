@@ -1,12 +1,27 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Loader from "../components/loader";
 import ErrorPage from "../pages/error-page";
 import CustomSnackbar from "../components/snackbar";
+import {useNavigate} from 'react-router-dom';
+import { AuthContext, useAuth } from "../AuthContext";
 
 const AdminGuard = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const [role, setRole] = useState();
+    const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
+    const {isAuthenticated, userRole} = useAuth();
+
+
+    console.log(userRole,' = User Role')
+
+    // const handleAuthentication = async () => {
+        // const success = await login({ email: values.email, password: values.password });
+        // if (success) {
+            // navigate('/dashboard')
+        // }
+    // }
 
     useEffect(() => {
         setLoading(true);
@@ -35,7 +50,7 @@ const AdminGuard = ({ children }) => {
     return (
         <>
             {message && <CustomSnackbar message={message} />}
-            {role === 'admin' ? children : <ErrorPage />}
+            {userRole === 'Admin' ? children : <ErrorPage />}
         </>
     );
 };

@@ -12,12 +12,12 @@ const Layout = ({ children }) => {
 
     return (
 <div className="flex flex-row bg-[#f8f8f8] min-h-screen">
-    {user?.role && user?.role === 'user' &&
+    {user?.role && user?.role === 'User' &&
         <div className="w-[20%]">
             <Sidebar />
         </div>
     }
-    {user && user?.role === 'admin' && (
+    {user && user?.role === 'Admin' && (
         <div className="w-[20%] fixed">
             <AdminSidebar />
         </div>

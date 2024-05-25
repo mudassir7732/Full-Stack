@@ -28,7 +28,7 @@ const AddUser = () => {
         name: details === null ? '' : details?.name,
         email: details === null ? '' : details.email,
         password: details === null ? '' : details.password,
-        role: details === null ? '' : details.role === 'admin' ? true : false
+        role: details === null ? '' : details.role === 'Admin' ? true : false
     }
 
     useEffect(() => {
@@ -67,7 +67,7 @@ const AddUser = () => {
                 name: values?.name,
                 email: values?.email,
                 password: values?.password,
-                role: values?.role ? 'admin' : 'user',
+                role: values?.role ? 'Admin' : 'User',
             })
             .then((res) => {
                 setMessage(res?.data?.message);
@@ -112,7 +112,7 @@ const AddUser = () => {
                 name: values?.name,
                 email: values?.email,
                 password: values?.password,
-                role: values?.role ? 'admin' : 'user',
+                role: values?.role ? 'Admin' : 'User',
             })
             .then((res) => {
                 const a = res?.data?.message;

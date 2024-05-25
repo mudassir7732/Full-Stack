@@ -1,14 +1,22 @@
 import { StrictMode } from "react";
 import AppRoutes from "./routes";
+import { AuthProvider } from "./AuthContext";
 
-const App=()=>{
-  return(
+const App = () => {
+  return (
     <StrictMode>
-      <AppRoutes />
+      <AuthProvider>
+        <AppRoutes />
+      </AuthProvider>
     </StrictMode>
   )
 }
 export default App;
+
+
+
+
+
 
 // import React, { useEffect, useState } from 'react';
 // import axios from 'axios';

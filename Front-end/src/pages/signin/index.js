@@ -1,5 +1,5 @@
 import "../../App.css";
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from "../../components/loader";
@@ -7,6 +7,7 @@ import styles from "./styles";
 import styles2 from '../add-product/styles';
 import CustomSnackbar from "../../components/snackbar";
 import { Form, Formik } from 'formik';
+import { AuthContext } from "../../AuthContext";
 import * as yup from 'yup';
 
 const ValidationSchema = yup.object().shape({
@@ -22,6 +23,7 @@ const Signin = () => {
     const [loading, setLoading] = useState(false);
     const [remember, setRemember] = useState(false);
     const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
 
     useEffect(() => {
         const userString = localStorage.getItem('user');
@@ -38,12 +40,22 @@ const Signin = () => {
     }, [user])
 
     const INTIIAL_VALUES = {
-        email: email,
+        email: user?.email,
         password: password
     }
 
     const handleSignin = async (values) => {
+        // try {
         setLoading(true)
+        // setCredentials({email:values.email, password:values.password});
+        // const success = await login({ email: values.email, password: values.password });
+        // if (success) {
+        //     navigate('/dashboard')
+        // }
+        // }
+        // catch (err) {
+        //     console.log(err, ' = Error')
+        // }
         await axios
             .post(`http://localhost:5000/signin`, {
                 email: values.email,
@@ -52,14 +64,16 @@ const Signin = () => {
             .then((res) => {
                 const a = res?.data?.message;
                 setMessage(a);
-                if (res?.data?.message === 'success') {
+                if (res?.data?.message === 'Sign-in Successful') {
+                    login();
                     const obj = res?.data?.user;
                     const user = JSON.stringify({ id: obj.id, email: obj.email, password: obj.password, token: obj.token, role: obj.role })
                     localStorage.setItem('user', user);
-                    if (res?.data?.user?.role === 'user') {
+                    console.log(res?.data?.user?.role, ' = Role')
+                    if (res?.data?.user?.role === 'User') {
                         navigate('/dashboard');
                     }
-                    else if (res?.data?.user?.role === 'admin') {
+                    else if (res?.data?.user?.role === 'Admin') {
                         navigate('/add-product');
                     }
                 }
@@ -77,6 +91,28 @@ const Signin = () => {
                 }, 4000);
             });
     }
+
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTcxNjYyNDkwOSwiZXhwIjoxNzE2NjI4NTA5fQ.MmyL2YR9hrJ8KmNACbVINO7bqkb_ZO19TjAi04FRbrY';
+
+    
+    const fetchProtectedData = async () => {
+        // const token = sessionStorage.getItem('token');
+
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTcxNjYyNDkwOSwiZXhwIjoxNzE2NjI4NTA5fQ.MmyL2YR9hrJ8KmNACbVINO7bqkb_ZO19TjAi04FRbrY';
+        try {
+            const response = await axios.get('http://localhost:5000/protected-route', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            console.log(response.data, ' = Response')
+            return response.data;
+        } catch (error) {
+            console.log(error, ' = Error');
+            return null;
+        }
+    };
+
 
     return (
         <>
@@ -155,6 +191,10 @@ const Signin = () => {
                             Sign up
                         </p>
                     </div>
+
+                    <button onClick={fetchProtectedData} className={styles.signin}>
+                        check
+                    </button>
 
                 </div>
 

@@ -6,6 +6,8 @@ const cors = require("cors");
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const mysql = require("mysql");
+const bcrypt = require('bcrypt');
+const { validationResult } = require('express-validator');
 
 const app = express();
 app.use(express.json());
@@ -50,9 +52,47 @@ let endpoint = 'products';
 
 
 
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const { validationResult } = require('express-validator');
+
+
+// Middleware to verify JWT token
+const verifyToken = (req, res, next) => {
+  // Extract token from Authorization header
+  const token = req.headers.authorization?.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ message: 'Authorization token is missing' });
+  }
+
+  try {
+    // Verify token
+    const decoded = jwt.verify(token, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTcxNjYyNDkwOSwiZXhwIjoxNzE2NjI4NTA5fQ.MmyL2YR9hrJ8KmNACbVINO7bqkb_ZO19TjAi04FRbrY');
+
+    // Attach user data to request object for further processing
+    req.user = decoded;
+
+    // Continue to the next middleware or route handler
+    next();
+  } catch (error) {
+    return res.status(403).json({ message: 'Invalid or expired token' });
+  }
+};
+
+// Protected route
+app.get('/protected-route', verifyToken, (req, res) => {
+  // Access user data from request object
+  const email = 'mudassir@gmail.com';
+
+  // Perform actions specific to the protected route
+  res.json({ message: `Welcome, ${email}! This is a protected route.` });
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
+
+
+
+
 
 app.post('/register', async (req, res) => {
   try {
@@ -65,17 +105,16 @@ app.post('/register', async (req, res) => {
     let role = req.body.role || 'User';
 
     const checkEmailSql = 'SELECT * FROM users WHERE email = ?';
-    const checkResult = await pool.query(checkEmailSql, [email]);
+    const checkResult = pool.query(checkEmailSql, [email]);
     if (checkResult.length > 0) {
       return res.status(400).json({ message: 'Email Already Registered' });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
+    // const hashedPassword = await bcrypt.hash(password, 10);
     const token = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
 
     const insertSql = 'INSERT INTO users (name, email, password, role, token) VALUES (?, ?, ?, ?, ?)';
-    await pool.query(insertSql, [name, email, hashedPassword, role, token]);
+    pool.query(insertSql, [name, email, password, role, token]);
 
     // Set access token as HTTP-only cookie
     res.cookie('access-token', token, {
@@ -152,7 +191,7 @@ app.post("/signin", function (req, res) {
       return;
     }
 
-    res.json({ userExist: true, user: user, message: 'Sign-in Successful' });
+    res.json({ success: true, user: user, message: 'Sign-in Successful' });
 
   });
 });

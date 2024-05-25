@@ -34,19 +34,23 @@ const Signup = () => {
                     name: values.name,
                     email: values.email,
                     password: values.password,
-                    role: 'user',
+                    role: 'Admin',
                 })
                 .then((res) => {
                     const a = res?.data?.message;
                     setMessage(a);
                     if (res?.data?.message === 'Successfully Registered') {
                         const obj = res.data;
-                        const user = JSON.stringify({ name: obj.name, email: obj.email, password: obj.password, role: 'user', token: obj.token });
+                        const user = JSON.stringify({ name: obj.name, email: obj.email, password: obj.password, role: 'User', token: obj.token });
                         localStorage.setItem('user', user)
-                        if (obj.role === 'admin') {
+                        console.log(user, ' = User')
+                        // setTimeout(() => {
+                        //     navigate('/');                            
+                        // }, 3000);
+                        if (obj.role === 'Admin') {
                             navigate('/add-products')
                         }
-                        else if (obj.role === 'user') {
+                        else if (obj.role === 'User') {
                             navigate('/dashboard')
                         }
                     }
