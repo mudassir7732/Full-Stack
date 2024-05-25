@@ -1,15 +1,18 @@
+import '../../App.css';
+
 const styles = {
-    container: 'flex flex-col lg:flex-row items-center lg:items-start justify-evenly w-full shadow-lg border-[1px] border-[#e5e5e5] py-3 gap-y-6',
-    firstBlock: 'p-4 rounded-xl h-fit lg:min-h-[90vh] w-[85%] lg:w-[45%] bg-[#eff1fa] border-[1px] border-[#c5c5c5]',
+    container: 'flex flex-col lg:flex-row items-center lg:items-start justify-evenly w-full shadow-lg border-[1px] border-[#e5e5e5] gap-y-6',
+    firstBlock: 'p-4 rounded-xl h-fit lg:min-h-[90vh] w-[85%] lg:w-[45%] bg-white border-[1px] border-[#c5c5c5]',
     secondBlock: 'py-3 rounded-xl px-2 lg:px-4 w-[85%] lg:w-[45%] bg-[#eff1fa] border-[1px] border-[#c5c5c5]',
     closeIcon:'absolute right-11 sm:right-20 z-10 lg:right-16 h-[22px] w-[22px] cursor-pointer',
-    header: 'flex flex-row items-center justify-between',
-    headingBox: 'flex flex-row items-center justify-between bg-[#e9e9e9] gap-x-2 border-[1px] border-[#e0e0e0] py-2 w-fit px-2 lg:px-3',
-    headingTitle: 'font-sans font-bold text-[18px] text-black my-auto',
+    header: 'flex flex-row items-center justify-between px-4 pb-2',
+    headingBox: 'flex flex-row items-center justify-between bg-[#e9e9e9] gap-x-2 border-[1px] border-[#e0e0e0] px-1 py-[1px] w-fit',
+    headingTitle: 'font-sans font-bold text-[13px] text-black my-auto',
     dataContainer: 'bg-[#e9e9e9] px-3 mt-5 border-[1px] border-[#e5e5e5]',
     dataList: 'flex flex-row items-center my-2 justify-between py-[7px] border-[1px] border-[#e5e5e5] bg-white px-3',
     itemDetails: 'my-auto font-sans font-semibold text-black',
-    viewButton: 'bg-[#006400] hover:bg-[#004400] px-[13px] py-[3px] rounded-[5px] text-white font-sans text-[13px] font-medium',
+    viewButton: 'edit-button px-[13px] py-[3px] rounded-[7px] text-white font-sans text-[13px] font-medium',
+    deleteButton: 'delete-button px-[13px] py-[3px] rounded-[7px] text-white font-sans text-[13px] font-medium',
     itemInfo: 'font-sans font-bold text-black text-[13px] h-fit min-h-[12px',
     infoWrapper: 'flex flex-col w-[65%] px-4 h-fit',
     imageInfo: 'flex flex-row items-center overflow-hidden',
@@ -21,6 +24,6 @@ const styles = {
     buttonsWrapper: 'flex flex-row items-center justify-between mt-3',
     status: 'flex flex-row font-sans text-[16px] font-semibold text-[#252525]',
     statusVal: 'ml-1 text-[15px] mt-[1px]',
-    buttonStyle: 'px-[13px] py-[3px] rounded-[5px] text-white font-sans font-medium'
+    buttonStyle: 'px-[9px] rounded-[5px] text-white font-sans font-medium mb-4'
 }
 export default styles;

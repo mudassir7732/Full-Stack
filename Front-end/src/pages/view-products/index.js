@@ -88,7 +88,7 @@ const ViewProducts = () => {
 
   const updateStatus = async (id, status) => {
     setLoading(true);
-    axios.post('http://localhost:5000/update-product-status', { id: id, newStatus: status })
+    await axios.post('http://localhost:5000/update-product-status', { id: id, newStatus: status })
       .then((res) => {
         setMessage(res?.data?.message);
         getData();
@@ -110,11 +110,9 @@ const ViewProducts = () => {
       {message && <CustomSnackbar message={message} />}
       {loading && <Loader />}
 
-      <div className='flex items-center h-fit justify-center w-fit py-4 '>
-        <div className={`${details === null ? 'mt-0' : 'mt-8'}`}>
-
+      <div className='flex items-center h-fit justify-center w-fit py-4'>
           {details === null &&
-            <div className="bg-[#eff1fa] border-[1px] p-5 border-[#e0e0e0] shadow-lg rounded-[20px]">
+            <div className="bg-white border-[1px] py-4 border-[#f0f0f0] shadow-lg rounded-[20px]">
               <div className={styles.header}>
 
                 <div className={styles.headingBox}>
@@ -146,14 +144,14 @@ const ViewProducts = () => {
 
               </div>
 
-              <TableContainer sx={{ borderRadius: '10px', border: '1px solid #e0e0e0', marginTop: '3vh' }}>
+              <TableContainer>
                 <Table>
-                  <TableHead sx={{ backgroundColor: '#000053' }}>
+                  <TableHead>
                     <TableRow>
-                      <TableCell sx={{ fontWeight: '700', fontSize: '15px', color: '#fff' }} >
+                      <TableCell sx={{ fontWeight: '500', fontSize: '12px', color: '#a9a9a9' }} >
                         Name
                       </TableCell>
-                      <TableCell sx={{ fontWeight: '700', fontSize: '15px', color: '#fff' }} >
+                      <TableCell sx={{ fontWeight: '500', fontSize: '12px', color: '#a9a9a9' }} >
                         Date
                       </TableCell>
                       <TableCell></TableCell>
@@ -161,7 +159,7 @@ const ViewProducts = () => {
                   </TableHead>
                   <TableBody>
                     {data?.map((item, index) => (
-                      <TableRow sx={{ backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#fff' }}>
+                      <TableRow>
                         <TableCell>
                           {item?.name}
                         </TableCell>
@@ -186,7 +184,7 @@ const ViewProducts = () => {
           {
             details !== null &&
             <>
-              <div className="bg-[#eff1fa] px-5 w-full border-[1px] border-[#e0e0e0] shadow-lg rounded-[20px]">
+              <div className="bg-white px-5 w-full border-[1px] border-[#e0e0e0] shadow-lg rounded-[20px]">
 
                 <img src='/assets/icons/close.png' alt='close_icon'
                   className='h-[22px] w-[22px] cursor-pointer ml-[100%] mt-4'
@@ -251,7 +249,7 @@ const ViewProducts = () => {
                       </p>
                     </div>
                     <div>
-                      {(details.status === 'Accepted' || details.status === 'Pending') &&
+                      {(details.status !== 'rejected') &&
                         <button className={`bg-[#ff0000] hover:bg-[#ee0000] ${styles.buttonStyle}`}
                           onClick={() => updateStatus(details.id, 'Rejected')}>
                           Reject
@@ -270,7 +268,6 @@ const ViewProducts = () => {
               <div className='h-6' />
             </>
           }
-        </div>
       </div>
     </>
   )

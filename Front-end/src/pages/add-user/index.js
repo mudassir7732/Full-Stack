@@ -7,6 +7,7 @@ import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from
 import CustomSnackbar from "../../components/snackbar";
 import styles3 from '../add-product/styles';
 import { Form, Formik } from 'formik';
+import '../../App.css';
 import * as yup from 'yup';
 
 
@@ -107,7 +108,7 @@ const AddUser = () => {
     const handleSignup = (values) => {
         setLoading(true);
         axios
-            .post(`http://127.0.0.1:5000/register`, {
+            .post(`http://localhost/register`, {
                 name: values?.name,
                 email: values?.email,
                 password: values?.password,
@@ -137,29 +138,29 @@ const AddUser = () => {
             {message && <CustomSnackbar message={message} />}
             <div>
                 {popup === false &&
-                    <div className="bg-[#eff1fa] px-6 py-4 my-4 border-[1px] border-[#e0e0e0] shadow-lg rounded-[20px]">
-                        <div className='flex flex-row items-center justify-between px-2'>
-                            <p className="text-[26px] font-bold font-sans text-[#000080] underline">
+                    <div className="bg-white py-4 my-4 border-[1px] border-[#e9e9e9] shadow-lg rounded-[16px]">
+                        <div className='flex flex-row items-center justify-between px-4'>
+                            <p className="text-[18px] font-medium font-sans text-[#606060]">
                                 Registered Users
                             </p>
 
-                            <button className={`bg-[#006400] hover:bg-[#004400] py-2 ${styles.buttonStyle}`}
+                            <button className={`bg-[#006400] hover:bg-[#004400] py-[1px] ${styles.buttonStyle}`}
                                 onClick={() => setPopup(true)}>
                                 Add New User
                             </button>
                         </div>
 
-                        <TableContainer sx={{ borderRadius: '10px', border: '1px solid #e0e0e0', marginTop: '3vh' }}>
+                        <TableContainer sx={{ marginTop: '0vh' }}>
                             <Table>
-                                <TableHead sx={{ backgroundColor: '#000053' }}>
+                                <TableHead>
                                     <TableRow>
-                                        <TableCell sx={{ fontWeight: '700', fontSize: '15px', color: '#fff' }} >
+                                        <TableCell sx={{ fontWeight:'500', fontSize: '12px', color: '#a9a9a9' }} >
                                             Name
                                         </TableCell>
-                                        <TableCell sx={{ fontWeight: '700', fontSize: '15px', color: '#fff' }} >
+                                        <TableCell sx={{ fontWeight: '500', fontSize: '12px', color: '#a9a9a9' }} >
                                             Email
                                         </TableCell>
-                                        <TableCell sx={{ fontWeight: '700', fontSize: '15px', color: '#fff' }} >
+                                        <TableCell sx={{ fontWeight: '500', fontSize: '12px', color: '#a9a9a9' }} >
                                             Role
                                         </TableCell>
                                         <TableCell></TableCell>
@@ -168,25 +169,27 @@ const AddUser = () => {
                                 </TableHead>
                                 <TableBody>
                                     {users?.map((user, index) => (
-                                        <TableRow sx={{ backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#fff' }}>
-                                            <TableCell>
+                                        <TableRow >
+                                            <TableCell sx={{color:'#505050'}}>
                                                 {user?.name}
                                             </TableCell>
-                                            <TableCell>
+                                            <TableCell sx={{color:'#505050'}}>
                                                 {user?.email}
                                             </TableCell>
-                                            <TableCell>
+                                            <TableCell sx={{color:'#505050'}}>
                                                 {user?.role}
                                             </TableCell>
                                             <TableCell>
-                                                <button id={1} className={styles.viewButton}
+                                                <button id={1}
+                                                 className={`${styles.viewButton} button`}
+                                                 style={{backgroundColor: "linear-gradient('310deg', '#17ad37', '#98ec2d')"}}
                                                     onClick={() => handleEditButton(user?.id)}
                                                 >
                                                     Edit
                                                 </button>
                                             </TableCell>
                                             <TableCell>
-                                                <button id={1} className={`bg-[#ff0000] hover:bg-[#ee0000] ${styles.viewButton}`}
+                                                <button id={1} className={`bg-[#ff0000] hover:bg-[#ee0000] ${styles.deleteButton}`}
                                                     onClick={() => handleDelete(user?.id)}
                                                 >
                                                     Delete
@@ -206,7 +209,7 @@ const AddUser = () => {
                     <Formik initialValues={INTIIAL_VALUES} validationSchema={ValidationSchema} onSubmit={details === null ? handleSignup : handleUpdate}>
                         {({ handleChange, values, errors, touched }) => (
                             <Form>
-                                <div className=' flex flex-col items-center justify-center p-4 bg-[#eff1fa] shadow-lg rounded-[18px] border-[1px]'>
+                                <div className=' flex flex-col items-center justify-center p-4 bg-white shadow-lg rounded-[18px] border-[1px]'>
                                     <div className="flex flex-row items-center justify-between w-full px-2">
                                         <p className="text-[22px] pt-2 mb-0 font-bold font-sans text-[#000080]">
                                             Add Here!

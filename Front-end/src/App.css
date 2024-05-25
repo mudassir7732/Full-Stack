@@ -13,6 +13,13 @@
   }
 }
 
+.edit-button{
+background-image: linear-gradient(310deg, #17ad37, #98ec2d);
+}
+
+.delete-button{
+  background-image: linear-gradient(310deg, #D2122E, #FF2400);
+  }
 
 .switch {
   position: relative;

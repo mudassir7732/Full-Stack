@@ -47,11 +47,6 @@ app.get("/getdata", (req, res) => {
 })
 
 
-
-
-
-
-
 app.post('/register', (req, res) => {
   const { name, email, password, role } = req.body;
   const checkEmailSql = 'SELECT * FROM registeredusers WHERE email = ?';
@@ -100,7 +95,7 @@ app.put('/update/:userId', (req, res) => {
       }
 
       if (checkResult.length > 0) {
-        res.json({ message: 'Email Already Registered' });
+        res.json({ message: 'User Updated Successfully' });
         return;
       }
 
@@ -119,33 +114,34 @@ app.put('/update/:userId', (req, res) => {
 });
 
 
-app.put('/update/:userId', (req, res) => {
-  const userId = req.params.userId;
-  const { name, email, password, role } = req.body;
+// app.put('/update/:userId', (req, res) => {
+//   const userId = req.params.userId;
+//   const { name, email, password, role } = req.body;
 
-  const updateSql = 'UPDATE registeredusers SET name = ?, email = ?, password = ?, role = ? WHERE id = ?';
-  pool.query(updateSql, [name, email, password, role, userId], (updateErr, updateResult) => {
-    if (updateErr) {
-      console.error('Error updating user:', updateErr);
-      res.status(500).json({ message: 'Internal Server Error' });
-      return;
-    }
+//   const updateSql = 'UPDATE registeredusers SET name = ?, email = ?, password = ?, role = ? WHERE id = ?';
+//   pool.query(updateSql, [name, email, password, role, userId], (updateErr, updateResult) => {
+//     if (updateErr) {
+//       console.error('Error updating user:', updateErr);
+//       res.status(500).json({ message: 'Internal Server Error' });
+//       return;
+//     }
 
-    if (updateResult.affectedRows === 0) {
-      res.status(404).json({ message: 'User not found' });
-      return;
-    }
+//     if (updateResult.affectedRows === 0) {
+//       res.status(404).json({ message: 'User not found' });
+//       return;
+//     }
 
-    res.status(200).json({ message: 'User updated successfully' });
+//     res.status(200).json({ message: 'User updated successfully' });
 
-    if (updateResult.affectedRows === 0) {
-      res.status(404).json({ message: 'User not found' });
-      return;
-    }
+//     if (updateResult.affectedRows === 0) {
+//       res.status(404).json({ message: 'User not found' });
+//       return;
+//     }
 
-    res.status(200).json({ message: 'User updated successfully' });
-  });
-});
+//     res.status(200).json({ message: 'User updated successfully' });
+//   });
+// });
+
 
 app.delete('/delete/:userId', (req, res) => {
   const userId = req.params.userId;
@@ -183,15 +179,17 @@ app.post("/signin", function (req, res) {
       return;
     }
 
+    const user = result[0]; // Move this line here
+
     if (user.password !== password) {
       res.json({ userExist: true, message: 'Password Incorrect' });
       return;
     }
-    const user = result[0];
 
     res.json({ userExist: true, user: user, message: 'success' });
   });
 });
+
 
 
 const storage = multer.diskStorage({
@@ -259,18 +257,6 @@ app.get("/get-users", (req, resp) => {
 });
 
 
-app.post("/update-product-status", (req, resp) => {
-  const { id, newStatus } = req.body;
-  const sql = 'UPDATE products SET status = ? WHERE id = ?';
-  pool.query(sql, [newStatus, id], (err, result) => {
-    if (err) {
-      console.error('Error updating status:', err);
-      resp.status(500).json({ message: 'Internal Server Error' });
-      return;
-    }
-    resp.status(200).json({ message: 'Status updated successfully' });
-  });
-});
 app.post("/update-product-status", (req, resp) => {
   const { id, newStatus } = req.body;
   const sql = 'UPDATE products SET status = ? WHERE id = ?';

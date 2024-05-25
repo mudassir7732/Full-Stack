@@ -45,7 +45,7 @@ const Signin = () => {
     const handleSignin = async (values) => {
         setLoading(true)
         await axios
-            .post(`http://127.0.0.1:5000/signin`, {
+            .post(`http://localhost:5000/signin`, {
                 email: values.email,
                 password: values.password,
             })

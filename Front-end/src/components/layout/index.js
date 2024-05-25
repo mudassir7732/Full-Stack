@@ -1,6 +1,7 @@
 import Header from "../header";
-import Sidebar from "./sidebar";
-import AdminSidebar from "./sidebar/adminSidebar";
+import Sidebar from "../sidebar";
+import AdminSidebar from "../sidebar/adminSidebar";
+
 
 const Layout = ({ children }) => {
     const userString = localStorage.getItem('user');
@@ -10,22 +11,24 @@ const Layout = ({ children }) => {
     }
 
     return (
-        <div className="flex flex-col w-full overflow-hidden">
-            <Header />
-            <div className="flex flex-row items-start justify-start w-full mt-[8vh]">
-                {user?.role && user?.role === 'user' &&
-                    <Sidebar />
-                }
-                {user && user?.role === 'admin' && (
-                    <AdminSidebar />
-                )}
-                <div className="flex items-center justify-center w-[82%] overflow-y-scroll ml-[200px] lg:ml-[250px] min-h-[92vh]">
-                    <div className="flex flex-col items-center justify-center pt-4 w-full h-[92vh]">
-                        {children}
-                    </div>
-                </div>
-            </div>
+<div className="flex flex-row bg-[#f8f8f8] min-h-screen">
+    {user?.role && user?.role === 'user' &&
+        <div className="w-[20%]">
+            <Sidebar />
         </div>
+    }
+    {user && user?.role === 'admin' && (
+        <div className="w-[20%] fixed">
+            <AdminSidebar />
+        </div>
+    )}
+    <div className="flex flex-col items-center justify-center ml-[20%] w-full">
+        <div className="flex flex-col items-center justify-center w-fit h-full">
+            {children}
+        </div>
+    </div>
+</div>
+
     )
 }
 export default Layout;

@@ -212,7 +212,9 @@ const AddProduct = () => {
                       </div>
                     ))}
 
-                    <button type='submit' className={styles.submit}>
+                    <button type='submit' 
+                    className={styles.submit}
+                    >
                       Submit
                     </button>
 

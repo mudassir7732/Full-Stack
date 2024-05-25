@@ -24,25 +24,24 @@ const Signup = () => {
         name: '',
         email: '',
         password: '',
-        role: false
     }
 
     const handleSignup = (values) => {
         if (values) {
             setLoading(true);
             axios
-                .post(`http://127.0.0.1:5000/register`, {
+                .post(`http://localhost:5000/register`, {
                     name: values.name,
                     email: values.email,
                     password: values.password,
-                    role: values.role ? 'admin' : 'user',
+                    role: 'user',
                 })
                 .then((res) => {
                     const a = res?.data?.message;
                     setMessage(a);
                     if (res?.data?.message === 'Successfully Registered') {
                         const obj = res.data;
-                        const user = JSON.stringify({ name: obj.name, email: obj.email, password: obj.password, role: obj.role, token: obj.token });
+                        const user = JSON.stringify({ name: obj.name, email: obj.email, password: obj.password, role: 'user', token: obj.token });
                         localStorage.setItem('user', user)
                         if (obj.role === 'admin') {
                             navigate('/add-products')
@@ -126,22 +125,6 @@ const Signup = () => {
                                             {errors.password?.toString()}
                                         </p>
                                     )}
-
-                                    <div className={styles.switchWrapper}>
-                                        <label className="switch">
-                                            <input
-                                                type="checkbox"
-                                                name='role'
-                                                value={values.role}
-                                                onChange={handleChange}
-                                                checked={values.role}
-                                            />
-                                            <span className="slider"></span>
-                                        </label>
-                                        <p className={styles.switch}>
-                                            Admin
-                                        </p>
-                                    </div>
 
                                     <button type="submit" className={styles.signin}>
                                         SIGN UP
