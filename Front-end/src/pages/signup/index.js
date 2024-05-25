@@ -79,8 +79,8 @@ const Signup = () => {
                     <Formik initialValues={INTIIAL_VALUES} validationSchema={ValidationSchema} onSubmit={handleSignup}>
                         {({ handleChange, values, errors, touched }) => (
                             <Form>
-                                <div>
-
+                                <div className="flex flex-col w-fit items-center">
+                                <div className="flex flex-col items-start">
                                     <p className={styles.welcome}>
                                         Sign up here!
                                     </p>
@@ -131,11 +131,13 @@ const Signup = () => {
                                     </button>
 
                                 </div>
+                                </div>
                             </Form>
                         )}
                     </Formik>
 
-                    <div className={styles.singupWrapper}>
+                    <div className={styles.singupWrapper}
+                    >
                         <p className="text-[#67748e] text-[14px]v font-sans">
                             Don't have an account?
                         </p>

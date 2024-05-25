@@ -15,11 +15,11 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const pool = mysql.createPool({
-  connectionLimit: 10,
-  database: process.env.DATABASE,
+  connectionLimit: 10,  
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
+  password: process.env.DB_PASSWORD,  
+  database: process.env.DATABASE,
 });
 
 const secretKey = process.env.SECRET_KEY;
@@ -30,21 +30,21 @@ let apikey = process.env.API_KEY;
 let pass = process.env.PASSWORD;
 let endpoint = 'products';
 
-let options = {
-  'method': 'GET',
-  'url': `https://${apikey}:${pass}@e0dc50-40.myshopify.com/admin/api/2024-04/${endpoint}.json`,
-  'headers': {
-    'Content-Type': 'application/json'
-  }
-};
+// let options = {
+//   'method': 'GET',
+//   'url': `https://${apikey}:${pass}@e0dc50-40.myshopify.com/admin/api/2024-04/${endpoint}.json`,
+//   'headers': {
+//     'Content-Type': 'application/json'
+//   }
+// };
 
-app.get("/getdata", (req, res) => {
-  request(options, function (error, res) {
-    if (error)
-      throw new Error(error);
-    console.log(res.body)
-  })
-})
+// app.get("/getdata", (req, res) => {
+//   request(options, function (error, res) {
+//     if (error)
+//       throw new Error(error);
+//     console.log(res.body)
+//   })
+// })
 
 
 app.post('/register', (req, res) => {
@@ -72,6 +72,33 @@ app.post('/register', (req, res) => {
       }
       res.json({ message: 'Successfully Registered', name, email, password, role, token });
     });
+  });
+});
+
+
+app.post("/signin", function (req, res) {
+  const { email, password } = req.body;
+
+  const sql = 'SELECT * FROM registeredusers WHERE email = ?';
+  pool.query(sql, [email], (err, result) => {
+    if (err) {
+      console.error('Error signing in:', err);
+      res.status(500).json({ message: 'Internal Server Error' });
+      return;
+    }
+    if (!result || result.length === 0) {
+      res.json({ userExist: false, message: 'Email not registered' });
+      return;
+    }
+
+    const user = result[0];
+
+    if (user.password !== password) {
+      res.json({ userExist: true, message: 'Password Incorrect' });
+      return;
+    }
+
+    res.json({ userExist: true, user: user, message: 'success' });
   });
 });
 
@@ -114,35 +141,6 @@ app.put('/update/:userId', (req, res) => {
 });
 
 
-// app.put('/update/:userId', (req, res) => {
-//   const userId = req.params.userId;
-//   const { name, email, password, role } = req.body;
-
-//   const updateSql = 'UPDATE registeredusers SET name = ?, email = ?, password = ?, role = ? WHERE id = ?';
-//   pool.query(updateSql, [name, email, password, role, userId], (updateErr, updateResult) => {
-//     if (updateErr) {
-//       console.error('Error updating user:', updateErr);
-//       res.status(500).json({ message: 'Internal Server Error' });
-//       return;
-//     }
-
-//     if (updateResult.affectedRows === 0) {
-//       res.status(404).json({ message: 'User not found' });
-//       return;
-//     }
-
-//     res.status(200).json({ message: 'User updated successfully' });
-
-//     if (updateResult.affectedRows === 0) {
-//       res.status(404).json({ message: 'User not found' });
-//       return;
-//     }
-
-//     res.status(200).json({ message: 'User updated successfully' });
-//   });
-// });
-
-
 app.delete('/delete/:userId', (req, res) => {
   const userId = req.params.userId;
 
@@ -162,34 +160,6 @@ app.delete('/delete/:userId', (req, res) => {
     res.status(200).json({ message: 'User deleted successfully' });
   });
 });
-
-
-app.post("/signin", function (req, res) {
-  const { email, password } = req.body;
-
-  const sql = 'SELECT * FROM registeredusers WHERE email = ?';
-  pool.query(sql, [email], (err, result) => {
-    if (err) {
-      console.error('Error signing in:', err);
-      res.status(500).json({ message: 'Internal Server Error' });
-      return;
-    }
-    if (!result || result.length === 0) {
-      res.json({ userExist: false, message: 'Email not registered' });
-      return;
-    }
-
-    const user = result[0]; // Move this line here
-
-    if (user.password !== password) {
-      res.json({ userExist: true, message: 'Password Incorrect' });
-      return;
-    }
-
-    res.json({ userExist: true, user: user, message: 'success' });
-  });
-});
-
 
 
 const storage = multer.diskStorage({

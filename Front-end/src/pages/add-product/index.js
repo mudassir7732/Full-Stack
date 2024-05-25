@@ -177,7 +177,7 @@ const AddProduct = () => {
                     ))}
 
                     <p className={styles.title}>
-                      video URLs
+                      Video URLs
                     </p>
                     <div className='flex flex-row items-center'>
                       <input

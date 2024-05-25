@@ -6,7 +6,7 @@ const ADMIN_ROUTES = [
     { label: 'Add Product', path: '/add-product', icon: '/assets/icons/add_icon.png' },
     { label: 'View Products', path: '/view-products', icon: '/assets/icons/view.png' },
     { label: 'Add User', path: '/add-user', icon: '/assets/icons/add-user1.png' },
-    { label: 'Sign-Out', path: '/', icon: '/assets/icons/logout.png' },
+    { label: 'Sign-Out', path: '/', icon: '/assets/icons/signout.png' },
 ]
 
 const AdminSidebar = () => {

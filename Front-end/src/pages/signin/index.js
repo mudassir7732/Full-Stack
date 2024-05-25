@@ -60,7 +60,7 @@ const Signin = () => {
                         navigate('/dashboard');
                     }
                     else if (res?.data?.user?.role === 'admin') {
-                        navigate('/view-products');
+                        navigate('/add-product');
                     }
                 }
             })
