@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require("express");
+const cookieParser = require('cookie-parser');
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const jwt = require('jsonwebtoken');
@@ -8,6 +9,7 @@ const mysql = require("mysql");
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 app.use(cors());
 app.use('/uploads', express.static('uploads'));
 app.use(cors());
@@ -15,10 +17,10 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const pool = mysql.createPool({
-  connectionLimit: 10,  
+  connectionLimit: 10,
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,  
+  password: process.env.DB_PASSWORD,
   database: process.env.DATABASE,
 });
 
@@ -47,39 +49,91 @@ let endpoint = 'products';
 // })
 
 
-app.post('/register', (req, res) => {
-  const { name, email, password, role } = req.body;
-  const checkEmailSql = 'SELECT * FROM registeredusers WHERE email = ?';
-  pool.query(checkEmailSql, [email], (checkErr, checkResult) => {
-    if (checkErr) {
-      console.error('Error checking email:', checkErr);
-      res.status(500).json({ message: 'Internal Server Error' });
-      return;
+
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { validationResult } = require('express-validator');
+
+app.post('/register', async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
 
+    const { name, email, password } = req.body;
+    let role = req.body.role || 'User';
+
+    const checkEmailSql = 'SELECT * FROM users WHERE email = ?';
+    const checkResult = await pool.query(checkEmailSql, [email]);
     if (checkResult.length > 0) {
-      res.json({ message: 'Email Already Registered' });
-      return;
+      return res.status(400).json({ message: 'Email Already Registered' });
     }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const token = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
-    const insertSql = 'INSERT INTO registeredusers (name, email, password, role, token) VALUES (?, ?, ?, ?, ?)';
-    pool.query(insertSql, [name, email, password, role, token], (insertErr, insertResult) => {
-      if (insertErr) {
-        console.error('Error registering user:', insertErr);
-        res.status(500).json({ message: 'Internal Server Error' });
-        return;
-      }
-      res.json({ message: 'Successfully Registered', name, email, password, role, token });
+
+    const insertSql = 'INSERT INTO users (name, email, password, role, token) VALUES (?, ?, ?, ?, ?)';
+    await pool.query(insertSql, [name, email, hashedPassword, role, token]);
+
+    // Set access token as HTTP-only cookie
+    res.cookie('access-token', token, {
+      httpOnly: true,
+      secure: true, // Set to true if your app is served over HTTPS
+      sameSite: 'strict',
     });
-  });
+
+    res.json({ message: 'Successfully Registered', name, email, role });
+  } catch (error) {
+    console.error('Error registering user:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
 });
+
+
+// app.post('/register', (req, res) => {
+//   const { name, email, password } = req.body;
+//   let role = req.body.role || 'User';
+
+//   const checkEmailSql = 'SELECT * FROM users WHERE email = ?';
+//   pool.query(checkEmailSql, [email], (checkErr, checkResult) => {
+//     if (checkErr) {
+//       console.error('Error checking email:', checkErr);
+//       res.status(500).json({ message: 'Internal Server Error' });
+//       return;
+//     }
+
+//     if (checkResult.length > 0) {
+//       res.json({ message: 'Email Already Registered' });
+//       return;
+//     }
+
+//     const token = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
+//     res.cookie('access-token', token,{
+//       httpOnly:true,
+//       secure:true,
+//       sameSite:strict
+//     });
+
+//     const insertSql = 'INSERT INTO users (name, email, password, role, token) VALUES (?, ?, ?, ?, ?)';
+//     pool.query(insertSql, [name, email, password, role, token], (insertErr, insertResult) => {
+//       if (insertErr) {
+//         console.error('Error registering user:', insertErr);
+//         res.status(500).json({ message: 'Internal Server Error' });
+//         return;
+//       }
+//       res.json({ message: 'Successfully Registered', name, email, password, role, token });
+//     });
+//   });
+// });
+
 
 
 app.post("/signin", function (req, res) {
   const { email, password } = req.body;
 
-  const sql = 'SELECT * FROM registeredusers WHERE email = ?';
+  const sql = 'SELECT * FROM users WHERE email = ?';
   pool.query(sql, [email], (err, result) => {
     if (err) {
       console.error('Error signing in:', err);
@@ -98,7 +152,8 @@ app.post("/signin", function (req, res) {
       return;
     }
 
-    res.json({ userExist: true, user: user, message: 'success' });
+    res.json({ userExist: true, user: user, message: 'Sign-in Successful' });
+
   });
 });
 
@@ -107,13 +162,13 @@ app.put('/update/:userId', (req, res) => {
   const userId = req.params.userId;
   const { name, email, password, role } = req.body;
 
-  const updateSql = 'UPDATE registeredusers SET name = ?, email = ?, password = ?, role = ? WHERE id = ?';
+  const updateSql = 'UPDATE users SET name = ?, email = ?, password = ?, role = ? WHERE id = ?';
   pool.query(updateSql, [name, email, password, role, userId], (updateErr, updateResult) => {
     if (updateErr) {
       console.error('Error updating user:', updateErr);
     }
     const { name, email, password, role } = req.body;
-    const checkEmailSql = 'SELECT * FROM registeredusers WHERE email = ?';
+    const checkEmailSql = 'SELECT * FROM users WHERE email = ?';
     pool.query(checkEmailSql, [email], (checkErr, checkResult) => {
       if (checkErr) {
         console.error('Error checking email:', checkErr);
@@ -127,7 +182,7 @@ app.put('/update/:userId', (req, res) => {
       }
 
       const token = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
-      const insertSql = 'INSERT INTO registeredusers (name, email, password, role, token) VALUES (?, ?, ?, ?, ?)';
+      const insertSql = 'INSERT INTO users (name, email, password, role, token) VALUES (?, ?, ?, ?, ?)';
       pool.query(insertSql, [name, email, password, role, token], (insertErr, insertResult) => {
         if (insertErr) {
           console.error('Error registering user:', insertErr);
@@ -144,7 +199,7 @@ app.put('/update/:userId', (req, res) => {
 app.delete('/delete/:userId', (req, res) => {
   const userId = req.params.userId;
 
-  const deleteSql = 'DELETE FROM registeredusers WHERE id = ?';
+  const deleteSql = 'DELETE FROM users WHERE id = ?';
   pool.query(deleteSql, [userId], (deleteErr, deleteResult) => {
     if (deleteErr) {
       console.error('Error deleting user:', deleteErr);
@@ -215,7 +270,7 @@ app.get("/get-data", (req, resp) => {
 
 
 app.get("/get-users", (req, resp) => {
-  const sql = 'SELECT * FROM registeredusers';
+  const sql = 'SELECT * FROM users';
 
   pool.query(sql, (err, result) => {
     if (err) {
