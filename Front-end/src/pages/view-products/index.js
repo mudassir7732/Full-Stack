@@ -144,7 +144,7 @@ const ViewProducts = () => {
 
               </div>
 
-              <TableContainer>
+              <TableContainer sx={{paddingInline:'30px', paddingBlock:'5px'}}>
                 <Table>
                   <TableHead>
                     <TableRow>

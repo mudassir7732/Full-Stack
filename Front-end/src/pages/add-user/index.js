@@ -150,7 +150,7 @@ const AddUser = () => {
                             </button>
                         </div>
 
-                        <TableContainer sx={{ marginTop: '0vh' }}>
+                        <TableContainer sx={{ paddingInline:'30px' }}>
                             <Table>
                                 <TableHead>
                                     <TableRow>
@@ -169,7 +169,7 @@ const AddUser = () => {
                                 </TableHead>
                                 <TableBody>
                                     {users?.map((user, index) => (
-                                        <TableRow >
+                                        <TableRow sx={{marginInline:'200px'}} >
                                             <TableCell sx={{color:'#505050'}}>
                                                 {user?.name}
                                             </TableCell>

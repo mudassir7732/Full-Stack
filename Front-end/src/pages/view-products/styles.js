@@ -6,7 +6,7 @@ const styles = {
     secondBlock: 'py-3 rounded-xl px-2 lg:px-4 w-[85%] lg:w-[45%] bg-[#eff1fa] border-[1px] border-[#c5c5c5]',
     closeIcon:'absolute right-11 sm:right-20 z-10 lg:right-16 h-[22px] w-[22px] cursor-pointer',
     header: 'flex flex-row items-center justify-between px-4 pb-2',
-    headingBox: 'flex flex-row items-center justify-between bg-[#e9e9e9] gap-x-2 border-[1px] border-[#e0e0e0] px-1 py-[1px] w-fit',
+    headingBox: 'flex flex-row items-center justify-between bg-[#f5f5f5] gap-x-2 border-[1px] border-[#f0f0f0] rounded-[4px] shadow-sm px-1 py-[1px] w-fit',
     headingTitle: 'font-sans font-bold text-[13px] text-black my-auto',
     dataContainer: 'bg-[#e9e9e9] px-3 mt-5 border-[1px] border-[#e5e5e5]',
     dataList: 'flex flex-row items-center my-2 justify-between py-[7px] border-[1px] border-[#e5e5e5] bg-white px-3',
