@@ -57,7 +57,8 @@ const Signin = () => {
         //     console.log(err, ' = Error')
         // }
         await axios
-            .post(`http://localhost:5000/signin`, {
+                .post(`/routes/auth/signin`, {
+                    // .post(`http://localhost:5000/signin`, {
                 email: values.email,
                 password: values.password,
             })

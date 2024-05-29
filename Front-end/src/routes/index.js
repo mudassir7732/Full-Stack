@@ -10,11 +10,11 @@ import AddUser from "../pages/add-user";
 import AdminGuard from "./adminGuard";
 import UserGuard from "./userGuard";
 import ShopifyPage from "../pages/shopify";
-import {useAuth} from '../AuthContext';
+import { useAuth } from '../AuthContext';
 import PrivateRoute from "./privateRoute";
 
 const AppRoutes = () => {
-  const { isAuthenticated } = useAuth();
+    const { isAuthenticated } = useAuth();
     return (
         <Router>
             <Routes>
@@ -29,12 +29,36 @@ const AppRoutes = () => {
                         </UserGuard>
                     }
                 />
-                <Route path="/add-product" element={<AdminGuard><Layout> <AddProduct /></Layout></AdminGuard>} />
-                <Route path='/view-products' element={<AdminGuard><Layout><ViewProducts /></Layout></AdminGuard>} />
-                .<Route path='/add-user' element={<AdminGuard><Layout><AddUser /></Layout></AdminGuard>} />
+                <Route path="/add-product"
+                    element={
+                        // <AdminGuard>
+                        <Layout>
+                            <AddProduct />
+                        </Layout>
+                        // </AdminGuard>
+                    }
+                />
+                <Route path='/view-products'
+                    element={
+                        // <AdminGuard>
+                        <Layout>
+                            <ViewProducts />
+                        </Layout>
+                        // </AdminGuard>
+                    }
+                />
+                .<Route path='/add-user'
+                    element={
+                        // <AdminGuard>
+                        <Layout>
+                            <AddUser />
+                        </Layout>
+                        // </AdminGuard> 
+                    }
+                />
                 <Route path='/shopify' element={<ShopifyPage />} />
                 {/* <PrivateRoute path="/dashboard" element={<Dashboard />} isAuthenticated={isAuthenticated} /> */}
-        {/* Redirect to sign-in page for unknown routes */}
+                {/* Redirect to sign-in page for unknown routes */}
                 <Route path='*' element={<ErrorPage />} />
             </Routes>
         </Router>

@@ -38,7 +38,7 @@ const AddUser = () => {
     }, []);
 
     const getData = async () => {
-        await axios.get('http://localhost:5000/get-users')
+        await axios.get('/routes/users/get-users')
             .then(response => {
                 setUsers(response?.data)
             })
@@ -63,7 +63,7 @@ const AddUser = () => {
     const handleUpdate = (values) => {
         setLoading(true);
         axios
-            .put(`http://localhost:5000/update/${details?.id}`, {
+            .put(`/routes/users/update/${details?.id}`, {
                 name: values?.name,
                 email: values?.email,
                 password: values?.password,
@@ -88,7 +88,7 @@ const AddUser = () => {
 
     const handleDelete = (userId) => {
         setLoading(true);
-        axios.delete(`http://localhost:5000/delete/${userId}`)
+        axios.delete(`/routes/users/delete/${userId}`)
             .then((res) => {
                 setMessage(res?.data?.message);
                 getData();

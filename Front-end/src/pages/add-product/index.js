@@ -60,7 +60,7 @@ const AddProduct = () => {
     videoURL.forEach((url, index) => {
       formData.append(`video_url_${index}`, url);
     });
-    axios.post('http://localhost:5000/upload-data', formData)
+    axios.post('/routes/products/upload-data', formData)
       .then((res) => {
         navigate('/view-products')
       })

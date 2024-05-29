@@ -6,6 +6,7 @@ import Loader from "../../components/loader";
 import styles2 from '../add-product/styles';
 import styles from '../signin/styles';
 import CustomSnackbar from "../../components/snackbar";
+// import Cookies from 'js-cookie';
 import { Form, Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -26,11 +27,11 @@ const Signup = () => {
         password: '',
     }
 
-    const handleSignup = (values) => {
+    const handleSignup = async (values) => {
         if (values) {
             setLoading(true);
-            axios
-                .post(`http://localhost:5000/register`, {
+            await axios
+                .post(`/routes/auth/register`, {
                     name: values.name,
                     email: values.email,
                     password: values.password,
@@ -41,9 +42,10 @@ const Signup = () => {
                     setMessage(a);
                     if (res?.data?.message === 'Successfully Registered') {
                         const obj = res.data;
+                        // Cookies.set('access_token', res?.data?.access_token, {expires:7});
                         const user = JSON.stringify({ name: obj.name, email: obj.email, password: obj.password, role: 'User', token: obj.token });
                         localStorage.setItem('user', user)
-                        console.log(user, ' = User')
+                        console.log(res?.data, ' = User')
                         // setTimeout(() => {
                         //     navigate('/');                            
                         // }, 3000);

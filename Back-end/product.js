@@ -1,4 +1,4 @@
-require('dotenv').config();
+ require('dotenv').config();
 let request = require('request');
 
 let apikey = process.env.API_KEY;
