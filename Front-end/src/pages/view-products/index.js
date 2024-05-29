@@ -22,7 +22,7 @@ const ViewProducts = () => {
   }, []);
 
   const getData = async () => {
-    await axios.get('/routes//get-data')
+    await axios.get('/routes/products/get-data')
       .then(response => {
         setData(response.data)
       })
