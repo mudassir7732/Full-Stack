@@ -101,8 +101,7 @@ To use the application, navigate to http://localhost:3000 in your web browser. Y
 
 ```bash
 
-/Full-Stack
-
+├──Full-Stack/
 ├── client/                  # Front-end code
 │   ├── public/              # Public assets
 │   ├── src/                 # Source code
