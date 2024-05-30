@@ -3,23 +3,6 @@ const router = express.Router();
 const connection = require('../config/db');
 const jwt = require('jsonwebtoken');
 
-//  router.post('/register', (req, res) => {
-//    const { name, email, password } = req.body;
-//    const role = 'Admin';
-//    const access_token = 'token123';
-//    const sql = 'INSERT INTO users (name, email, password, role, access_token) VALUES (?, ?, ?, ?, ?)';
-
-//    connection.query(sql, [name, email, password, role, access_token], (err, result) => {
-//      if (err) {
-//        console.error('Error registering user:', err);
-//        return res.status(500).json({ message: 'Internal Server Error' });
-//      }
-
-//      console.log('User registered successfully');
-//      res.status(201).json({ message: 'User registered successfully', access_token });
-//    });
-//  });
-
 
 router.post('/register', async (req, res) => {
   try {
@@ -52,7 +35,7 @@ router.post('/register', async (req, res) => {
     //    sameSite: 'strict',
     //  });
 
-    res.json({ message: 'Successfully Registered', name, email, access_token });
+    res.json({ message: 'Successfully Registered', name, email, role, access_token });
   } catch (error) {
     console.error('Error registering user:', error);
     res.status(500).json({ message: 'Internal Server Error' });
