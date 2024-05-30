@@ -1,19 +1,43 @@
+// const jwt = require('jsonwebtoken');
+// const SECRET_KEY = process.env.SECRET_KEY;
+
+// const authenticate = (req, res, next) => {
+//   const token = req.cookies.access_token;
+//   if (!token) {
+//     return res.status(403).json({ message: 'Token required' });
+//   }
+
+//   jwt.verify(token, SECRET_KEY, (err, user) => {
+//     if (err) {
+//       return res.status(403).json({ message: 'Invalid token' });
+//     }
+//     req.user = user;
+//     next();
+//   });
+// };
+
+// module.exports = authenticate;
+
+
 const jwt = require('jsonwebtoken');
+const SECRET_KEY = process.env.SECRET_KEY;
 
-const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
-
+const authenticate = (req, res, next) => {
+  const token = req.cookies.access_token;
   if (!token) {
-    return res.status(401).json({ message: 'Authorization token is missing' });
+    return res.status(403).json({ message: 'Token required' });
   }
 
-  try {
-    const decoded = jwt.verify(token, process.env.SECRET_KEY);
-    req.user = decoded;
+  jwt.verify(token, SECRET_KEY, (err, decodedToken) => {
+    if (err) {
+      return res.status(403).json({ message: 'Invalid token' });
+    }
+    // Extract the user's role from the decoded token
+    const { role } = decodedToken;
+    // Attach the role to the request object for further use
+    req.userRole = role;
     next();
-  } catch (error) {
-    return res.status(403).json({ message: 'Invalid or expired token' });
-  }
+  });
 };
 
-module.exports = verifyToken;
+module.exports = authenticate;

@@ -7,7 +7,7 @@ import styles from "./styles";
 import styles2 from '../add-product/styles';
 import CustomSnackbar from "../../components/snackbar";
 import { Form, Formik } from 'formik';
-import { AuthContext } from "../../AuthContext";
+import Cookies from 'js-cookie';
 import * as yup from 'yup';
 
 const ValidationSchema = yup.object().shape({
@@ -23,7 +23,6 @@ const Signin = () => {
     const [loading, setLoading] = useState(false);
     const [remember, setRemember] = useState(false);
     const navigate = useNavigate();
-    const { login } = useContext(AuthContext);
 
     useEffect(() => {
         const userString = localStorage.getItem('user');
@@ -57,25 +56,26 @@ const Signin = () => {
         //     console.log(err, ' = Error')
         // }
         await axios
-                .post(`/routes/auth/signin`, {
-                    // .post(`http://localhost:5000/signin`, {
+            .post(`/routes/auth/signin`, {
+                // .post(`http://localhost:5000/signin`, {
                 email: values.email,
                 password: values.password,
             })
             .then((res) => {
+                console.log('module found here')
                 const a = res?.data?.message;
                 setMessage(a);
                 if (res?.data?.message === 'Sign-in Successful') {
-                    login();
-                    const obj = res?.data?.user;
-                    const user = JSON.stringify({ id: obj.id, email: obj.email, password: obj.password, token: obj.token, role: obj.role })
-                    localStorage.setItem('user', user);
-                    console.log(res?.data?.user?.role, ' = Role')
+                    Cookies.set('access_token', res?.data?.access_token, {expires:1/24});
+// const obj = res?.data?.user;
+                    // const user = JSON.stringify({ id: obj.id, email: obj.email, password: obj.password, token: obj.token, role: obj.role })
+                    // localStorage.setItem('user', user);
+                    // console.log(res?.data?.user?.role, ' = Role')
                     if (res?.data?.user?.role === 'User') {
                         navigate('/dashboard');
                     }
                     else if (res?.data?.user?.role === 'Admin') {
-                        navigate('/add-product');
+                        navigate('/add-products');
                     }
                 }
             })
@@ -93,26 +93,23 @@ const Signin = () => {
             });
     }
 
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTcxNjYyNDkwOSwiZXhwIjoxNzE2NjI4NTA5fQ.MmyL2YR9hrJ8KmNACbVINO7bqkb_ZO19TjAi04FRbrY';
 
-    
-    const fetchProtectedData = async () => {
-        // const token = sessionStorage.getItem('token');
 
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTcxNjYyNDkwOSwiZXhwIjoxNzE2NjI4NTA5fQ.MmyL2YR9hrJ8KmNACbVINO7bqkb_ZO19TjAi04FRbrY';
-        try {
-            const response = await axios.get('http://localhost:5000/protected-route', {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            console.log(response.data, ' = Response')
-            return response.data;
-        } catch (error) {
-            console.log(error, ' = Error');
-            return null;
-        }
-    };
+    // const fetchProtectedData = async () => {
+    //     // const token = sessionStorage.getItem('token');
+    //     try {
+    //         const response = await axios.get('http://localhost:5000/protected-route', {
+    //             headers: {
+    //                 Authorization: `Bearer ${token}`,
+    //             },
+    //         });
+    //         console.log(response.data, ' = Response')
+    //         return response.data;
+    //     } catch (error) {
+    //         console.log(error, ' = Error');
+    //         return null;
+    //     }
+    // };
 
 
     return (
@@ -192,11 +189,6 @@ const Signin = () => {
                             Sign up
                         </p>
                     </div>
-
-                    <button onClick={fetchProtectedData} className={styles.signin}>
-                        check
-                    </button>
-
                 </div>
 
                 <img

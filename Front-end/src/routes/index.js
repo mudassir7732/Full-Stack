@@ -8,13 +8,10 @@ import ViewProducts from "../pages/view-products";
 import ErrorPage from "../pages/error-page";
 import AddUser from "../pages/add-user";
 import AdminGuard from "./adminGuard";
-import UserGuard from "./userGuard";
 import ShopifyPage from "../pages/shopify";
-import { useAuth } from '../AuthContext';
-import PrivateRoute from "./privateRoute";
+import PrivateRoute from "./userGuard";
 
 const AppRoutes = () => {
-    const { isAuthenticated } = useAuth();
     return (
         <Router>
             <Routes>
@@ -22,38 +19,36 @@ const AppRoutes = () => {
                 <Route path={'/'} element={<Signin />} />
                 <Route path="/dashboard"
                     element={
-                        <UserGuard>
                             <Layout>
                                 <Dashboard />
                             </Layout>
-                        </UserGuard>
                     }
                 />
-                <Route path="/add-product"
+                <Route path="/add-products"
                     element={
-                        // <AdminGuard>
+                        <AdminGuard>
                         <Layout>
                             <AddProduct />
                         </Layout>
-                        // </AdminGuard>
+                        </AdminGuard>
                     }
                 />
                 <Route path='/view-products'
                     element={
-                        // <AdminGuard>
+                        <AdminGuard>
                         <Layout>
                             <ViewProducts />
                         </Layout>
-                        // </AdminGuard>
+                        </AdminGuard>
                     }
                 />
                 .<Route path='/add-user'
                     element={
-                        // <AdminGuard>
+                        <AdminGuard>
                         <Layout>
                             <AddUser />
                         </Layout>
-                        // </AdminGuard> 
+                        </AdminGuard> 
                     }
                 />
                 <Route path='/shopify' element={<ShopifyPage />} />

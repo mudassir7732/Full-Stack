@@ -6,7 +6,7 @@ import Loader from "../../components/loader";
 import styles2 from '../add-product/styles';
 import styles from '../signin/styles';
 import CustomSnackbar from "../../components/snackbar";
-// import Cookies from 'js-cookie';
+import Cookies from 'js-cookie';
 import { Form, Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -42,7 +42,7 @@ const Signup = () => {
                     setMessage(a);
                     if (res?.data?.message === 'Successfully Registered') {
                         const obj = res.data;
-                        // Cookies.set('access_token', res?.data?.access_token, {expires:7});
+                        Cookies.set('access_token', res?.data?.access_token, {expires:1/24});
                         const user = JSON.stringify({ name: obj.name, email: obj.email, password: obj.password, role: 'User', token: obj.token });
                         localStorage.setItem('user', user)
                         console.log(res?.data, ' = User')

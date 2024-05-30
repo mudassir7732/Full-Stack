@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/db');
-const verifyToken = require('../middlewares/auth');
 
 router.get("/get-users", (req, res) => {
   const sql = 'SELECT * FROM users';

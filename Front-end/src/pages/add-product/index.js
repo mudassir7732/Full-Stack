@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './styles';
 import Loader from '../../components/loader';
 import CustomSnackbar from '../../components/snackbar';
+import Cookies from 'js-cookie';
 
 const INITIAL_VALUES = {
   name: '',

@@ -1,13 +1,10 @@
 import { StrictMode } from "react";
 import AppRoutes from "./routes";
-import { AuthProvider } from "./AuthContext";
 
 const App = () => {
   return (
     <StrictMode>
-      <AuthProvider>
         <AppRoutes />
-      </AuthProvider>
     </StrictMode>
   )
 }

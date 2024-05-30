@@ -1,58 +1,38 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Loader from "../components/loader";
-import ErrorPage from "../pages/error-page";
-import CustomSnackbar from "../components/snackbar";
-import {useNavigate} from 'react-router-dom';
-import { AuthContext, useAuth } from "../AuthContext";
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const AdminGuard = ({ children }) => {
-    const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState('');
-    const [role, setRole] = useState();
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
-    const { login } = useContext(AuthContext);
-    const {isAuthenticated, userRole} = useAuth();
-
-
-    console.log(userRole,' = User Role')
-
-    // const handleAuthentication = async () => {
-        // const success = await login({ email: values.email, password: values.password });
-        // if (success) {
-            // navigate('/dashboard')
-        // }
-    // }
 
     useEffect(() => {
-        setLoading(true);
+        handleAuthentication();
+    }, []);
+
+    const handleAuthentication = async () => {
         try {
-            const userString = localStorage.getItem('user');
-            if (userString) {
-                const user = JSON.parse(userString);
-                setRole(user?.role);
+            const res = await axios.get(`/verify-token`, { withCredentials: true });
+            console.log(res.data, ' = response');
+            if (res?.data?.message === 'Success' && res?.data?.userRole === 'Admin') {
+                return;
+            } else {
+                navigate('/');
             }
-        }
-        catch (err) {
-            setMessage(err?.message)
+        } catch (err) {
+            console.error(err);
+            navigate('/');
         }
         finally {
             setLoading(false);
-            setTimeout(() => {
-                setMessage('');
-            }, 4000);
         }
-    }, []);
+    };
 
     if (loading) {
         return <Loader />;
     }
-
-    return (
-        <>
-            {message && <CustomSnackbar message={message} />}
-            {userRole === 'Admin' ? children : <ErrorPage />}
-        </>
-    );
+    return <>{children}</>;
 };
 
 export default AdminGuard;

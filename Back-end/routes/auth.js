@@ -2,15 +2,15 @@ const express = require('express');
 const router = express.Router();
 const connection = require('../config/db');
 const jwt = require('jsonwebtoken');
+const SECRET_KEY = process.env.SECRET_KEY;
 
+const createToken = (email, role) => {
+  const token = jwt.sign({ email, role }, SECRET_KEY, { expiresIn: '1h' });
+  return token;
+};
 
 router.post('/register', async (req, res) => {
   try {
-    //  const errors = validationResult(req);
-    //  if (!errors.isEmpty()) {
-    //    return res.status(400).json({ errors: errors.array() });
-    //  }
-
     const { name, email, password } = req.body;
     let role = req.body.role || 'User';
 
@@ -19,22 +19,11 @@ router.post('/register', async (req, res) => {
     if (checkResult.length > 0) {
       return res.status(400).json({ message: 'Email Already Registered' });
     }
-
-    const secretKey = 'mysecretkey123';
-
     //  const hashedPassword = await bcrypt.hash(password, 10);
-    const access_token = jwt.sign({ email }, process.env.SECRET_KEY, { expiresIn: '1h' });
-
+    // const access_token = jwt.sign({ email, role}, process.env.SECRET_KEY, { expiresIn: '1h' });
+    const access_token = createToken(email, role);
     const insertSql = 'INSERT INTO users (name, email, password, role, access_token) VALUES (?, ?, ?, ?, ?)';
     connection.query(insertSql, [name, email, password, role, access_token]);
-
-    //  Set access token as HTTP-only cookie
-    //  res.cookie('access-token', token, {
-    //    httpOnly: true,
-    //    secure: true,  //Set to true if your app is served over HTTPS
-    //    sameSite: 'strict',
-    //  });
-
     res.json({ message: 'Successfully Registered', name, email, role, access_token });
   } catch (error) {
     console.error('Error registering user:', error);
@@ -64,9 +53,11 @@ router.post("/signin", function (req, res) {
       return;
     }
 
-    res.json({ success: true, user: user, message: 'Sign-in Successful' });
-
+    const role = user.role;
+    const access_token = createToken(email, role);
+    res.json({ success: true, access_token, user: { email, role }, message: 'Sign-in Successful' });
   });
 });
+
 
 module.exports = router;

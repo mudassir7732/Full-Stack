@@ -47,14 +47,14 @@ git clone https://github.com/mudassir7732/Full-Stack.git<br/>
 cd Full-Stack
 
 ### Environment Variables
-Create a .env file in the back-end directory and add the following environment variables:
+Create a .env file in the back-end directory and add the values for following environment variables:
 
-PORT=5000<br/>
-DB_HOST=localhost<br/>
-DB_USER=root<br/>
-DATABASE=practice<br/>
+PORT=<br/>
+DB_HOST=<br/>
+DB_USER=<br/>
+DATABASE=<br/>
 PASSWORD=''<br/>
-SECRET_KEY=mysecretkey123
+SECRET_KEY=
 
 
 ### Install Dependencies
