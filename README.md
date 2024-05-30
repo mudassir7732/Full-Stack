@@ -13,7 +13,6 @@
 
 
 ## Description
-
 This is a full stack web application built with React.js, JavaScript, TailwindCSS for the front-end, and Node.js with Express.js for the back-end. This project demonstrates a modern web development stack with a responsive UI and a RESTful API.
 
 
@@ -28,8 +27,8 @@ This is a full stack web application built with React.js, JavaScript, TailwindCS
 - Node.js
 - Express.js
 
-## Features
 
+## Features
 - Responsive design using TailwindCSS
 - RESTful API with CRUD operations
 - User authentication
@@ -39,9 +38,7 @@ This is a full stack web application built with React.js, JavaScript, TailwindCS
 ## Setup and Installation
 
 ### Prerequisites
-
 Make sure you have the following installed on your system:
-
 - Node.js (v14.x or higher)
 - npm (v6.x or higher)
 
@@ -49,7 +46,7 @@ Make sure you have the following installed on your system:
 git clone https://github.com/mudassir7732/Full-Stack.git<br/>
 cd Full-Stack
 
-## Environment Variables
+### Environment Variables
 Create a .env file in the back-end directory and add the following environment variables:
 
 PORT=5000<br/>
@@ -60,9 +57,9 @@ PASSWORD=''<br/>
 SECRET_KEY=mysecretkey123
 
 
-## Install Dependencies
+### Install Dependencies
 
-### Front-end
+#### Front-end
 ```bash
 cd Front-end
 
@@ -71,7 +68,7 @@ or
 yarn install
 ```
 
-### Back-end
+#### Back-end
 ```bash
 cd Back-end
 
@@ -81,14 +78,14 @@ yarn install
 ```
 
 
-## Run the Application
+### Run the Application
 
-### Back-end
+#### Back-end
 ```bash
 cd Back-end
 nodemon index.js
 ```
-### Front-end
+#### Front-end
 ```bash
 cd Front-end
 npm start
@@ -102,7 +99,16 @@ To use the application, navigate to http://localhost:3000 in your web browser. Y
 ```bash
 
 ├Full-Stack/
-├── client/                  # Front-end code
+
+├── Back-end/                  # Back-end code
+│   ├── config/              # Database credentials configuration
+│   ├── middlewares/         # Middleware functions  
+│   ├── routes/              # Backend routes
+│   ├── uploads/             # Backend directory to store the images uploaded by website admin
+│   ├── server.js            # Server entry point
+│   └── package.json         # Back-end dependencies
+
+├── Front-end/                  # Front-end code
 │   ├── public/              # Public assets
 │   ├── src/                 # Source code
 │   │   ├── components/      # React components
@@ -112,14 +118,6 @@ To use the application, navigate to http://localhost:3000 in your web browser. Y
 │   │   └── index.js         # Entry point
 │   ├── tailwind.config.js   # TailwindCSS configuration
 │   └── package.json         # Front-end dependencies
-
-├── server/                  # Back-end code
-│   ├── config/              # Database credentials configuration
-│   ├── middlewares/         # Middleware functions  
-│   ├── routes/              # Backend routes
-│   ├── uploads/             # Backend directory to store the images uploaded by website admin
-│   ├── server.js            # Server entry point
-│   └── package.json         # Back-end dependencies
 
 ├── .gitignore               # Git ignore file
 └── README.md                # Project README
