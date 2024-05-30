@@ -121,9 +121,9 @@ To use the application, navigate to http://localhost:3000 in your web browser. Y
 │   ├── uploads/             # Backend directory to store the images uploaded by website admin
 │   ├── server.js            # Server entry point
 │   └── package.json         # Back-end dependencies
+
 ├── .gitignore               # Git ignore file
-├── README.md                # Project README
-└── LICENSE                  # License file
+└── README.md                # Project README
 ```
 
 
