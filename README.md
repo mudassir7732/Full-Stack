@@ -108,15 +108,17 @@ To use the application, navigate to http://localhost:3000 in your web browser. Y
 │   ├── src/                 # Source code
 │   │   ├── components/      # React components
 │   │   ├── pages/           # React pages
+│   │   ├── routes/          # React Routes for Front-end
 │   │   ├── App.js           # Main App component
 │   │   └── index.js         # Entry point
 │   ├── tailwind.config.js   # TailwindCSS configuration
 │   └── package.json         # Front-end dependencies
+
 ├── server/                  # Back-end code
-│   ├── controllers/         # Route controllers
-│   ├── models/              # Database models
-│   ├── routes/              # API routes
-│   ├── middleware/          # Middleware functions
+│   ├── config/              # Database credentials configuration
+│   ├── middlewares/         # Middleware functions  
+│   ├── routes/              # Backend routes
+│   ├── uploads/             # Backend directory to store the images uploaded by website admin
 │   ├── server.js            # Server entry point
 │   └── package.json         # Back-end dependencies
 ├── .gitignore               # Git ignore file
