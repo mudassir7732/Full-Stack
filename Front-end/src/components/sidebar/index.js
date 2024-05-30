@@ -1,7 +1,7 @@
 
 const Sidebar=()=>{
     return(
-        <div className="hidden md:block w-[300px]">
+        <div className="hidden md:block w-[250px] xl:w-[300px]">
                <aside className="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
                 <div className="sidenav-header">
                     <i className="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>

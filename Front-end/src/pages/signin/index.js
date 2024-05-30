@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from "../../components/loader";
 import styles from "./styles";
-import styles2 from '../add-product/styles';
+import styles2 from '../add-products/styles';
 import CustomSnackbar from "../../components/snackbar";
 import { Form, Formik } from 'formik';
 import Cookies from 'js-cookie';
@@ -44,43 +44,27 @@ const Signin = () => {
     }
 
     const handleSignin = async (values) => {
-        // try {
         setLoading(true)
-        // setCredentials({email:values.email, password:values.password});
-        // const success = await login({ email: values.email, password: values.password });
-        // if (success) {
-        //     navigate('/dashboard')
-        // }
-        // }
-        // catch (err) {
-        //     console.log(err, ' = Error')
-        // }
         await axios
             .post(`/routes/auth/signin`, {
-                // .post(`http://localhost:5000/signin`, {
                 email: values.email,
                 password: values.password,
             })
             .then((res) => {
-                console.log('module found here')
                 const a = res?.data?.message;
                 setMessage(a);
                 if (res?.data?.message === 'Sign-in Successful') {
-                    Cookies.set('access_token', res?.data?.access_token, {expires:1/24});
-// const obj = res?.data?.user;
-                    // const user = JSON.stringify({ id: obj.id, email: obj.email, password: obj.password, token: obj.token, role: obj.role })
-                    // localStorage.setItem('user', user);
-                    // console.log(res?.data?.user?.role, ' = Role')
-                    if (res?.data?.user?.role === 'User') {
+                    Cookies.set('access_token', res?.data?.access_token, { expires: 1 / 24 });
+
+                    if (res?.data?.role === 'User') {
                         navigate('/dashboard');
                     }
-                    else if (res?.data?.user?.role === 'Admin') {
+                    else if (res?.data?.role === 'Admin') {
                         navigate('/add-products');
                     }
                 }
             })
             .catch((error) => {
-                localStorage.setItem('user', null)
                 console.error('Error:', error);
                 setMessage(error?.message)
 
@@ -92,24 +76,6 @@ const Signin = () => {
                 }, 4000);
             });
     }
-
-
-
-    // const fetchProtectedData = async () => {
-    //     // const token = sessionStorage.getItem('token');
-    //     try {
-    //         const response = await axios.get('http://localhost:5000/protected-route', {
-    //             headers: {
-    //                 Authorization: `Bearer ${token}`,
-    //             },
-    //         });
-    //         console.log(response.data, ' = Response')
-    //         return response.data;
-    //     } catch (error) {
-    //         console.log(error, ' = Error');
-    //         return null;
-    //     }
-    // };
 
 
     return (

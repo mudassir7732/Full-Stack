@@ -12,7 +12,8 @@ const createToken = (email, role) => {
 router.post('/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    let role = req.body.role || 'User';
+    // let role = req.body.role || 'User';
+    let role = 'User';
 
     const checkEmailSql = 'SELECT * FROM users WHERE email = ?';
     const checkResult = connection.query(checkEmailSql, [email]);
@@ -55,7 +56,7 @@ router.post("/signin", function (req, res) {
 
     const role = user.role;
     const access_token = createToken(email, role);
-    res.json({ success: true, access_token, user: { email, role }, message: 'Sign-in Successful' });
+    res.json({ message:'Sign-in Successful', access_token, email, role});
   });
 });
 

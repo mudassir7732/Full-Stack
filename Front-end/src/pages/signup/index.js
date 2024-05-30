@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from "../../components/loader";
-import styles2 from '../add-product/styles';
+import styles2 from '../add-products/styles';
 import styles from '../signin/styles';
 import CustomSnackbar from "../../components/snackbar";
 import Cookies from 'js-cookie';
@@ -35,30 +35,16 @@ const Signup = () => {
                     name: values.name,
                     email: values.email,
                     password: values.password,
-                    role: 'Admin',
                 })
                 .then((res) => {
                     const a = res?.data?.message;
                     setMessage(a);
                     if (res?.data?.message === 'Successfully Registered') {
-                        const obj = res.data;
-                        Cookies.set('access_token', res?.data?.access_token, {expires:1/24});
-                        const user = JSON.stringify({ name: obj.name, email: obj.email, password: obj.password, role: 'User', token: obj.token });
-                        localStorage.setItem('user', user)
-                        console.log(res?.data, ' = User')
-                        // setTimeout(() => {
-                        //     navigate('/');                            
-                        // }, 3000);
-                        if (obj.role === 'Admin') {
-                            navigate('/add-products')
-                        }
-                        else if (obj.role === 'User') {
-                            navigate('/dashboard')
-                        }
+                        Cookies.set('access_token', res?.data?.access_token, { expires: 1 / 24 });
+                        navigate('/dashboard')
                     }
                 })
                 .catch((error) => {
-                    localStorage.setItem('user', null)
                     console.error(error, ' = Error');
                     setMessage(error?.message);
                 })
@@ -79,64 +65,61 @@ const Signup = () => {
             {loading && <Loader />}
 
             <div className={styles.container}>
-
                 <div className={styles.card}>
-
                     <Formik initialValues={INTIIAL_VALUES} validationSchema={ValidationSchema} onSubmit={handleSignup}>
                         {({ handleChange, values, errors, touched }) => (
                             <Form>
                                 <div className="flex flex-col w-fit items-center">
-                                <div className="flex flex-col items-start">
-                                    <p className={styles.welcome}>
-                                        Sign up here!
-                                    </p>
-
-                                    <p className={styles.desc}>
-                                        Enter your credentials to sign up
-                                    </p>
-
-                                    <p className={styles.title}>
-                                        Name
-                                    </p>
-                                    <input name='name' value={values.name} onChange={handleChange} placeholder='Name'
-                                        className={styles.input} />
-
-                                    {errors.name && touched.name && (
-                                        <p className={styles2.error}>
-                                            {errors.name?.toString()}
+                                    <div className="flex flex-col items-start">
+                                        <p className={styles.welcome}>
+                                            Sign up here!
                                         </p>
-                                    )}
 
-                                    <p className={styles.title}>
-                                        Email
-                                    </p>
-                                    <input name='email' value={values.email} onChange={handleChange} placeholder='Email'
-                                        className={styles.input} />
-
-
-                                    {errors.email && touched.email && (
-                                        <p className={styles2.error}>
-                                            {errors.email?.toString()}
+                                        <p className={styles.desc}>
+                                            Enter your credentials to sign up
                                         </p>
-                                    )}
 
-                                    <p className={styles.title}>
-                                        Password
-                                    </p>
-                                    <input name='password' value={values.password} onChange={handleChange} placeholder='Password'
-                                        className={styles.input} />
-
-                                    {errors.password && touched.password && (
-                                        <p className={styles2.error}>
-                                            {errors.password?.toString()}
+                                        <p className={styles.title}>
+                                            Name
                                         </p>
-                                    )}
+                                        <input name='name' value={values.name} onChange={handleChange} placeholder='Name'
+                                            className={styles.input} />
 
-                                    <button type="submit" className={styles.signin}>
-                                        SIGN UP
-                                    </button>
+                                        {errors.name && touched.name && (
+                                            <p className={styles2.error}>
+                                                {errors.name?.toString()}
+                                            </p>
+                                        )}
 
-                                </div>
+                                        <p className={styles.title}>
+                                            Email
+                                        </p>
+                                        <input name='email' value={values.email} onChange={handleChange} placeholder='Email'
+                                            className={styles.input} />
+
+
+                                        {errors.email && touched.email && (
+                                            <p className={styles2.error}>
+                                                {errors.email?.toString()}
+                                            </p>
+                                        )}
+
+                                        <p className={styles.title}>
+                                            Password
+                                        </p>
+                                        <input name='password' value={values.password} onChange={handleChange} placeholder='Password'
+                                            className={styles.input} />
+
+                                        {errors.password && touched.password && (
+                                            <p className={styles2.error}>
+                                                {errors.password?.toString()}
+                                            </p>
+                                        )}
+
+                                        <button type="submit" className={styles.signin}>
+                                            SIGN UP
+                                        </button>
+                                    </div>
                                 </div>
                             </Form>
                         )}

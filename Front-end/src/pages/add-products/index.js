@@ -24,7 +24,7 @@ const ValidationSchema = yup.object().shape({
   videoURL: yup.string().required('Video URL required')
 })
 
-const AddProduct = () => {
+const AddProducts = () => {
   const [supplierURLs, setSupplierURLs] = useState(0);
   const [videoURLs, setVideoURLs] = useState(0);
   const [supplierURL, setSupplierURL] = useState([]);
@@ -230,4 +230,4 @@ const AddProduct = () => {
 
   )
 }
-export default AddProduct;
+export default AddProducts;
