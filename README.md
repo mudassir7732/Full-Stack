@@ -1,9 +1,5 @@
 # Full Stack Website Project
 
-## Description
-
-This is a full stack web application built with React.js, JavaScript, TailwindCSS for the front-end, and Node.js with Express.js for the back-end. This project demonstrates a modern web development stack with a responsive UI and a RESTful API.
-
 ## Table of Contents
 
 - [Description](#description)
@@ -15,6 +11,12 @@ This is a full stack web application built with React.js, JavaScript, TailwindCS
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
+
+
+## Description
+
+This is a full stack web application built with React.js, JavaScript, TailwindCSS for the front-end, and Node.js with Express.js for the back-end. This project demonstrates a modern web development stack with a responsive UI and a RESTful API.
+
 
 ## Technologies
 
@@ -62,27 +64,36 @@ SECRET_KEY=mysecretkey123
 ## Install Dependencies
 
 ### Front-end
-cd Front-end <br/>
-npm install<br/>
-or<br/>
+```bash
+cd Front-end
+
+npm install
+or
 yarn install
+```
 
 ### Back-end
-cd Back-end<br/>
-npm install<br/>
-or<br/>
+```bash
+cd Back-end
+
+npm install
+or
 yarn install
+```
 
 
 ## Run the Application
 
 ### Back-end
-cd Back-end<br/>
+```bash
+cd Back-end
 nodemon index.js
-
+```
 ### Front-end
-cd Front-end<br/>
+```bash
+cd Front-end
 npm start
+```
 
 ## Usage
 To use the application, navigate to http://localhost:3000 in your web browser. You can interact with the UI and make API requests to the server.
@@ -126,6 +137,6 @@ Push to the branch (git push origin feature/YourFeature)
 Open a pull request
 
 ## Contact
-Name: Muhammad Mudassir
-Email: mudassir7732@gmail.com
+Name: Muhammad Mudassir <br/>
+Email: mudassir7732@gmail.com <br/>
 GitHub: github.com/mudassir7732
