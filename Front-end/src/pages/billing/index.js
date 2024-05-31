@@ -17,7 +17,7 @@ const INITIAL_VALUES = {
             date: '',
             month: '',
             type: '',
-            amount: 0,
+            amount: null,
             description: ''
         }
     ]
@@ -43,8 +43,8 @@ const Billing = () => {
     const handleSubmit = async (values) => {
         console.log(values, ' = Values');
         // await axios.post('/routes/products/upload-data', formData)
-        await axios.post('/routes/products/upload-data', {values})
-        
+        await axios.post('/routes/products/upload-data', { values })
+
             .then((res) => {
                 navigate('/view-products')
             })
@@ -76,99 +76,99 @@ const Billing = () => {
                             <Form>
                                 <FieldArray name="sections">
                                     {({ insert, remove, push }) => (
-                                        <div className='flex flex-col gap-x-20 border-2'>
+                                        <div className='flex flex-col gap-x-20'>
                                             {values.sections.map((section, index) => (
-                                                <div key={index} className="section mb-3">
-                                                    <div className="flex flex-row flex-wrap gap-x-10 w-full">
-                                                        <div>
-                                                            <p className={styles.title}>Select Date</p>
-                                                            <select
-                                                                name={`sections[${index}].date`}
-                                                                value={section.date}
-                                                                onChange={handleChange}
-                                                                className='sbg-[#fefefe] text-[#303030] text-[15px] px-2 font-sans border-[1px] border-[#d0d0d0] rounded-[5px] h-[40px] w-full outline-none font-normal'
-                                                            >
-                                                                <option value="" label="Select date" />
-                                                                {DATE_OPTIONS.map((option, i) => (
-                                                                    <option key={i} value={option}>
-                                                                        {option}
-                                                                    </option>
-                                                                ))}
-                                                            </select>
-                                                            {errors.sections?.[index]?.date && touched.sections?.[index]?.date && (
-                                                                <p className={styles.error}>{errors.sections[index].date}</p>
-                                                            )}
-                                                        </div>
-
-                                                        <div>
-                                                            <p className={styles.title}>Select Month</p>
-                                                            <select
-                                                                name={`sections[${index}].month`}
-                                                                value={section.month}
-                                                                onChange={handleChange}    className='bg-[#fefefe] text-[#303030] text-[15px] px-2 font-sans border-[1px] border-[#d0d0d0] rounded-[5px] h-[40px] w-full outline-none font-normal'
-                                                                >
-                                                                <option value="" label="Select month" />
-                                                                {MONTH_OPTIONS.map((option, i) => (
-                                                                    <option key={i} value={option}>
-                                                                        {option}
-                                                                    </option>
-                                                                ))}
-                                                            </select>
-                                                            {errors.sections?.[index]?.month && touched.sections?.[index]?.month && (
-                                                                <p className={styles.error}>{errors.sections[index].month}</p>
-                                                            )}
-                                                        </div>
-
-                                                        <div className='w-full border-2'>
-                                                            <p className={styles.title}>Input Type</p>
-                                                            <select
-                                                                name={`sections[${index}].type`}
-                                                                value={section.type}
-                                                                onChange={handleChange} className='bg-[#fefefe] text-[#303030] text-[15px] px-2 font-sans border-[1px] border-[#d0d0d0] rounded-[5px] h-[40px] w-full outline-none font-normal'
-                                                                >
-                                                                <option value="" label="Select type" />
-                                                                {TYPE_OPTIONS.map((option, i) => (
-                                                                    <option key={i} value={option}>
-                                                                        {option}
-                                                                    </option>
-                                                                ))}
-                                                            </select>
-                                                            {errors.sections?.[index]?.type && touched.sections?.[index]?.type && (
-                                                                <p className={styles.error}>{errors.sections[index].type}</p>
-                                                            )}
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="flex flex-row gap-x-6 mt-2">
-                                                        <div>
-                                                            <p className={styles.title}>Amount</p>
-                                                            <input
-                                                                name={`sections[${index}].amount`}
-                                                                value={section.amount}
-                                                                type="number"
-                                                                placeholder="Enter amount..."
-                                                                className={`${styles.input} rounded-r-[5px] no-arrows`}
-                                                                onChange={handleChange}
-                                                            />
-                                                            {errors.sections?.[index]?.amount && touched.sections?.[index]?.amount && (
-                                                                <p className={styles.error}>{errors.sections[index].amount}</p>
-                                                            )}
-                                                        </div>
-
-                                                        <div className="w-full">
-                                                            <p className={styles.title}>Description</p>
-                                                            <textarea
-                                                                name={`sections[${index}].description`}
-                                                                value={section.description}
-                                                                placeholder="Enter description..."
-                                                                className={`flex items-center bg-[#fefefe] text-[#303030] text-[15px] px-2 font-sans border-[1px] border-[#d0d0d0] rounded-[5px] outline-none font-normal pt-[5px] h-[40px] w-full`}
-                                                                onChange={handleChange}
-                                                            />
-                                                            {errors.sections?.[index]?.description && touched.sections?.[index]?.description && (
-                                                                <p className={styles.error}>{errors.sections[index].description}</p>
-                                                            )}
-                                                        </div>
-                                                    </div>
+                                                <div key={index} className="mb-3">
+                                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:min-w-[650px] xl:min-w-[800px] gap-x-6">
+                                                  <div className="col-span-1">
+                                                    <p className={styles.title}>Select Date</p>
+                                                    <select
+                                                      name={`sections[${index}].date`}
+                                                      value={section.date}
+                                                      onChange={handleChange}
+                                                      className='bg-[#fefefe] text-[#303030] text-[15px] px-2 font-sans border-[1px] border-[#d0d0d0] rounded-[5px] h-[40px] w-full outline-none font-normal'
+                                                    >
+                                                      <option value="" label="Select date" />
+                                                      {DATE_OPTIONS.map((option, i) => (
+                                                        <option key={i} value={option}>
+                                                          {option}
+                                                        </option>
+                                                      ))}
+                                                    </select>
+                                                    {errors.sections?.[index]?.date && touched.sections?.[index]?.date && (
+                                                       <p className={styles.error}>{errors.sections[index].date}</p>
+                                                    )}
+                                                  </div>
+                                            
+                                                  <div className="col-span-1">
+                                                    <p className={styles.title}>Select Month</p>
+                                                    <select
+                                                      name={`sections[${index}].month`}
+                                                      value={section.month}
+                                                      onChange={handleChange}
+                                                      className='bg-[#fefefe] text-[#303030] text-[15px] px-2 font-sans border-[1px] border-[#d0d0d0] rounded-[5px] h-[40px] w-full outline-none font-normal'
+                                                    >
+                                                      <option value="" label="Select month" />
+                                                      {MONTH_OPTIONS.map((option, i) => (
+                                                        <option key={i} value={option}>
+                                                          {option}
+                                                        </option>
+                                                      ))}
+                                                    </select>
+                                                    {errors.sections?.[index]?.month && touched.sections?.[index]?.month && (
+                                                       <p className={styles.error}>{errors.sections[index].month}</p>
+                                                    )}
+                                                  </div>
+                                            
+                                                  <div className="col-span-1">
+                                                    <p className={styles.title}>Input Type</p>
+                                                    <select
+                                                      name={`sections[${index}].type`}
+                                                      value={section.type}
+                                                      onChange={handleChange}
+                                                      className='bg-[#fefefe] text-[#303030] text-[15px] px-2 font-sans border-[1px] border-[#d0d0d0] rounded-[5px] h-[40px] w-full outline-none font-normal'
+                                                    >
+                                                      <option value="" label="Select type" />
+                                                      {TYPE_OPTIONS.map((option, i) => (
+                                                        <option key={i} value={option}>
+                                                          {option}
+                                                        </option>
+                                                      ))}
+                                                    </select>
+                                                    {errors.sections?.[index]?.type && touched.sections?.[index]?.type && (
+                                                       <p className={styles.error}>{errors.sections[index].type}</p>
+                                                    )}
+                                                  </div>
+                                            
+                                                  <div className="col-span-1">
+                                                    <p className={styles.title}>Amount</p>
+                                                    <input
+                                                      name={`sections[${index}].amount`}
+                                                      value={section.amount}
+                                                      type="number"
+                                                      placeholder="Enter amount..."
+                                                      className='bg-[#fefefe] text-[#303030] text-[15px] px-2 font-sans border-[1px] border-[#d0d0d0] rounded-[5px] h-[40px] w-full outline-none font-normal'
+                                                      onChange={handleChange}
+                                                    />
+                                                    {errors.sections?.[index]?.amount && touched.sections?.[index]?.amount && (
+                                                       <p className={styles.error}>{errors.sections[index].amount}</p>
+                                                    )}
+                                                  </div>
+                                            
+                                                  <div className="sm:col-span-2">
+                                                    <p className={styles.title}>Description</p>
+                                                    <textarea
+                                                      name={`sections[${index}].description`}
+                                                      value={section.description}
+                                                      placeholder="Enter description..."
+                                                      className='flex items-center bg-[#fefefe] text-[#303030] text-[15px] px-2 font-sans border-[1px] border-[#d0d0d0] rounded-[5px] outline-none font-normal pt-[5px] h-[40px] w-full'
+                                                      onChange={handleChange}
+                                                    />
+                                                    {errors.sections?.[index]?.description && touched.sections?.[index]?.description && (
+                                                       <p className={styles.error}>{errors.sections[index].description}</p>
+                                                    )}
+                                                  </div>
+                                                </div>
 
                                                     <div className="flex flex-row justify-end gap-x-4 mt-4">
                                                         {index > 0 && (
