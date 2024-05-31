@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import styles from './styles';
 import Loader from '../../components/loader';
 import CustomSnackbar from '../../components/snackbar';
-import Cookies from 'js-cookie';
 
 const INITIAL_VALUES = {
   name: '',
@@ -61,12 +60,12 @@ const AddProducts = () => {
     videoURL.forEach((url, index) => {
       formData.append(`video_url_${index}`, url);
     });
-    axios.post('/routes/products/upload-data', formData)
+    await axios.post('/routes/products/upload-data', formData)
       .then((res) => {
         navigate('/view-products')
       })
       .catch((err) => {
-        setMessage(err?.message);
+        setMessage(err?.message || "Error occureds");
       })
       .finally(() => {
         setLoading(false);

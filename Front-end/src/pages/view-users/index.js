@@ -192,7 +192,7 @@ const ViewUsers = () => {
                                                 <button id={1} className={`bg-[#ff0000] hover:bg-[#ee0000] ${styles.deleteButton}`}
                                                     onClick={() => handleDelete(user?.id)}
                                                 >
-                                                    Delete
+                                                    Remove
                                                 </button>
                                             </TableCell>
                                         </TableRow>

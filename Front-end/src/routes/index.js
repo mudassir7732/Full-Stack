@@ -55,7 +55,7 @@ const AppRoutes = () => {
                         </AdminGuard>
                     }
                 />
-                .<Route path='/add-user'
+                .<Route path='/view-users'
                     element={
                         <AdminGuard>
                             <Layout>
