@@ -17,7 +17,6 @@ const Layout = ({ children }) => {
     const handleAuthentication = async () => {
         try {
             const res = await axios.get(`/verify-token`, { withCredentials: true });
-            console.log(res.data, ' = response');
             if (res?.data?.message === 'Success') {
                 setRole(res?.data?.userRole)
                 return;
@@ -41,7 +40,7 @@ const Layout = ({ children }) => {
             {role === 'Admin' && (
                 <AdminSidebar />
             )}
-            <div className="flex border-8 flex-col items-center justify-center w-full">
+            <div className="flex flex-col items-center justify-center w-full">
                 <div className="flex flex-col items-center justify-center w-fit h-full">
                     {children}
                 </div>

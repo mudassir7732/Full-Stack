@@ -93,6 +93,18 @@ const AddProducts = () => {
                   <div className='flex flex-col'>
 
                     <p className={styles.title}>
+                      Product Name
+                    </p>
+                    <input name='name' value={values.name} placeholder='Enter name...'
+                      className={`${styles.input} rounded-r-[5px]`}
+                      onChange={handleChange} />
+                    {errors.name && touched.name && errors.name && (
+                      <p className={styles.error}>
+                        {errors.name}
+                      </p>
+                    )}
+
+                    <p className={styles.title}>
                       Product Image
                     </p>
                     <input
@@ -109,18 +121,6 @@ const AddProducts = () => {
                     {errors.image && touched.image && (
                       <p className={styles.error}>
                         {errors.image?.toString()}
-                      </p>
-                    )}
-
-                    <p className={styles.title}>
-                      Product Name
-                    </p>
-                    <input name='name' value={values.name} placeholder='Enter name...'
-                      className={`${styles.input} rounded-r-[5px]`}
-                      onChange={handleChange} />
-                    {errors.name && touched.name && errors.name && (
-                      <p className={styles.error}>
-                        {errors.name}
                       </p>
                     )}
 
@@ -212,8 +212,8 @@ const AddProducts = () => {
                       </div>
                     ))}
 
-                    <button type='submit' 
-                    className={styles.submit}
+                    <button type='submit'
+                      className={styles.submit}
                     >
                       Submit
                     </button>
