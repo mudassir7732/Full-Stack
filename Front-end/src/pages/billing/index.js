@@ -1,255 +1,10 @@
-// import styles from '../add-products/styles';
-// import React, { useState } from 'react';
-// import { Formik, Form, Field } from 'formik';
-// import { useNavigate } from 'react-router-dom';
-// import axios from 'axios';
-// import * as Yup from 'yup';
-// import CustomSnackbar from '../../components/snackbar';
-// import Loader from '../../components/loader';
-
-// const MONTH_OPTIONS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-// const DATE_OPTIONS = ['2021-01-01', '2021-02-01'];
-// const TYPE_OPTIONS = ['Type1', 'Type2'];
-
-// const INITIAL_VALUES = {
-//     sections: [
-//         {
-//             date: '',
-//             month: '',
-//             type: '',
-//             amount: '',
-//             description: ''
-//         }
-//     ]
-// };
-
-// const ValidationSchema = Yup.object().shape({
-//     sections: Yup.array().of(
-//         Yup.object().shape({
-//             date: Yup.string().required('Date is required'),
-//             month: Yup.string().required('Month is required'),
-//             type: Yup.string().required('Type is required'),
-//             amount: Yup.number().required('Amount is required'),
-//             description: Yup.string().required('Description is required')
-//         })
-//     )
-// });
-
-
-// const Billing = () => {
-
-//     const [message, setMessage] = useState('');
-//     const [loading, setLoading] = useState(false);
-//     const navigate = useNavigate();
-
-//     const handleAddSection = (setFieldValue, values) => {
-//         const newSection = {
-//             date: '',
-//             month: '',
-//             type: '',
-//             amount: '',
-//             description: ''
-//         };
-//         setFieldValue('sections', [...values.sections, newSection]);
-//     };
-
-
-
-//     const handleSubmit = async (values) => {
-//         console.log(values,' = Values')
-//         // setLoading(true);
-//         // let formData = new FormData();
-//         // formData.append("user_file", values.image);
-//         // formData.append("name", values.name);
-//         // formData.append("description", values.description);
-
-//         // await axios.post('/routes/products/upload-data', formData)
-//         //     .then((res) => {
-//         //         navigate('/view-products')
-//         //     })
-//         //     .catch((err) => {
-//         //         setMessage(err?.message || "Error occureds");
-//         //     })
-//         //     .finally(() => {
-//         //         setLoading(false);
-//         //         setTimeout(() => {
-//         //             setMessage('');
-//         //         }, 4000);
-//         //     })
-//     };
-
-//     return (
-//         <>
-//              {message && <CustomSnackbar message={message} />}
-//              {loading && <Loader />}
-
-//         <div className='flex flex-col items-center justify-center '>
-//             <div className={styles.container}>
-//                 <p className={styles.heading}>
-//                     Balance Sheet
-//                 </p>
-//                 <Formik
-//                     initialValues={INITIAL_VALUES}
-//                     validationSchema={ValidationSchema}
-//                     onSubmit={(values)=>console.log(values, ' = Values')}
-//                 >
-//                     {({ values, handleChange, setFieldValue }) => (
-//                         <Form onClick={handleSubmit}>
-//                             <div className="form">
-//                                 {values.sections && values.sections.map((section, index) => (
-//                                     <div key={index} className="section mb-3">
-//                                         <div className="flex flex-row gap-x-6">
-//                                             <div>
-
-//                                                 <p className={styles.title}>
-//                                                     Select Date
-//                                                 </p>
-//                                                 <select
-//                                                     as="select"
-//                                                     name={`sections[${index}].date`}
-//                                                     value={section.date}
-//                                                     onChange={handleChange}
-//                                                     className={`${styles.input} rounded-r-[5px]`}
-//                                                 >
-//                                                     {DATE_OPTIONS.map((option, i) => (
-//                                                         <option key={i} value={option}>
-//                                                             {option}
-//                                                         </option>
-//                                                     ))}
-//                                                 </select>
-//                                             </div>
-
-//                                             <div>
-//                                                 <p className={styles.title}>
-//                                                     Select Month</p>
-//                                                 <select
-//                                                     as="select"
-//                                                     name={`sections[${index}].month`}
-//                                                     value={section.month}
-//                                                     onChange={handleChange}
-//                                                     className={`${styles.input} rounded-r-[5px]`}
-//                                                 >
-//                                                     {MONTH_OPTIONS.map((option, i) => (
-//                                                         <option key={i} value={option}>
-//                                                             {option}
-//                                                         </option>
-//                                                     ))}
-//                                                 </select>
-//                                             </div>
-
-//                                             <div>
-//                                                 <p className={styles.title}>
-//                                                     Input Type</p>
-//                                                 <select
-//                                                     as="select"
-//                                                     name={`sections[${index}].type`}
-//                                                     value={section.type}
-//                                                     onChange={handleChange}
-//                                                     className={`${styles.input} rounded-r-[5px]`}
-//                                                 >
-//                                                     {TYPE_OPTIONS.map((option, i) => (
-//                                                         <option key={i} value={option}>
-//                                                             {option}
-//                                                         </option>
-//                                                     ))}
-//                                                 </select>
-//                                             </div>
-//                                         </div>
-
-//                                         <div className="flex flex-row gap-x-6 mt-2">
-//                                             <div>
-//                                                 <p className={styles.title}>
-//                                                     Amount</p>
-//                                                 <input
-//                                                     name={`sections[${index}].amount`}
-//                                                     value={section.amount}
-//                                                     type='number'
-//                                                     placeholder="Enter amount..."
-//                                                     className={`${styles.input} rounded-r-[5px] no-arrows`} // Add the custom class here
-//                                                     onChange={handleChange}
-//                                                 />
-//                                             </div>
-
-//                                             <div className="w-full">
-//                                                 <p className={styles.title}>
-//                                                     Description</p>
-//                                                 <textarea
-//                                                     as="textarea"
-//                                                     name={`sections[${index}].description`}
-//                                                     value={section.description}
-//                                                     placeholder="Enter description..."
-//                                                     className={`flex items-center bg-[#fefefe] text-[#303030] text-[15px] px-2 font-sans border-[1px] border-[#d0d0d0] rounded-[5px] outline-none font-normal pt-[5px] h-[40px] w-full`}
-//                                                     onChange={handleChange}
-//                                                 />
-//                                             </div>
-//                                         </div>
-
-//                                         <div className="flex flex-row justify-end gap-x-4 mt-4">
-//                                             {index > 0 &&(
-//                                             <button
-//                                                 type="button"
-//                                                 className='w-fit px-3 bg-[#f9f9f9] text-black font-sans py-1 rounded-[8px] font-semibold text-[16px] mb-5 hover:bg-[#f0f0f0] border-[1px] border-[#808080]'
-//                                                 onClick={() => {
-//                                                     const newSections = values.sections.filter((_, i) => i !== index);
-//                                                     setFieldValue('sections', newSections);
-//                                                 }}
-//                                             >
-//                                                 Delete Section
-//                                             </button>
-//                                             )}
-//                                             <button
-//                                                 type="button"
-//                                                 className='bg-[#3b82f6] w-fit px-3 text-black font-sans py-1 rounded-[8px] font-semibold text-[16px] mb-5 hover:bg-[#2376ff]'
-//                                                 onClick={() => {
-//                                                     const newSection = {
-//                                                         date: '',
-//                                                         month: '',
-//                                                         type: '',
-//                                                         amount: '',
-//                                                         description: ''
-//                                                     };
-//                                                     setFieldValue('sections', [...values.sections, newSection]);
-//                                                 }}
-//                                             >
-//                                                 Add Section
-//                                             </button>
-//                                         </div>
-//                                     </div>
-//                                 ))}
-
-//                                 <div className="flex flex-row justify-end w-full mt-4">
-//                                     <button type="submit" className={`${styles.submit} w-[200px]`}>
-//                                         Save
-//                                     </button>
-//                                 </div>
-//                             </div>
-//                         </Form>
-//                     )}
-//                 </Formik>
-//             </div>
-//         </div>
-//         </>
-//     );
-// };
-
-// export default Billing;
-
-
-
-
-
-
-
-
-
-
-
 import React, { useState } from 'react';
 import { Formik, Form, Field, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import CustomSnackbar from '../../components/snackbar';
 import Loader from '../../components/loader';
 import styles from '../add-products/styles';
+import {useNavigate} from 'react-router-dom'
 
 const MONTH_OPTIONS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const DATE_OPTIONS = ['2021-01-01', '2021-02-01'];
@@ -282,9 +37,24 @@ const ValidationSchema = Yup.object().shape({
 const Billing = () => {
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = async (values, { setSubmitting }) => {
         console.log(values, ' = Values');
+        await axios.post('/routes/products/upload-data', formData)
+                    .then((res) => {
+                        navigate('/view-products')
+                    })
+                    .catch((err) => {
+                        setMessage(err?.message || "Error occureds");
+                    })
+                    .finally(() => {
+                        setLoading(false);
+                        setTimeout(() => {
+                            setMessage('');
+                        }, 4000);
+                    })
+            };
     };
 
     return (
