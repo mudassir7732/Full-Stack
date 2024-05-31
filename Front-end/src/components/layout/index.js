@@ -35,18 +35,22 @@ const Layout = ({ children }) => {
     return (
         <div className="flex flex-row bg-[#f8f8f8] min-h-screen">
             {role === 'User' && (
-                <Sidebar />
+                <div className="fixed top-0 left-0 h-full w-fit bg-white shadow-md z-[1000]">
+                    <Sidebar />
+                </div>
             )}
             {role === 'Admin' && (
-                <AdminSidebar />
+
+                <div className="fixed top-0 left-0 h-full w-fit bg-white shadow-md z-[1000]">
+                    <AdminSidebar />
+                </div>
             )}
-            <div className="flex flex-col items-center justify-center w-full">
+            <div className="flex flex-col items-center justify-center w-full lg:ml-[250px] xl:ml-[300px]">
                 <div className="flex flex-col items-center justify-center w-fit h-full">
                     {children}
                 </div>
             </div>
         </div>
-
     )
 }
 export default Layout;

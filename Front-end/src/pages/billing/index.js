@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 
 const MONTH_OPTIONS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const DATE_OPTIONS = ['2021-01-01', '2021-02-01'];
-const TYPE_OPTIONS = ['Type1', 'Type2'];
+const TYPE_OPTIONS = ['Expense', 'Income'];
 
 const INITIAL_VALUES = {
     sections: [
@@ -79,7 +79,7 @@ const Billing = () => {
                                         <div className='flex flex-col gap-x-20'>
                                             {values.sections.map((section, index) => (
                                                 <div key={index} className="section mb-3">
-                                                    <div className="flex flex-row gap-x-6">
+                                                    <div className="flex flex-row gap-x-6 flex-wrap">
                                                         <div>
                                                             <p className={styles.title}>Select Date</p>
                                                             <select
@@ -179,7 +179,7 @@ const Billing = () => {
                                                         {index > 0 && (
                                                             <button
                                                                 type="button"
-                                                                className="w-fit px-3 bg-[#f9f9f9] text-black font-sans py-1 rounded-[8px] font-semibold text-[16px] mb-5 hover:bg-[#f0f0f0] border-[1px] border-[#808080]"
+                                                                className="w-fit px-3 bg-[#f9f9f9] text-black outline-none font-sans py-1 rounded-[8px] font-semibold text-[16px] mb-5 hover:bg-[#f0f0f0] border-[1px] border-[#808080]"
                                                                 onClick={() => remove(index)}
                                                             >
                                                                 Delete Section
@@ -187,7 +187,8 @@ const Billing = () => {
                                                         )}
                                                         <button
                                                             type="button"
-                                                            className="bg-[#3b82f6] w-fit px-3 text-black font-sans py-1 rounded-[8px] font-semibold text-[16px] mb-5 hover:bg-[#2376ff]"
+                                                            className="bg-[#1e90ff] w-fit px-3 text-black font-sans py-1 outline-none rounded-[8px] font-semibold text-[16px] mb-5 hover:bg-[#2376ff]"
+                                                            // className="bg-[#3b82f6] w-fit px-3 text-black font-sans py-1 rounded-[8px] font-semibold text-[16px] mb-5 hover:bg-[#2376ff]"
                                                             onClick={() =>
                                                                 push({
                                                                     date: '',
@@ -208,7 +209,7 @@ const Billing = () => {
                                 </FieldArray>
 
                                 <div className="flex flex-row justify-end w-full mt-4">
-                                    <button type="submit" className={`${styles.submit} w-[200px]`}>
+                                    <button type="submit" className={`${styles.submit} w-[200px] outline-none`}>
                                         Save
                                     </button>
                                 </div>

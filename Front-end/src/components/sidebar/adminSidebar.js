@@ -15,8 +15,18 @@ const AdminSidebar = () => {
     const [selected, setSelected] = useState('/add-products');
     const navigate = useNavigate();
 
+    const handleClick = async (path) => {
+        if (path === '/') {
+            Cookies.remove('access_token');
+        }
+        else {
+            setSelected(path);
+        }
+        navigate(path);
+    }
+
     return (
-        <div className='flex-col py-4 items-center hidden md:flex min-w-[250px] xl:min-w-[300px]'>
+        <div className='flex-col py-4 items-center justify-center hidden lg:flex lg:w-[250px] xl:w-[300px]'>
             <div className="flex flex-row mb-4 items-center -ml-10 gap-x-2" onClick={() => navigate('/view-products')}>
                 <img src="../assets/img/logo-ct-dark.png" className="h-[32px]" alt="main_logo" />
                 <span className="text-[14px] text-[#555555] font-semibold font-sans">
@@ -25,16 +35,20 @@ const AdminSidebar = () => {
             </div>
             <hr className="horizontal dark mt-0" />
 
-            <div className="w-auto" id="sidenav-collapse-main">
+            <div className="w-fit">
+
                 {ADMIN_ROUTES?.map((route, index) => (
-                    <div className={`flex flex-row items-center px-3 cursor-pointer gap-x-3 p-2 w-[220px] h-[53px] rounded-lg ${selected === route.path ? 'bg-white' : ''} ${selected === route.path ? 'shadow-md' : 'shadow-none'} ${selected === route.path ? 'shadow-red-500' : 'shadow-white'}`}
-                        onClick={() => {setSelected(route.path); navigate(route.path); selected === '/' && Cookies.remove('access_token') }}>
-                        <div className={`${selected === route.path ? 'bg-[#cb0c9f]' : 'bg-white'} shadow-sm p-[6px] rounded-lg`}>
+                    <div className={`flex flex-row items-center cursor-pointer px-3 gap-x-3 w-[200px] xl:w-[230px] border-[1px] mt-1 h-[53px] rounded-lg ${selected === route.path ? 'bg-white' : ''} ${selected === route.path ? 'shadow-md' : 'shadow-none'} ${selected === route.path ? "border-[#f5f5f5] " : "border-transparent"} ${selected === route.path ? 'shadow-red-500' : 'shadow-white'}`}
+                        onClick={() => handleClick(route.path)}>
+
+                        <div className={`${selected === route.path ? 'bg-[#cb0c9f]' : 'bg-white'} border-[1px] ${selected === route.path ? "border-transparent " : "border-[#f5f5f5]"} shadow-sm p-[6px] rounded-lg`}>
                             <img src={route.icon} className='w-[16px]' alt='button_icon' />
                         </div>
+
                         <span className={`${selected === route.path ? 'font-semibold' : 'font-normal'} font-sans mt-1 text-[14px] ${selected === route.path ? 'text-[#505050]' : 'text-[#808080]'}`}>
                             {route.label}
                         </span>
+
                     </div>
                 ))}
 
