@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const connection = require('../config/db');
+const db = require('../config/db');
 const jwt = require('jsonwebtoken');
 const SECRET_KEY = process.env.SECRET_KEY;
 
@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
     let role = 'User';
 
     const checkEmailSql = 'SELECT * FROM users WHERE email = ?';
-    const checkResult = connection.query(checkEmailSql, [email]);
+    const checkResult = db.query(checkEmailSql, [email]);
     if (checkResult.length > 0) {
       return res.status(400).json({ message: 'Email Already Registered' });
     }
@@ -24,7 +24,7 @@ router.post('/register', async (req, res) => {
     // const access_token = jwt.sign({ email, role}, process.env.SECRET_KEY, { expiresIn: '1h' });
     const access_token = createToken(email, role);
     const insertSql = 'INSERT INTO users (name, email, password, role, access_token) VALUES (?, ?, ?, ?, ?)';
-    connection.query(insertSql, [name, email, password, role, access_token]);
+    db.query(insertSql, [name, email, password, role, access_token]);
     res.json({ message: 'Successfully Registered', name, email, role, access_token });
   } catch (error) {
     console.error('Error registering user:', error);
@@ -36,7 +36,7 @@ router.post("/signin", function (req, res) {
   const { email, password } = req.body;
 
   const sql = 'SELECT * FROM users WHERE email = ?';
-  connection.query(sql, [email], (err, result) => {
+  db.query(sql, [email], (err, result) => {
     if (err) {
       console.error('Error signing in:', err);
       res.status(500).json({ message: 'Internal Server Error' });

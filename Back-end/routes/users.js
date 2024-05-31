@@ -14,6 +14,28 @@ router.get("/get-users", (req, res) => {
   });
 });
 
+
+
+router.post('/add-user', async (req, res) => {
+  try {
+    const { name, email, password, role } = req.body;
+
+    const checkEmailSql = 'SELECT * FROM users WHERE email = ?';
+    const checkResult = db.query(checkEmailSql, [email]);
+    if (checkResult.length > 0) {
+      return res.status(400).json({ message: 'Email Already Registered' });
+    }
+    //  const hashedPassword = await bcrypt.hash(password, 10);
+    const insertSql = 'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)';
+    db.query(insertSql, [name, email, password, role]);
+    res.json({ message: 'Successfully Added', name, email, role });
+  } catch (error) {
+    console.error('Error registering user:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+
 router.put('/update/:userId', (req, res) => {
   const userId = req.params.userId;
   const { name, email, password, role } = req.body;

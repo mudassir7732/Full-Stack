@@ -105,33 +105,6 @@ const ViewUsers = () => {
     };
 
 
-    const handleSignup = (values) => {
-        setLoading(true);
-        axios
-            .post(`http://localhost/register`, {
-                name: values?.name,
-                email: values?.email,
-                password: values?.password,
-                role: values?.role ? 'Admin' : 'User',
-            })
-            .then((res) => {
-                const a = res?.data?.message;
-                setMessage(a);
-            })
-            .catch((error) => {
-                localStorage.setItem('user', null)
-                setMessage(error?.message);
-            })
-            .finally(() => {
-                getData();
-                setLoading(false);
-                setPopup(false);
-                setTimeout(() => {
-                    setMessage('');
-                }, 4000);
-            });
-    }
-
     return (
         <>
             {loading && <Loader />}
@@ -206,7 +179,7 @@ const ViewUsers = () => {
                 {
                     popup &&
 
-                    <Formik initialValues={INTIIAL_VALUES} validationSchema={ValidationSchema} onSubmit={details === null ? handleSignup : handleUpdate}>
+                    <Formik initialValues={INTIIAL_VALUES} validationSchema={ValidationSchema} onSubmit={handleUpdate}>
                         {({ handleChange, values, errors, touched }) => (
                             <Form>
                                 <div className=' flex flex-col items-center justify-center p-4 bg-white shadow-lg rounded-[18px] border-[1px]'>
