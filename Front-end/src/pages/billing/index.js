@@ -103,10 +103,9 @@ const Billing = () => {
                                                         <div>
                                                             <p className={styles.title}>Select Month</p>
                                                             <select
-                                                                as="select"
                                                                 name={`sections[${index}].month`}
                                                                 value={section.month}
-                                                                onChange={handleChange}    className='sbg-[#fefefe] text-[#303030] text-[15px] px-2 font-sans border-[1px] border-[#d0d0d0] rounded-[5px] h-[40px] w-full outline-none font-normal'
+                                                                onChange={handleChange}    className='bg-[#fefefe] text-[#303030] text-[15px] px-2 font-sans border-[1px] border-[#d0d0d0] rounded-[5px] h-[40px] w-full outline-none font-normal'
                                                                 >
                                                                 <option value="" label="Select month" />
                                                                 {MONTH_OPTIONS.map((option, i) => (
@@ -123,10 +122,9 @@ const Billing = () => {
                                                         <div className='w-full border-2'>
                                                             <p className={styles.title}>Input Type</p>
                                                             <select
-                                                                as="select"
                                                                 name={`sections[${index}].type`}
                                                                 value={section.type}
-                                                                onChange={handleChange}    className='sbg-[#fefefe] text-[#303030] text-[15px] px-2 font-sans border-[1px] border-[#d0d0d0] rounded-[5px] h-[40px] w-full outline-none font-normal'
+                                                                onChange={handleChange} className='bg-[#fefefe] text-[#303030] text-[15px] px-2 font-sans border-[1px] border-[#d0d0d0] rounded-[5px] h-[40px] w-full outline-none font-normal'
                                                                 >
                                                                 <option value="" label="Select type" />
                                                                 {TYPE_OPTIONS.map((option, i) => (
@@ -160,7 +158,6 @@ const Billing = () => {
                                                         <div className="w-full">
                                                             <p className={styles.title}>Description</p>
                                                             <textarea
-                                                                as="textarea"
                                                                 name={`sections[${index}].description`}
                                                                 value={section.description}
                                                                 placeholder="Enter description..."
