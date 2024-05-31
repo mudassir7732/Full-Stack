@@ -88,7 +88,7 @@ const ViewProducts = () => {
 
   const updateStatus = async (id, status) => {
     setLoading(true);
-    await axios.post('http://localhost:5000/update-product-status', { id: id, newStatus: status })
+    await axios.post('/routes/products/update-product-status', { id: id, newStatus: status })
       .then((res) => {
         setMessage(res?.data?.message);
         getData();
@@ -249,7 +249,7 @@ const ViewProducts = () => {
                       </p>
                     </div>
                     <div>
-                      {(details.status !== 'rejected') &&
+                      {(details.status !== 'Rejected') &&
                         <button className={`bg-[#ff0000] hover:bg-[#ee0000] ${styles.buttonStyle}`}
                           onClick={() => updateStatus(details.id, 'Rejected')}>
                           Reject
