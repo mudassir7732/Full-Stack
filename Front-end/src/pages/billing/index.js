@@ -17,7 +17,7 @@ const INITIAL_VALUES = {
             date: '',
             month: '',
             type: '',
-            amount: '',
+            amount: 0,
             description: ''
         }
     ]
@@ -64,7 +64,7 @@ const Billing = () => {
             {message && <CustomSnackbar message={message} />}
             {loading && <Loader />}
 
-            <div className='flex flex-col items-center justify-center'>
+            <div className='flex flex-col items-center justify-center max-w-[95%]'>
                 <div className={styles.container}>
                     <p className={styles.heading}>Balance Sheet</p>
                     <Formik
@@ -76,17 +76,17 @@ const Billing = () => {
                             <Form>
                                 <FieldArray name="sections">
                                     {({ insert, remove, push }) => (
-                                        <div className='flex flex-col gap-x-20'>
+                                        <div className='flex flex-col gap-x-20 border-2'>
                                             {values.sections.map((section, index) => (
                                                 <div key={index} className="section mb-3">
-                                                    <div className="flex flex-row gap-x-6 flex-wrap">
+                                                    <div className="flex flex-row flex-wrap gap-x-10 w-full">
                                                         <div>
                                                             <p className={styles.title}>Select Date</p>
                                                             <select
                                                                 name={`sections[${index}].date`}
                                                                 value={section.date}
                                                                 onChange={handleChange}
-                                                                className={`${styles.input} rounded-r-[5px]`}
+                                                                className='sbg-[#fefefe] text-[#303030] text-[15px] px-2 font-sans border-[1px] border-[#d0d0d0] rounded-[5px] h-[40px] w-full outline-none font-normal'
                                                             >
                                                                 <option value="" label="Select date" />
                                                                 {DATE_OPTIONS.map((option, i) => (
@@ -106,9 +106,8 @@ const Billing = () => {
                                                                 as="select"
                                                                 name={`sections[${index}].month`}
                                                                 value={section.month}
-                                                                onChange={handleChange}
-                                                                className={`${styles.input} rounded-r-[5px]`}
-                                                            >
+                                                                onChange={handleChange}    className='sbg-[#fefefe] text-[#303030] text-[15px] px-2 font-sans border-[1px] border-[#d0d0d0] rounded-[5px] h-[40px] w-full outline-none font-normal'
+                                                                >
                                                                 <option value="" label="Select month" />
                                                                 {MONTH_OPTIONS.map((option, i) => (
                                                                     <option key={i} value={option}>
@@ -121,15 +120,14 @@ const Billing = () => {
                                                             )}
                                                         </div>
 
-                                                        <div>
+                                                        <div className='w-full border-2'>
                                                             <p className={styles.title}>Input Type</p>
                                                             <select
                                                                 as="select"
                                                                 name={`sections[${index}].type`}
                                                                 value={section.type}
-                                                                onChange={handleChange}
-                                                                className={`${styles.input} rounded-r-[5px]`}
-                                                            >
+                                                                onChange={handleChange}    className='sbg-[#fefefe] text-[#303030] text-[15px] px-2 font-sans border-[1px] border-[#d0d0d0] rounded-[5px] h-[40px] w-full outline-none font-normal'
+                                                                >
                                                                 <option value="" label="Select type" />
                                                                 {TYPE_OPTIONS.map((option, i) => (
                                                                     <option key={i} value={option}>
@@ -209,7 +207,7 @@ const Billing = () => {
                                 </FieldArray>
 
                                 <div className="flex flex-row justify-end w-full mt-4">
-                                    <button type="submit" className={`${styles.submit} w-[200px] outline-none`}>
+                                    <button type="submit" className={`${styles.submit} max-w-[180px] outline-none`}>
                                         Save
                                     </button>
                                 </div>
