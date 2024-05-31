@@ -1,18 +1,18 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import UserGuard from "./userGuard";
+import AdminGuard from "./adminGuard";
 import Signin from "../pages/signin";
 import Dashboard from "../pages/dashboard/userDashboard";
 import Signup from "../pages/signup";
 import Layout from "../components/layout";
-import AddProducts from "../pages/add-product";
-import ViewProducts from "../pages/products";
 import ErrorPage from "../pages/error-page";
-import ViewUsers from "../pages/users";
-import AdminGuard from "./adminGuard";
 import ShopifyPage from "../pages/shopify";
-import UserGuard from "./userGuard";
-import Billing from "../pages/payments";
-import AddBilling from "../pages/add-payment";
-
+import AddProduct from "../pages/add-product";
+import Products from "../pages/products";
+import AddUser from "../pages/add-user";
+import Users from "../pages/users";
+import AddPayment from "../pages/add-payment";
+import Payments from "../pages/payments";
 
 const AppRoutes = () => {
     return (
@@ -20,7 +20,7 @@ const AppRoutes = () => {
             <Routes>
                 <Route path={'/signup'} element={<Signup />} />
                 <Route path={'/'} element={<Signin />} />
-                 <Route path="/dashboard"
+                <Route path="/dashboard"
                     element={
                         <UserGuard>
                             <Layout>
@@ -33,7 +33,7 @@ const AppRoutes = () => {
                     element={
                         <AdminGuard>
                             <Layout>
-                                <AddProducts />
+                                <AddProduct />
                             </Layout>
                         </AdminGuard>
                     }
@@ -42,7 +42,34 @@ const AppRoutes = () => {
                     element={
                         <AdminGuard>
                             <Layout>
-                                <ViewProducts />
+                                <Products />
+                            </Layout>
+                        </AdminGuard>
+                    }
+                />
+                <Route path='/add-user'
+                    element={
+                        <AdminGuard>
+                            <Layout>
+                                <AddUser />
+                            </Layout>
+                        </AdminGuard>
+                    }
+                />
+                <Route path='/users'
+                    element={
+                        <AdminGuard>
+                            <Layout>
+                                <Users />
+                            </Layout>
+                        </AdminGuard>
+                    }
+                />
+                <Route path='/add-payment'
+                    element={
+                        <AdminGuard>
+                            <Layout>
+                                <AddPayment />
                             </Layout>
                         </AdminGuard>
                     }
@@ -51,26 +78,7 @@ const AppRoutes = () => {
                     element={
                         <AdminGuard>
                             <Layout>
-                                <Billing />
-                            </Layout>
-                        </AdminGuard>
-                    }
-                />
-                
-                <Route path='/add-payment'
-                    element={
-                        <AdminGuard>
-                            <Layout>
-                                <AddBilling />
-                            </Layout>
-                        </AdminGuard>
-                    }
-                />
-                .<Route path='/users'
-                    element={
-                        <AdminGuard>
-                            <Layout>
-                                <ViewUsers />
+                                <Payments />
                             </Layout>
                         </AdminGuard>
                     }
