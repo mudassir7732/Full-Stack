@@ -62,7 +62,7 @@ const AddProducts = () => {
     });
     await axios.post('/routes/products/upload-data', formData)
       .then((res) => {
-        navigate('/view-products')
+        navigate('/products')
       })
       .catch((err) => {
         setMessage(err?.message || "Error occureds");

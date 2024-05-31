@@ -5,7 +5,7 @@ import Loader from '../../components/loader';
 import styles from './styles';
 import CustomSnackbar from '../../components/snackbar';
 
-const ViewProducts = () => {
+const Products = () => {
   const [data, setData] = useState();
   const [accepted, setAccepted] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -272,4 +272,4 @@ const ViewProducts = () => {
     </>
   )
 }
-export default ViewProducts;
+export default Products;

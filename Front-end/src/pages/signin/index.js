@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from "../../components/loader";
 import styles from "./styles";
-import styles2 from '../add-products/styles';
+import styles2 from '../add-product/styles';
 import CustomSnackbar from "../../components/snackbar";
 import { Form, Formik } from 'formik';
 import Cookies from 'js-cookie';
@@ -60,7 +60,7 @@ const Signin = () => {
                         navigate('/dashboard');
                     }
                     else if (res?.data?.role === 'Admin') {
-                        navigate('/add-products');
+                        navigate('/add-product');
                     }
                 }
             })

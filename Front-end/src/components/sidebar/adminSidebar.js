@@ -4,15 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 const ADMIN_ROUTES = [
-    { label: 'Add Products', path: '/add-products', icon: '/assets/icons/add_icon.png' },
-    { label: 'View Products', path: '/view-products', icon: '/assets/icons/view.png' },
-    { label: 'View Users', path: '/view-users', icon: '/assets/icons/add-user2.png' },
-    { label: 'Billing', path: '/billing', icon: '/assets/icons/invoice.png' },
+    { label: 'Add Product', path: '/add-product', icon: '/assets/icons/add_icon.png' },
+    { label: 'Products', path: '/products', icon: '/assets/icons/view.png' },
+    { label: 'Users', path: '/users', icon: '/assets/icons/add-user2.png' },    
+    { label: 'Add Payment', path: '/add-payment', icon: '/assets/icons/invoice.png' },
+    { label: 'Payments', path: '/payments', icon: '/assets/icons/invoice.png' },
     { label: 'Sign-Out', path: '/', icon: '/assets/icons/signout.png' },
 ]
 
 const AdminSidebar = () => {
-    const [selected, setSelected] = useState('/add-products');
+    const [selected, setSelected] = useState('/add-product');
     const navigate = useNavigate();
 
     const handleClick = async (path) => {
@@ -27,7 +28,7 @@ const AdminSidebar = () => {
 
     return (
         <div className='flex-col py-4 items-center justify-center hidden lg:flex lg:w-[250px] xl:w-[300px]'>
-            <div className="flex flex-row mb-4 items-center -ml-10 gap-x-2" onClick={() => navigate('/view-products')}>
+            <div className="flex flex-row mb-4 items-center -ml-10 gap-x-2" onClick={() => navigate('/products')}>
                 <img src="../assets/img/logo-ct-dark.png" className="h-[32px]" alt="main_logo" />
                 <span className="text-[14px] text-[#555555] font-semibold font-sans">
                     Soft UI Dashboard

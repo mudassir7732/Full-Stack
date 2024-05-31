@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import CustomSnackbar from '../../components/snackbar';
 import Loader from '../../components/loader';
 import axios from 'axios';
-import styles from '../add-products/styles';
+import styles from '../add-product/styles';
 import { useNavigate } from 'react-router-dom'
 
 const MONTH_OPTIONS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -46,7 +46,7 @@ const Billing = () => {
         await axios.post('/routes/products/upload-data', { values })
 
             .then((res) => {
-                navigate('/view-products')
+                navigate('/products')
             })
             .catch((err) => {
                 setMessage(err?.message || "Error occureds");

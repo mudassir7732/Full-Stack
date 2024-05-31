@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from "../../components/loader";
-import styles2 from '../add-products/styles';
+import styles2 from '../add-product/styles';
 import styles from '../signin/styles';
 import CustomSnackbar from "../../components/snackbar";
 import Cookies from 'js-cookie';

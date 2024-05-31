@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import styles from "../view-products/styles";
+import styles from "../products/styles";
 import axios from 'axios';
 import Loader from "../../components/loader";
 import styles2 from '../signin/styles';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 import CustomSnackbar from "../../components/snackbar";
-import styles3 from '../add-products/styles';
+import styles3 from '../add-product/styles';
 import { Form, Formik } from 'formik';
 import '../../App.css';
 import * as yup from 'yup';

@@ -3,14 +3,15 @@ import Signin from "../pages/signin";
 import Dashboard from "../pages/dashboard/userDashboard";
 import Signup from "../pages/signup";
 import Layout from "../components/layout";
-import AddProducts from "../pages/add-products";
-import ViewProducts from "../pages/view-products";
+import AddProducts from "../pages/add-product";
+import ViewProducts from "../pages/products";
 import ErrorPage from "../pages/error-page";
-import ViewUsers from "../pages/view-users";
+import ViewUsers from "../pages/users";
 import AdminGuard from "./adminGuard";
 import ShopifyPage from "../pages/shopify";
 import UserGuard from "./userGuard";
-import Billing from "../pages/billing";
+import Billing from "../pages/payments";
+import AddBilling from "../pages/add-payment";
 
 
 const AppRoutes = () => {
@@ -28,7 +29,7 @@ const AppRoutes = () => {
                         </UserGuard>
                     }
                 />
-                <Route path="/add-products"
+                <Route path="/add-product"
                     element={
                         <AdminGuard>
                             <Layout>
@@ -37,7 +38,7 @@ const AppRoutes = () => {
                         </AdminGuard>
                     }
                 />
-                <Route path='/view-products'
+                <Route path='/products'
                     element={
                         <AdminGuard>
                             <Layout>
@@ -46,7 +47,7 @@ const AppRoutes = () => {
                         </AdminGuard>
                     }
                 />
-                <Route path='/billing'
+                <Route path='/payments'
                     element={
                         <AdminGuard>
                             <Layout>
@@ -55,7 +56,17 @@ const AppRoutes = () => {
                         </AdminGuard>
                     }
                 />
-                .<Route path='/view-users'
+                
+                <Route path='/add-payment'
+                    element={
+                        <AdminGuard>
+                            <Layout>
+                                <AddBilling />
+                            </Layout>
+                        </AdminGuard>
+                    }
+                />
+                .<Route path='/users'
                     element={
                         <AdminGuard>
                             <Layout>
