@@ -17,7 +17,7 @@ const ValidationSchema = yup.object().shape({
     password: yup.string().required('Password Required')
 })
 
-const AddUser = () => {
+const ViewUsers = () => {
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState([]);
@@ -94,7 +94,7 @@ const AddUser = () => {
                 getData();
             })
             .catch((error) => {
-                setMessage(error?.message || 'An error occurred while deleting user');
+                setMessage(error?.message || 'Error occurred while deleting user');
             })
             .finally(() => {
                 setLoading(false);
@@ -144,7 +144,7 @@ const AddUser = () => {
                                 Registered Users
                             </p>
 
-                            <button className={`bg-[#006400] hover:bg-[#004400] py-[1px] ${styles.buttonStyle}`}
+                            <button className={`bg-[#006400] hover:bg-[#004400] py-[3px] ${styles.buttonStyle}`}
                                 onClick={() => setPopup(true)}>
                                 Add New User
                             </button>
@@ -154,13 +154,13 @@ const AddUser = () => {
                             <Table>
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell sx={{ fontWeight:'500', fontSize: '12px', color: '#a9a9a9' }} >
+                                        <TableCell sx={{ fontWeight:'500', fontSize: '12px', color: '#a0a0a0' }} >
                                             Name
                                         </TableCell>
-                                        <TableCell sx={{ fontWeight: '500', fontSize: '12px', color: '#a9a9a9' }} >
+                                        <TableCell sx={{ fontWeight: '500', fontSize: '12px', color: '#a0a0a0' }} >
                                             Email
                                         </TableCell>
-                                        <TableCell sx={{ fontWeight: '500', fontSize: '12px', color: '#a9a9a9' }} >
+                                        <TableCell sx={{ fontWeight: '500', fontSize: '12px', color: '#a0a0a0' }} >
                                             Role
                                         </TableCell>
                                         <TableCell></TableCell>
@@ -297,4 +297,4 @@ const AddUser = () => {
         </>
     )
 }
-export default AddUser;
+export default ViewUsers;

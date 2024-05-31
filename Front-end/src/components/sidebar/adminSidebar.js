@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 const ADMIN_ROUTES = [
     { label: 'Add Products', path: '/add-products', icon: '/assets/icons/add_icon.png' },
     { label: 'View Products', path: '/view-products', icon: '/assets/icons/view.png' },
-    { label: 'Add User', path: '/add-user', icon: '/assets/icons/add-user1.png' },
+    { label: 'View Users', path: '/view-users', icon: '/assets/icons/add-user1.png' },
     { label: 'Billing', path: '/billing', icon: '/assets/icons/add-user1.png' },
     { label: 'Sign-Out', path: '/', icon: '/assets/icons/signout.png' },
 ]

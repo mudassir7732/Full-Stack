@@ -6,7 +6,7 @@ import Layout from "../components/layout";
 import AddProducts from "../pages/add-products";
 import ViewProducts from "../pages/view-products";
 import ErrorPage from "../pages/error-page";
-import AddUser from "../pages/add-user";
+import ViewUsers from "../pages/view-users";
 import AdminGuard from "./adminGuard";
 import ShopifyPage from "../pages/shopify";
 import UserGuard from "./userGuard";
@@ -59,7 +59,7 @@ const AppRoutes = () => {
                     element={
                         <AdminGuard>
                             <Layout>
-                                <AddUser />
+                                <ViewUsers />
                             </Layout>
                         </AdminGuard>
                     }

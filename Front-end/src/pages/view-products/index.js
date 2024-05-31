@@ -148,10 +148,10 @@ const ViewProducts = () => {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell sx={{ fontWeight: '500', fontSize: '12px', color: '#a9a9a9' }} >
+                      <TableCell sx={{ fontWeight: '500', fontSize: '13px', color: '#a0a0a0' }} >
                         Name
                       </TableCell>
-                      <TableCell sx={{ fontWeight: '500', fontSize: '12px', color: '#a9a9a9' }} >
+                      <TableCell sx={{ fontWeight: '500', fontSize: '13px', color: '#a0a0a0' }} >
                         Date
                       </TableCell>
                       <TableCell></TableCell>
