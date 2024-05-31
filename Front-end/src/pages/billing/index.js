@@ -3,8 +3,9 @@ import { Formik, Form, Field, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import CustomSnackbar from '../../components/snackbar';
 import Loader from '../../components/loader';
+import axios from 'axios';
 import styles from '../add-products/styles';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const MONTH_OPTIONS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const DATE_OPTIONS = ['2021-01-01', '2021-02-01'];
@@ -39,22 +40,23 @@ const Billing = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const handleSubmit = async (values, { setSubmitting }) => {
+    const handleSubmit = async (values) => {
         console.log(values, ' = Values');
-        await axios.post('/routes/products/upload-data', formData)
-                    .then((res) => {
-                        navigate('/view-products')
-                    })
-                    .catch((err) => {
-                        setMessage(err?.message || "Error occureds");
-                    })
-                    .finally(() => {
-                        setLoading(false);
-                        setTimeout(() => {
-                            setMessage('');
-                        }, 4000);
-                    })
-            };
+        // await axios.post('/routes/products/upload-data', formData)
+        await axios.post('/routes/products/upload-data', {values})
+        
+            .then((res) => {
+                navigate('/view-products')
+            })
+            .catch((err) => {
+                setMessage(err?.message || "Error occureds");
+            })
+            .finally(() => {
+                setLoading(false);
+                setTimeout(() => {
+                    setMessage('');
+                }, 4000);
+            })
     };
 
     return (
