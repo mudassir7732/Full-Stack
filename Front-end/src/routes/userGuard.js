@@ -14,7 +14,6 @@ const UserGuard = ({ children }) => {
   const handleAuthentication = async () => {
     try {
       const res = await axios.get(`/verify-token`, { withCredentials: true });
-      console.log(res.data, ' = response');
       if (res?.data?.message === 'Success' && res?.data?.userRole === 'User') {
         return;
       } else {
