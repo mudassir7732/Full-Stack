@@ -41,7 +41,6 @@ const AddPayment = () => {
     const navigate = useNavigate();
 
     const handleSubmit = async (values) => {
-        console.log(values, ' = Values');
         // await axios.post('/routes/products/upload-data', formData)
         await axios.post('/routes/products/upload-data', { values })
 
