@@ -4,7 +4,6 @@ import {useAuth} from '../../AuthContext';
 
 const Dashboard = () => {
     const { userRole } = useAuth();
-    console.log(userRole, ' = User Role')
   
     return (
       <div>
