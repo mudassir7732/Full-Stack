@@ -52,11 +52,11 @@ const ViewUsers = () => {
             });
     }
 
-    const handleEditButton = (id) => {
+    const handleEdit = (id) => {
         const item = users.find((item, index) => item.id === id);
         if (item) {
             setDetails(item);
-            setPopup(true);
+            // setPopup(true);
         }
     }
 
@@ -110,24 +110,17 @@ const ViewUsers = () => {
             {loading && <Loader />}
             {message && <CustomSnackbar message={message} />}
             <div>
-                {popup === false &&
-                    <div className="bg-white py-4 my-4 border-[1px] border-[#e9e9e9] shadow-lg rounded-[16px]">
-                        <div className='flex flex-row items-center justify-between px-4'>
-                            <p className="text-[18px] font-medium font-sans text-[#606060]">
-                                Registered Users
-                            </p>
+                {details === null &&
+                    <div className="bg-white py-4 px-[30px] my-4 border-[1px] border-[#e9e9e9] shadow-lg rounded-[16px]">
+                        <p className=" text-[18px] font-medium font-sans text-[#606060]">
+                            Registered Users
+                        </p>
 
-                            <button className={`bg-[#006400] hover:bg-[#004400] py-[3px] ${styles.buttonStyle}`}
-                                onClick={() => setPopup(true)}>
-                                Add New User
-                            </button>
-                        </div>
-
-                        <TableContainer sx={{ paddingInline:'30px' }}>
+                        <TableContainer>
                             <Table>
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell sx={{ fontWeight:'500', fontSize: '12px', color: '#a0a0a0' }} >
+                                        <TableCell sx={{ fontWeight: '500', fontSize: '12px', color: '#a0a0a0' }} >
                                             Name
                                         </TableCell>
                                         <TableCell sx={{ fontWeight: '500', fontSize: '12px', color: '#a0a0a0' }} >
@@ -142,21 +135,21 @@ const ViewUsers = () => {
                                 </TableHead>
                                 <TableBody>
                                     {users?.map((user, index) => (
-                                        <TableRow sx={{marginInline:'200px'}} >
-                                            <TableCell sx={{color:'#505050'}}>
+                                        <TableRow sx={{ marginInline: '200px' }} >
+                                            <TableCell sx={{ color: '#505050' }}>
                                                 {user?.name}
                                             </TableCell>
-                                            <TableCell sx={{color:'#505050'}}>
+                                            <TableCell sx={{ color: '#505050' }}>
                                                 {user?.email}
                                             </TableCell>
-                                            <TableCell sx={{color:'#505050'}}>
+                                            <TableCell sx={{ color: '#505050' }}>
                                                 {user?.role}
                                             </TableCell>
                                             <TableCell>
                                                 <button id={1}
-                                                 className={`${styles.viewButton} button`}
-                                                 style={{backgroundColor: "linear-gradient('310deg', '#17ad37', '#98ec2d')"}}
-                                                    onClick={() => handleEditButton(user?.id)}
+                                                    className={`${styles.viewButton} button`}
+                                                    style={{ backgroundColor: "linear-gradient('310deg', '#17ad37', '#98ec2d')" }}
+                                                    onClick={() => handleEdit(user?.id)}
                                                 >
                                                     Edit
                                                 </button>
@@ -177,7 +170,7 @@ const ViewUsers = () => {
                 }
 
                 {
-                    popup &&
+                    details &&
 
                     <Formik initialValues={INTIIAL_VALUES} validationSchema={ValidationSchema} onSubmit={handleUpdate}>
                         {({ handleChange, values, errors, touched }) => (
@@ -188,7 +181,7 @@ const ViewUsers = () => {
                                             Add Here!
                                         </p>
                                         <img src='/assets/icons/close.png' alt='close_icon' className="h-[24px] w-[24px] cursor-pointer"
-                                            onClick={() => { setPopup(false); setDetails(null) }} />
+                                            onClick={() => setDetails(null)} />
                                     </div>
                                     <div className="p-3">
 
@@ -214,7 +207,7 @@ const ViewUsers = () => {
                                         <input placeholder='Email'
                                             name='email'
                                             value={values.email}
-                                            onChange={details === null ? handleChange : undefined}
+                                            onChange={undefined}
                                             className={styles2.input} />
                                         {errors.email && touched.email && (
                                             <p className={styles3.error}>
@@ -257,7 +250,7 @@ const ViewUsers = () => {
                                         </div>
 
                                         <button className={styles2.signin} type='submit'>
-                                            {details === null ? 'Register' : 'Update'}
+                                            Update
                                         </button>
                                     </div>
                                 </div>

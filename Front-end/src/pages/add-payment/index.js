@@ -169,20 +169,19 @@ const AddPayment = () => {
                                                   </div>
                                                 </div>
 
-                                                    <div className="flex flex-row justify-end gap-x-4 mt-4">
+                                                    <div className="flex flex-row flex-wrap justify-end gap-4 mt-4 mb-5">
                                                         {index > 0 && (
                                                             <button
                                                                 type="button"
-                                                                className="w-fit px-3 bg-[#f9f9f9] text-black outline-none font-sans py-1 rounded-[8px] font-semibold text-[16px] mb-5 hover:bg-[#f0f0f0] border-[1px] border-[#808080]"
+                                                                className="w-fit px-3 bg-[#f9f9f9] text-black outline-none font-sans py-1 rounded-[8px] font-semibold text-[16px] hover:bg-[#f0f0f0] border-[1px] border-[#808080]"
                                                                 onClick={() => remove(index)}
                                                             >
-                                                                Delete Section
+                                                                Discard
                                                             </button>
                                                         )}
                                                         <button
                                                             type="button"
-                                                            className="bg-[#1e90ff] w-fit px-3 text-black font-sans py-1 outline-none rounded-[8px] font-semibold text-[16px] mb-5 hover:bg-[#2376ff]"
-                                                            // className="bg-[#3b82f6] w-fit px-3 text-black font-sans py-1 rounded-[8px] font-semibold text-[16px] mb-5 hover:bg-[#2376ff]"
+                                                            className="bg-[#1e90ff] w-fit px-3 text-black font-sans py-1 outline-none rounded-[8px] font-semibold text-[16px] hover:bg-[#2376ff]"
                                                             onClick={() =>
                                                                 push({
                                                                     date: '',
@@ -204,7 +203,7 @@ const AddPayment = () => {
 
                                 <div className="flex flex-row justify-end w-full mt-4">
                                     <button type="submit" className={`${styles.submit} max-w-[180px] outline-none`}>
-                                        Save
+                                        Save Payments
                                     </button>
                                 </div>
                             </Form>

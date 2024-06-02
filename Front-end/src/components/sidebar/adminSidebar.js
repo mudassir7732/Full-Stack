@@ -32,7 +32,7 @@ const AdminSidebar = () => {
             <div className="flex flex-row mb-4 items-center -ml-10 gap-x-2" onClick={() => navigate('/products')}>
                 <img src="../assets/img/logo-ct-dark.png" className="h-[32px]" alt="main_logo" />
                 <span className="text-[14px] text-[#555555] font-semibold font-sans">
-                    Soft UI Dashboard
+                    Soft UI Admin Dashboard
                 </span>
             </div>
             <hr className="horizontal dark mt-0" />
