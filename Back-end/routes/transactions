@@ -28,50 +28,17 @@ router.post('/add-transaction', (req, res) => {
 });
 
 
+router.get('/get-transactions', (req, res) => {
+    const query = 'SELECT * FROM transactions';
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching transactions:', err);
+            return res.status(500).send('Error fetching transactions');
+        }
+        res.json(results);
+    });
+})
+
+
 module.exports = router;
-
-
-
-
-
-
-
-
-
-// router.post('/add-transaction', (req, res) => {
-//     const sections = req.body.sections;
-
-// const insertTransaction = (transaction, callback) => {
-//     const query = 'INSERT INTO transactions (day, month, type, amount, description) VALUES (?, ?, ?, ?, ?)';
-//     db.query(query, [transaction.day, transaction.month, transaction.type, transaction.amount, transaction.description], callback);
-//     // db.query(query, [transaction.amount, transaction.date, transaction.description, transaction.type], callback);
-// };
-
-// sections.forEach((section) => {
-//     console.log(section, ' = Section in backend')
-//     // Construct the date string
-//     const { day, month, type, amount, description } = section;
-
-//     // Create a new object with the constructed date
-//     console.log(day, month, type, amount, description, ' = Values in backend')
-//     const transaction = {
-//         day,
-//         month,
-//         type,
-//         amount,
-//         description,
-//     };
-
-
-
-// insertTransaction(transaction, (err, results) => {
-//     if (err) {
-//         console.error('Error inserting transaction:', err);
-//         return res.status(500).send('Error inserting transaction');
-//     }
-//     //   console.log('Transaction inserted:', results.insertId);
-// });
-//     });
-
-//     res.send('Data received and inserted successfully');
-// });
