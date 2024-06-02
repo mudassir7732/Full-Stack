@@ -73,6 +73,10 @@ const Transactions = () => {
             {message && <CustomSnackbar message={message} />}
             {data && (
                 <div className="bg-white py-4 px-[30px] my-4 border-[1px] border-[#e9e9e9] shadow-lg rounded-[16px]">
+                    <div className='flex flex-row justify-between items-start mb-2'>
+                        <p className='font-sans font-bold text-[#000080] text-[20px]'>
+                            All Transactions
+                        </p>
                     <select
                         value={month}
                         onChange={(e) => setMonth(e.target.value)}
@@ -82,6 +86,7 @@ const Transactions = () => {
                             <option key={index} value={month}>{month}</option>
                         ))}
                     </select>
+                    </div>
 
                     <div className={styles.header}>
                         <div className={styles.headingBox}>
@@ -113,7 +118,7 @@ const Transactions = () => {
                     </div>
 
                     {data && (
-                        <TableContainer sx={{ paddingBlock: '5px' }}>
+                        <TableContainer sx={{ paddingBlock: '5px', marginTop:'2vh' }}>
                             <Table>
                                 <TableHead>
                                     <TableRow>
@@ -150,7 +155,7 @@ const Transactions = () => {
                                             <TableCell>
                                                 {item.day + ", " + item.month}
                                             </TableCell>
-                                            <TableCell>
+                                            <TableCell sx={{maxWidth:'25vw'}}>
                                                 {item?.description}
                                             </TableCell>
                                         </TableRow>
