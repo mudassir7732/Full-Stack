@@ -44,7 +44,7 @@ const AddPayment = () => {
     console.log(values, ' = Values')
     const sections = values?.sections;
     // await axios.post('/routes/products/upload-data', formData)
-    await axios.post('http://localhost:5000/routes/transactions/add-transaction', { sections })
+    await axios.post('routes/transactions/add-transaction', { sections })
 
       .then((res) => {
         // navigate('/products')
