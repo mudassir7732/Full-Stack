@@ -1,7 +1,7 @@
 const MONTH_OPTIONS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 
-const Payments = () => {
+const Transactions = () => {
     return (
         <div className="w-full bg-white">
             <select
@@ -20,4 +20,4 @@ const Payments = () => {
         </div>
     )
 }
-export default Payments;
+export default Transactions;

@@ -65,7 +65,7 @@ const AddProducts = () => {
         navigate('/products')
       })
       .catch((err) => {
-        setMessage(err?.message || "Error occureds");
+        setMessage(err?.message || "Error occured");
       })
       .finally(() => {
         setLoading(false);

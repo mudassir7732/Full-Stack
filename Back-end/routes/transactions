@@ -1,0 +1,40 @@
+const express = require('express');
+const router = express.Router();
+const db = require('../config/db');
+
+
+router.post('/add-transaction', (req, res) => {
+  const sections = req.body.sections;
+
+  const insertTransaction = (transaction, callback) => {
+    const query = 'INSERT INTO transactions (amount, date, description, type) VALUES (?, ?, ?, ?)';
+    db.query(query, [transaction.type, transaction.amount, transaction.date, transaction.month, transaction.description], callback);
+    // db.query(query, [transaction.amount, transaction.date, transaction.description, transaction.type], callback);
+  };
+
+  sections.forEach((section) => {
+    // Construct the date string
+    const { day, month, year, amount, description, type } = section;
+
+    // Create a new object with the constructed date
+    console.log(day, month, year, amount, description, ' = Values in backend')
+    const transaction = {
+      amount,
+      date,
+      description,
+      type
+    };
+
+    insertTransaction(transaction, (err, results) => {
+      if (err) {
+        console.error('Error inserting transaction:', err);
+        return res.status(500).send('Error inserting transaction');
+      }
+      console.log('Transaction inserted:', results.insertId);
+    });
+  });
+
+  res.send('Data received and inserted successfully');
+});
+
+module.exports = router;

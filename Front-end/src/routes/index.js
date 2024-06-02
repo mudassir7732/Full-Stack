@@ -11,8 +11,8 @@ import AddProduct from "../pages/add-product";
 import Products from "../pages/products";
 import AddUser from "../pages/add-user";
 import Users from "../pages/users";
-import AddPayment from "../pages/add-payment";
-import Payments from "../pages/payments";
+import AddPayment from "../pages/add-transaction";
+import Transactions from "../pages/transactions";
 
 const AppRoutes = () => {
     return (
@@ -65,7 +65,7 @@ const AppRoutes = () => {
                         </AdminGuard>
                     }
                 />
-                <Route path='/add-payment'
+                <Route path='/add-transaction'
                     element={
                         <AdminGuard>
                             <Layout>
@@ -74,11 +74,11 @@ const AppRoutes = () => {
                         </AdminGuard>
                     }
                 />
-                <Route path='/payments'
+                <Route path='/transactions'
                     element={
                         <AdminGuard>
                             <Layout>
-                                <Payments />
+                                <Transactions />
                             </Layout>
                         </AdminGuard>
                     }

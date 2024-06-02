@@ -41,11 +41,14 @@ const AddPayment = () => {
     const navigate = useNavigate();
 
     const handleSubmit = async (values) => {
+      console.log(values, ' = Values')
+      const sections = values?.sections;
         // await axios.post('/routes/products/upload-data', formData)
-        await axios.post('/routes/products/upload-data', { values })
+        await axios.post('http://localhost:5000/routes/transactions/add-transaction', { sections })
 
             .then((res) => {
-                navigate('/products')
+                // navigate('/products')
+                console.log(res.data, ' = Response')
             })
             .catch((err) => {
                 setMessage(err?.message || "Error occureds");
@@ -203,7 +206,7 @@ const AddPayment = () => {
 
                                 <div className="flex flex-row justify-end w-full mt-4">
                                     <button type="submit" className={`${styles.submit} max-w-[180px] outline-none`}>
-                                        Save Payments
+                                        Save Transactions
                                     </button>
                                 </div>
                             </Form>
