@@ -76,7 +76,7 @@ const Transactions = () => {
             {data && (
                 <div className={styles.container}>
                     <div className={styles.header}>
-                        <p className=''>
+                        <p className='font-sans font-bold text-[#000080] text-[20px]'>
                             All Transactions
                         </p>
                         <select
@@ -130,7 +130,7 @@ const Transactions = () => {
                         <Table>
                             <TableHead sx={{ backgroundColor: '#d1edff' }}>
                                 <TableRow>
-                                    <TableCell sx={{ fontWeight: '500', fontSize: '13px', color: '#a0a0a0' }}>
+                                    <TableCell sx={{ fontWeight: '500', fontSize: '13px', color: '#a0a0a0', minWidth:'95px' }}>
                                         Serial No.
                                     </TableCell>
                                     <TableCell sx={{ fontWeight: '500', fontSize: '13px', color: '#a0a0a0' }}>

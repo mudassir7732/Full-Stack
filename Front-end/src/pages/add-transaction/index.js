@@ -65,7 +65,7 @@ const AddPayment = () => {
 
       <div className='flex flex-col items-center justify-center max-w-[95%]'>
         <div className={styles2.container}>
-          <p className={styles2.heading}>Balance Sheet</p>
+          <p className={styles2.heading}>Add Here!</p>
           
           <Formik
             initialValues={INITIAL_VALUES}
