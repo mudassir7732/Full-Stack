@@ -11,6 +11,7 @@ const ShopifyPage = () => {
         await axios.get('http://localhost:5000/getdata')
             .then((res) => {
                 console.log(res?.data, ' = data')
+                const data = res?.data;
             })
             .catch((err) => {
                 console.log(err, ' = Error')
