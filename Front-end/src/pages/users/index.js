@@ -48,7 +48,7 @@ const ViewUsers = () => {
             .finally(() => {
                 setTimeout(() => {
                     setMessage('');
-                }, 4000);
+                }, 5000);
             });
     }
 
@@ -82,7 +82,7 @@ const ViewUsers = () => {
                 setLoading(false);
                 setTimeout(() => {
                     setMessage('');
-                }, 4000);
+                }, 5000);
             });
     };
 
@@ -100,7 +100,7 @@ const ViewUsers = () => {
                 setLoading(false);
                 setTimeout(() => {
                     setMessage('');
-                }, 4000);
+                }, 5000);
             });
     };
 

@@ -17,7 +17,7 @@ const Header = () => {
         finally {
             setTimeout(() => {
                 setMessage('')
-            }, 4000);
+            }, 5000);
         }
     }
 

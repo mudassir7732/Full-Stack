@@ -12,7 +12,7 @@ const CustomSnackbar = ({ message }) => {
 
             setTimeout(() => {
                 setOpen(false);
-            }, 4000);
+            }, 5000);
         }
     }, [message, messageState]);
 

@@ -54,7 +54,7 @@ const AddPayment = () => {
         setLoading(false);
         setTimeout(() => {
           setMessage('');
-        }, 4000);
+        }, 5000);
       })
   };
 

@@ -32,7 +32,7 @@ const Products = () => {
       .finally(() => {
         setTimeout(() => {
           setMessage('');
-        }, 4000);
+        }, 5000);
       });
   }
 
@@ -72,7 +72,7 @@ const Products = () => {
       finally {
         setTimeout(() => {
           setMessage('');
-        }, 4000);
+        }, 5000);
       }
     }
 
@@ -101,7 +101,7 @@ const Products = () => {
         setLoading(false);
         setTimeout(() => {
           setMessage('');
-        }, 4000);
+        }, 5000);
       })
   }
 
@@ -145,12 +145,14 @@ const Products = () => {
             </div>
 
 
-            <TableContainer sx={{ paddingBlock: '0px', marginTop: '4vh', borderRadius: '10px',  overflow: 'scroll', maxWidth: '95vw',
-                        '&::-webkit-scrollbar': {
-                            display: 'none'
-                        },
-                        '-ms-overflow-style': 'none',
-                        'scrollbar-width': 'none' }}>
+            <TableContainer sx={{
+              paddingBlock: '0px', marginTop: '4vh', borderRadius: '10px', overflow: 'scroll', maxWidth: '95vw',
+              '&::-webkit-scrollbar': {
+                display: 'none'
+              },
+              '-ms-overflow-style': 'none',
+              'scrollbar-width': 'none'
+            }}>
               <Table>
                 <TableHead sx={{ backgroundColor: '#d1edff' }}>
                   <TableRow>
@@ -198,20 +200,26 @@ const Products = () => {
               />
 
               <dviv className={styles.imageInfo}>
-                <img src={`http://localhost:5000/uploads/${details?.filename}`} alt="Close Icon" className='h-[120px]' />
+                <img src={`http://localhost:5000/uploads/${details?.filename}`} alt="Close Icon" className='h-[210px] rounded-lg' />
                 <div className={styles.infoWrapper}>
-                  <p className={styles.itemInfo}>
-                    {details?.name}
-                  </p>
-                  <p className={styles.itemInfo}>
-                    {details?.description}
-                  </p>
-                  <p className={styles.itemInfo}>
-                    {details?.date}
-                  </p>
-                  <p className={styles.itemInfo}>
-                    {details?.id}
-                  </p>
+                  <div className={styles.singleInfo}>
+                    <p className={styles.itemLabel}>Name:</p>
+                    <p className={styles.itemInfo}>{details?.name}</p>
+                  </div>
+                  <div className={styles.singleInfo}>
+                    <p className={styles.itemLabel}>Description:</p>
+                    <p className={styles.itemInfo}>{details?.description}</p>
+                  </div>
+
+                  <div className={styles.singleInfo}>
+                    <p className={styles.itemLabel}>Date:</p>
+                    <p className={styles.itemInfo}>{details?.date}</p>
+                  </div>
+
+                  <div className={styles.singleInfo}>
+                    <p className={styles.itemLabel}>ID:</p>
+                    <p className={styles.itemInfo}>{details?.id}</p>
+                  </div>
                 </div>
               </dviv>
 
@@ -233,16 +241,14 @@ const Products = () => {
                 <p className={styles.URLsTitle}>
                   Videos URLs
                 </p>
-                <p className='font-sans'>
-                  {videos && videos.map((url, index) => (
-                    <div className={styles.URLsWrapper}>
-                      <p className={styles.URLIndex}>{index + 1 + ")   "}</p>
-                      <a href={url} target='_blank' className={styles.URL} >
-                        {url}
-                      </a>
-                    </div>
-                  ))}
-                </p>
+                {videos && videos.map((url, index) => (
+                  <div className={styles.URLsWrapper}>
+                    <p className={styles.URLIndex}>{index + 1 + ")   "}</p>
+                    <a href={url} target='_blank' className={styles.URL} >
+                      {url}
+                    </a>
+                  </div>
+                ))}
               </div>
 
               {
