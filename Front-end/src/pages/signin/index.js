@@ -82,11 +82,25 @@ const Signin = () => {
         <>
             {loading && <Loader />}
 
-            <div className={styles.container}>
+            {/* <div style={{backgroundImage:'https://i.giphy.com/9bTjZrytydVRK.webp'}}> */}
+            <div style={{ backgroundImage: 'url(https://i.giphy.com/9bTjZrytydVRK.webp)', width: '100%', height: '100vh', backgroundSize: 'cover' }}>
+      
                 {message &&
                     <CustomSnackbar message={message} />
                 }
-                <div className={styles.card}>
+                {/* <div className={styles.card}> */}
+                <div>
+
+                    {/* <div style={{ width: '100%', height: 0, paddingBottom: '56%', position: 'relative' }}>
+                        <iframe
+                            src="https://i.giphy.com/9bTjZrytydVRK.webp"
+                            width="100%"
+                            height="100%"
+                            style={{ position: 'absolute' }}
+                            className="giphy-embed"
+                            allowFullScreen
+                        ></iframe>
+                    </div> */}
 
                     <Formik initialValues={INTIIAL_VALUES} validationSchema={ValidationSchema} onSubmit={handleSignin}>
                         {({ handleChange, values, errors, touched }) => (
