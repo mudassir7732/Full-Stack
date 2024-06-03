@@ -148,7 +148,7 @@ const Transactions = () => {
                             </TableHead>
                             <TableBody>
                                 {data?.map((item, index) => {
-                                    if (month !== 'Select Month' && item?.month === month) {
+                                    if ((month === 'Select Month') ^ (item?.month === month)) {
                                         return (
                                             <TableRow key={index}>
                                                 <TableCell>
@@ -160,7 +160,7 @@ const Transactions = () => {
                                                 <TableCell>
                                                     {item?.amount}
                                                 </TableCell>
-                                                <TableCell sx={{minWidth:'120px'}}>
+                                                <TableCell sx={{ minWidth: '120px' }}>
                                                     {item.day + ", " + item.month}
                                                 </TableCell>
                                                 <TableCell sx={{ maxWidth: '25vw' }}>
@@ -168,27 +168,6 @@ const Transactions = () => {
                                                 </TableCell>
                                             </TableRow>
                                         );
-                                    }
-                                    else if (month === 'Select Month') {
-                                        return (
-                                            <TableRow key={index}>
-                                                <TableCell>
-                                                    {index + 1}
-                                                </TableCell>
-                                                <TableCell>
-                                                    {item?.type}
-                                                </TableCell>
-                                                <TableCell>
-                                                    {item?.amount}
-                                                </TableCell>
-                                                <TableCell>
-                                                    {item.day + ", " + item.month}
-                                                </TableCell>
-                                                <TableCell sx={{ maxWidth:'25vw' }}>
-                                                    {item?.description}
-                                                </TableCell>
-                                            </TableRow>
-                                        )
                                     }
                                 })}
                             </TableBody>
