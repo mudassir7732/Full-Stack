@@ -46,7 +46,7 @@ const Layout = ({ children }) => {
                 </div>
             )}
             <div className="flex flex-col items-center justify-center w-full lg:ml-[250px] xl:ml-[300px]">
-                <div className="flex flex-col items-center justify-center py-4 w-fit h-full">
+                <div className="flex flex-col items-center justify-center py-4 w-fit max-w-[95vw] h-full">
                     {children}
                 </div>
             </div>
