@@ -48,7 +48,7 @@ const Transactions = () => {
                     totalProfit += item?.amount;
                 }
             }
-            else if(month === 'Select Month'){
+            else if (month === 'Select Month') {
                 totalAmount += item?.amount;
                 if (item?.type === 'Expense') {
                     totalExpense += item?.amount;
@@ -77,15 +77,15 @@ const Transactions = () => {
                         <p className='font-sans font-bold text-[#000080] text-[20px]'>
                             All Transactions
                         </p>
-                    <select
-                        value={month}
-                        onChange={(e) => setMonth(e.target.value)}
-                        className='bg-[#fdfdfd] text-[#303030] text-[15px] px-2 font-sans border-[1px] border-[#d0d0d0] rounded-[5px] h-[30px] w-fit mb-4 outline-none font-normal'
-                    >
-                        {MONTH_OPTIONS?.map((month, index) => (
-                            <option key={index} value={month}>{month}</option>
-                        ))}
-                    </select>
+                        <select
+                            value={month}
+                            onChange={(e) => setMonth(e.target.value)}
+                            className='bg-[#fdfdfd] text-[#303030] text-[15px] px-2 font-sans border-[1px] border-[#d0d0d0] rounded-[5px] h-[30px] w-fit mb-4 outline-none font-normal'
+                        >
+                            {MONTH_OPTIONS?.map((month, index) => (
+                                <option key={index} value={month}>{month}</option>
+                            ))}
+                        </select>
                     </div>
 
                     <div className={styles.header}>
@@ -117,31 +117,31 @@ const Transactions = () => {
                         </div>
                     </div>
 
-                    {data && (
-                        <TableContainer sx={{ paddingBlock: '5px', marginTop:'2vh' }}>
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell sx={{ fontWeight: '500', fontSize: '13px', color: '#a0a0a0' }}>
-                                            Serial No.
-                                        </TableCell>
-                                        <TableCell sx={{ fontWeight: '500', fontSize: '13px', color: '#a0a0a0' }}>
-                                            Type
-                                        </TableCell>
-                                        <TableCell sx={{ fontWeight: '500', fontSize: '13px', color: '#a0a0a0' }}>
-                                            Amount
-                                        </TableCell>
-                                        <TableCell sx={{ fontWeight: '500', fontSize: '13px', color: '#a0a0a0' }}>
-                                            Date
-                                        </TableCell>
-                                        <TableCell sx={{ fontWeight: '500', fontSize: '13px', color: '#a0a0a0' }}>
-                                            Description
-                                        </TableCell>
-                                        <TableCell></TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {data?.map((item, index) => (
+                    <TableContainer sx={{ paddingBlock: '0px', marginTop: '4vh', borderRadius: '10px' }}>
+                        <Table>
+                            <TableHead sx={{ backgroundColor: '#d1edff' }}>
+                                <TableRow>
+                                    <TableCell sx={{ fontWeight: '500', fontSize: '13px', color: '#a0a0a0' }}>
+                                        Serial No.
+                                    </TableCell>
+                                    <TableCell sx={{ fontWeight: '500', fontSize: '13px', color: '#a0a0a0' }}>
+                                        Type
+                                    </TableCell>
+                                    <TableCell sx={{ fontWeight: '500', fontSize: '13px', color: '#a0a0a0' }}>
+                                        Amount
+                                    </TableCell>
+                                    <TableCell sx={{ fontWeight: '500', fontSize: '13px', color: '#a0a0a0' }}>
+                                        Date
+                                    </TableCell>
+                                    <TableCell sx={{ fontWeight: '500', fontSize: '13px', color: '#a0a0a0' }}>
+                                        Description
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {data?.map((item, index) => (
+                                    // item?.month === month && (
                                         <TableRow key={index}>
                                             <TableCell>
                                                 {index + 1}
@@ -155,15 +155,15 @@ const Transactions = () => {
                                             <TableCell>
                                                 {item.day + ", " + item.month}
                                             </TableCell>
-                                            <TableCell sx={{maxWidth:'25vw'}}>
+                                            <TableCell sx={{ maxWidth: '25vw' }}>
                                                 {item?.description}
                                             </TableCell>
                                         </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    )}
+                                    // )
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                 </div>
             )}
         </>

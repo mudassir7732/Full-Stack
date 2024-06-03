@@ -184,7 +184,7 @@ const AddPayment = () => {
                             )}
                             <button
                               type="button"
-                              className="bg-[#1e90ff] w-fit px-3 text-black font-sans py-1 outline-none rounded-[8px] font-semibold text-[16px] hover:bg-[#2376ff]"
+                              className="bg-[#9ac6e2] w-fit px-3 text-black font-sans py-1 outline-none rounded-[8px] font-semibold text-[16px] hover:bg-[#86aec6js]"
                               onClick={() =>
                                 push({
                                   day: '',

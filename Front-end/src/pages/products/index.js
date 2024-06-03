@@ -111,109 +111,125 @@ const Products = () => {
       {loading && <Loader />}
 
       <div className='flex items-center h-fit justify-center w-fit py-4'>
-          {details === null &&
-            <div className="bg-white border-[1px] py-4 border-[#f0f0f0] shadow-lg rounded-[20px]">
-              <div className={styles.header}>
+        {details === null &&
+          <div className="bg-white border-[1px] px-[30px] py-4 border-[#f0f0f0] shadow-lg rounded-[20px]">
+            <div className={styles.header}>
 
-                <div className={styles.headingBox}>
-                  <p className={styles.headingTitle}>
-                    Total
-                  </p>
-                  <p className={styles.headingTitle}>
-                    {data?.length}
-                  </p>
-                </div>
-
-                <div className={styles.headingBox}>
-                  <p className={styles.headingTitle}>
-                    Accepted
-                  </p>
-                  <p className={styles.headingTitle}>
-                    {accepted}
-                  </p>
-                </div>
-
-                <div className={styles.headingBox}>
-                  <p className={styles.headingTitle}>
-                    Rejected
-                  </p>
-                  <p className={styles.headingTitle}>
-                    {rejected}
-                  </p>
-                </div>
-
+              <div className={styles.headingBox}>
+                <p className={styles.headingTitle}>
+                  Total
+                </p>
+                <p className={styles.headingTitle}>
+                  {data?.length}
+                </p>
               </div>
 
-              <TableContainer sx={{paddingInline:'30px', paddingBlock:'5px'}}>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell sx={{ fontWeight: '500', fontSize: '13px', color: '#a0a0a0' }} >
-                        Name
-                      </TableCell>
-                      <TableCell sx={{ fontWeight: '500', fontSize: '13px', color: '#a0a0a0' }} >
-                        Date
-                      </TableCell>
-                      <TableCell></TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {data?.map((item, index) => (
-                      <TableRow>
-                        <TableCell>
-                          {item?.name}
-                        </TableCell>
-                        <TableCell>
-                          {item?.date}
-                        </TableCell>
-                        <TableCell>
-                          <button id={1} className={styles.viewButton}
-                            onClick={() => handleClick(item?.id)}
-                          >
-                            View
-                          </button>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+              <div className={styles.headingBox}>
+                <p className={styles.headingTitle}>
+                  Accepted
+                </p>
+                <p className={styles.headingTitle}>
+                  {accepted}
+                </p>
+              </div>
+
+              <div className={styles.headingBox}>
+                <p className={styles.headingTitle}>
+                  Rejected
+                </p>
+                <p className={styles.headingTitle}>
+                  {rejected}
+                </p>
+              </div>
+
             </div>
-          }
 
-          {
-            details !== null &&
-            <>
-              <div className="bg-white px-5 w-full border-[1px] border-[#e0e0e0] shadow-lg rounded-[20px]">
 
-                <img src='/assets/icons/close.png' alt='close_icon'
-                  className='h-[22px] w-[22px] cursor-pointer ml-[100%] mt-4'
-                  onClick={() => setDetails(null)}
-                />
+            <TableContainer sx={{ paddingBlock: '0px', marginTop: '4vh', borderRadius: '10px' }}>
+              <Table>
+                <TableHead sx={{ backgroundColor: '#d1edff' }}>
+                  <TableRow>
+                    <TableCell sx={{ fontWeight: '500', fontSize: '13px', color: '#a0a0a0' }} >
+                      Name
+                    </TableCell>
+                    <TableCell sx={{ fontWeight: '500', fontSize: '13px', color: '#a0a0a0' }} >
+                      Date
+                    </TableCell>
+                    <TableCell></TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data?.map((item, index) => (
+                    <TableRow>
+                      <TableCell>
+                        {item?.name}
+                      </TableCell>
+                      <TableCell>
+                        {item?.date}
+                      </TableCell>
+                      <TableCell>
+                        <button id={1} className={styles.viewButton}
+                          onClick={() => handleClick(item?.id)}
+                        >
+                          View
+                        </button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
+        }
 
-                <dviv className={styles.imageInfo}>
-                  <img src={`http://localhost:5000/uploads/${details?.filename}`} alt="Close Icon" className='h-[120px]' />
-                  <div className={styles.infoWrapper}>
-                    <p className={styles.itemInfo}>
-                      {details?.name}
-                    </p>
-                    <p className={styles.itemInfo}>
-                      {details?.description}
-                    </p>
-                    <p className={styles.itemInfo}>
-                      {details?.date}
-                    </p>
-                    <p className={styles.itemInfo}>
-                      {details?.id}
-                    </p>
-                  </div>
-                </dviv>
+        {
+          details !== null &&
+          <>
+            <div className="bg-white px-5 w-full border-[1px] border-[#e0e0e0] shadow-lg rounded-[20px]">
 
-                <div className={styles.URLsBlock}>
-                  <p className={styles.URLsTitle}>
-                    Suppliers URLs
+              <img src='/assets/icons/close.png' alt='close_icon'
+                className='h-[22px] w-[22px] cursor-pointer ml-[100%] mt-4'
+                onClick={() => setDetails(null)}
+              />
+
+              <dviv className={styles.imageInfo}>
+                <img src={`http://localhost:5000/uploads/${details?.filename}`} alt="Close Icon" className='h-[120px]' />
+                <div className={styles.infoWrapper}>
+                  <p className={styles.itemInfo}>
+                    {details?.name}
                   </p>
-                  {suppliers && suppliers.map((url, index) => (
+                  <p className={styles.itemInfo}>
+                    {details?.description}
+                  </p>
+                  <p className={styles.itemInfo}>
+                    {details?.date}
+                  </p>
+                  <p className={styles.itemInfo}>
+                    {details?.id}
+                  </p>
+                </div>
+              </dviv>
+
+              <div className={styles.URLsBlock}>
+                <p className={styles.URLsTitle}>
+                  Suppliers URLs
+                </p>
+                {suppliers && suppliers.map((url, index) => (
+                  <div className={styles.URLsWrapper}>
+                    <p className={styles.URLIndex}>{index + 1 + ")   "}</p>
+                    <a href={url} target='_blank' className={styles.URL} >
+                      {url}
+                    </a>
+                  </div>
+                ))}
+              </div>
+
+              <div className={styles.URLsBlock}>
+                <p className={styles.URLsTitle}>
+                  Videos URLs
+                </p>
+                <p className='font-sans'>
+                  {videos && videos.map((url, index) => (
                     <div className={styles.URLsWrapper}>
                       <p className={styles.URLIndex}>{index + 1 + ")   "}</p>
                       <a href={url} target='_blank' className={styles.URL} >
@@ -221,53 +237,38 @@ const Products = () => {
                       </a>
                     </div>
                   ))}
-                </div>
-
-                <div className={styles.URLsBlock}>
-                  <p className={styles.URLsTitle}>
-                    Videos URLs
-                  </p>
-                  <p className='font-sans'>
-                    {videos && videos.map((url, index) => (
-                      <div className={styles.URLsWrapper}>
-                        <p className={styles.URLIndex}>{index + 1 + ")   "}</p>
-                        <a href={url} target='_blank' className={styles.URL} >
-                          {url}
-                        </a>
-                      </div>
-                    ))}
-                  </p>
-                </div>
-
-                {
-                  details &&
-                  <div className={styles.buttonsWrapper}>
-                    <div className={styles.status}>
-                      Status:
-                      <p className={styles.statusVal}>
-                        {details?.status}
-                      </p>
-                    </div>
-                    <div>
-                      {(details.status !== 'Rejected') &&
-                        <button className={`bg-[#ff0000] hover:bg-[#ee0000] ${styles.buttonStyle}`}
-                          onClick={() => updateStatus(details.id, 'Rejected')}>
-                          Reject
-                        </button>
-                      }
-                      {details.status !== 'Accepted' &&
-                        <button className={`bg-[#006400] hover:bg-[#004400] ml-4 ${styles.buttonStyle}`}
-                          onClick={() => updateStatus(details.id, 'Accepted')}>
-                          Accept
-                        </button>}
-
-                    </div>
-                  </div>
-                }
+                </p>
               </div>
-              <div className='h-6' />
-            </>
-          }
+
+              {
+                details &&
+                <div className={styles.buttonsWrapper}>
+                  <div className={styles.status}>
+                    Status:
+                    <p className={styles.statusVal}>
+                      {details?.status}
+                    </p>
+                  </div>
+                  <div>
+                    {(details.status !== 'Rejected') &&
+                      <button className={`bg-[#ff0000] hover:bg-[#ee0000] ${styles.buttonStyle}`}
+                        onClick={() => updateStatus(details.id, 'Rejected')}>
+                        Reject
+                      </button>
+                    }
+                    {details.status !== 'Accepted' &&
+                      <button className={`bg-[#006400] hover:bg-[#004400] ml-4 ${styles.buttonStyle}`}
+                        onClick={() => updateStatus(details.id, 'Accepted')}>
+                        Accept
+                      </button>}
+
+                  </div>
+                </div>
+              }
+            </div>
+            <div className='h-6' />
+          </>
+        }
       </div>
     </>
   )

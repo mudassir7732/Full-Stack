@@ -116,9 +116,9 @@ const ViewUsers = () => {
                             Registered Users
                         </p>
 
-                        <TableContainer>
+                        <TableContainer sx={{ paddingBlock: '0px', marginTop: '4vh', borderRadius: '10px' }}>
                             <Table>
-                                <TableHead>
+                                <TableHead sx={{ backgroundColor: '#d1edff' }}>
                                     <TableRow>
                                         <TableCell sx={{ fontWeight: '500', fontSize: '12px', color: '#a0a0a0' }} >
                                             Name

@@ -5,7 +5,7 @@ const styles = {
     firstBlock: 'p-4 rounded-xl h-fit lg:min-h-[90vh] w-[85%] lg:w-[45%] bg-white border-[1px] border-[#c5c5c5]',
     secondBlock: 'py-3 rounded-xl px-2 lg:px-4 w-[85%] lg:w-[45%] bg-[#eff1fa] border-[1px] border-[#c5c5c5]',
     closeIcon:'absolute right-11 sm:right-20 z-10 lg:right-16 h-[22px] w-[22px] cursor-pointer',
-    header: 'flex flex-row items-center justify-between pb-2',
+    header: 'flex gap-x-6 flex-row items-center justify-between pb-2',
     headingBox: 'flex flex-row items-center justify-between bg-[#f5f5f5] gap-x-2 border-[1px] border-[#e9e9e9] rounded-[4px] shadow-none px-1 py-[1px] w-fit',
     headingTitle: 'font-sans font-bold text-[13px] text-[#353535] my-auto',
     dataContainer: 'bg-[#e9e9e9] px-3 mt-5 border-[1px] border-[#e5e5e5]',
