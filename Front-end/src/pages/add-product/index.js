@@ -183,7 +183,7 @@ const AddProducts = () => {
                       <input
                         name='videoURL' placeholder='Enter video URL...' value={values.videoURL}
                         className={`${styles.input} max-w-[260px] rounded-r-0 `}
-                        onChange={(e) => { setFieldValue('videoURL', e.target.value); handleVideoURLs(e.target.value, 0); }}
+                        onChange={(e) => { setFieldValue('videoURL', e.target.value); handleVideoURLs(e.target.value, 0) }}
                       />
                       <button
                         className={styles.incrementButton} type='button'

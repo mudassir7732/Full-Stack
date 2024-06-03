@@ -6,10 +6,8 @@ import Loader from '../../components/loader';
 import axios from 'axios';
 import styles from '../add-product/styles';
 import { useNavigate } from 'react-router-dom'
+import { DATE_OPTIONS, MONTH_OPTIONS, TYPE_OPTIONS } from '../../constants/month_options';
 
-const DATE_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
-const MONTH_OPTIONS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-const TYPE_OPTIONS = ['Expense', 'Income'];
 
 const INITIAL_VALUES = {
   sections: [
@@ -43,11 +41,9 @@ const AddPayment = () => {
   const handleSubmit = async (values) => {
     console.log(values, ' = Values')
     const sections = values?.sections;
-    // await axios.post('/routes/products/upload-data', formData)
     await axios.post('routes/transactions/add-transaction', { sections })
 
       .then((res) => {
-        // navigate('/products')
         console.log(res.data, ' = Response')
       })
       .catch((err) => {
