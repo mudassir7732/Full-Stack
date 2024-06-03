@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import styles from '../products/styles';
+import styles from './styles';
+import styles2 from '../products/styles';
 import axios from 'axios';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 import Loader from '../../components/loader';
 import CustomSnackbar from '../../components/snackbar';
 import { MONTH_OPTIONS } from '../../constants/month_options';
+
 
 const Transactions = () => {
     const [data, setData] = useState([]);
@@ -57,7 +59,6 @@ const Transactions = () => {
                 }
             }
         });
-
         setTotalCash(totalAmount);
         setExpense(totalExpense);
         setProfit(totalProfit);
@@ -67,20 +68,21 @@ const Transactions = () => {
         calculateTotals();
     }, [data, month]);
 
+
     return (
         <>
             {loading && <Loader />}
             {message && <CustomSnackbar message={message} />}
             {data && (
-                <div className="flex flex-col items-center max-w-[95%] justify-center bg-white py-4 px-[15px] lg:px-[30px] my-4 border-[1px] border-[#e9e9e9] shadow-lg rounded-[16px]">
-                    <div className='flex flex-row justify-between items-start w-full mb-2'>
-                        <p className='font-sans font-bold text-[#000080] text-[20px]'>
+                <div className={styles.container}>
+                    <div className={styles.header}>
+                        <p className=''>
                             All Transactions
                         </p>
                         <select
                             value={month}
                             onChange={(e) => setMonth(e.target.value)}
-                            className='bg-[#fdfdfd] text-[#303030] text-[15px] px-2 font-sans border-[1px] border-[#d0d0d0] rounded-[5px] h-[30px] w-fit mb-4 outline-none font-normal'
+                            className={styles.select}
                         >
                             {MONTH_OPTIONS?.map((month, index) => (
                                 <option key={index} value={month}>{month}</option>
@@ -88,30 +90,30 @@ const Transactions = () => {
                         </select>
                     </div>
 
-                    <div className='flex gap-x-6 flex-col md:flex-row items-start gap-3 w-full md:items-center justify-between pb-2'>
-                        <div className={styles.headingBox}>
-                            <p className={styles.headingTitle}>
+                    <div className={styles.statsWrapper}>
+                        <div className={styles2.headingBox}>
+                            <p className={styles2.headingTitle}>
                                 Total Profit
                             </p>
-                            <p className={styles.headingTitle}>
+                            <p className={styles2.headingTitle}>
                                 {profit}
                             </p>
                         </div>
 
-                        <div className={styles.headingBox}>
-                            <p className={styles.headingTitle}>
+                        <div className={styles2.headingBox}>
+                            <p className={styles2.headingTitle}>
                                 Total Expense
                             </p>
-                            <p className={styles.headingTitle}>
+                            <p className={styles2.headingTitle}>
                                 {expense}
                             </p>
                         </div>
 
-                        <div className={styles.headingBox}>
-                            <p className={styles.headingTitle}>
+                        <div className={styles2.headingBox}>
+                            <p className={styles2.headingTitle}>
                                 Total Cash Flow
                             </p>
-                            <p className={styles.headingTitle}>
+                            <p className={styles2.headingTitle}>
                                 {totalCash}
                             </p>
                         </div>
