@@ -160,7 +160,7 @@ const Transactions = () => {
                                                 <TableCell>
                                                     {item?.amount}
                                                 </TableCell>
-                                                <TableCell sx={{ border: '1px solid red !important'}}>
+                                                <TableCell sx={{minWidth:'120px'}}>
                                                     {item.day + ", " + item.month}
                                                 </TableCell>
                                                 <TableCell sx={{ maxWidth: '25vw' }}>

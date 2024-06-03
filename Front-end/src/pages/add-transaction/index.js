@@ -80,7 +80,7 @@ const AddPayment = () => {
                   {({ insert, remove, push }) => (
                     <div className='flex flex-col gap-x-20'>
                       {values.sections.map((section, index) => (
-                        <div key={index} className="mb-3">
+                        <div key={index}>
                           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:min-w-[650px] xl:min-w-[800px] gap-x-6">
                             <div className="col-span-1">
                               <p className={styles.title}>Select Date</p>
@@ -184,7 +184,7 @@ const AddPayment = () => {
                             )}
                             <button
                               type="button"
-                              className="bg-[#9ac6e2] w-fit px-3 text-black font-sans py-1 outline-none rounded-[8px] font-semibold text-[16px] hover:bg-[#86aec6js]"
+                              className="bg-[#9ac6e2] w-fit px-3 text-black font-sans py-1 outline-none rounded-[8px] font-semibold text-[16px] hover:bg-[#86aec6]"
                               onClick={() =>
                                 push({
                                   day: '',
@@ -204,7 +204,7 @@ const AddPayment = () => {
                   )}
                 </FieldArray>
 
-                <div className="flex flex-row justify-end w-full mt-4">
+                <div className="flex flex-row justify-end w-full">
                   <button type="submit" className={`${styles.submit} max-w-[180px] outline-none`}>
                     Save Transactions
                   </button>
