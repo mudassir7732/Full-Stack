@@ -117,7 +117,14 @@ const Transactions = () => {
                         </div>
                     </div>
 
-                    <TableContainer sx={{ paddingBlock: '0px', marginTop: '4vh', borderRadius: '10px', overflow:'scroll', maxWidth:'95vw'}}>
+                    <TableContainer sx={{
+                        paddingBlock: '0px', marginTop: '4vh', borderRadius: '10px', overflow: 'scroll', maxWidth: '95vw',
+                        '&::-webkit-scrollbar': {
+                            display: 'none'
+                        },
+                        '-ms-overflow-style': 'none',
+                        'scrollbar-width': 'none'
+                    }}>
                         <Table>
                             <TableHead sx={{ backgroundColor: '#d1edff' }}>
                                 <TableRow>
@@ -153,10 +160,10 @@ const Transactions = () => {
                                                 <TableCell>
                                                     {item?.amount}
                                                 </TableCell>
-                                                <TableCell>
+                                                <TableCell sx={{ border: '1px solid red !important'}}>
                                                     {item.day + ", " + item.month}
                                                 </TableCell>
-                                                <TableCell sx={{ maxWidth:{ sm:'50vw', lg:'25vw' } }}>
+                                                <TableCell sx={{ maxWidth: '25vw' }}>
                                                     {item?.description}
                                                 </TableCell>
                                             </TableRow>
@@ -177,7 +184,7 @@ const Transactions = () => {
                                                 <TableCell>
                                                     {item.day + ", " + item.month}
                                                 </TableCell>
-                                                <TableCell sx={{ maxWidth:{ xs:'500px', lg:'25vw' } }}>
+                                                <TableCell sx={{ maxWidth:'25vw' }}>
                                                     {item?.description}
                                                 </TableCell>
                                             </TableRow>
