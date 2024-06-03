@@ -145,7 +145,12 @@ const Products = () => {
             </div>
 
 
-            <TableContainer sx={{ paddingBlock: '0px', marginTop: '4vh', borderRadius: '10px' }}>
+            <TableContainer sx={{ paddingBlock: '0px', marginTop: '4vh', borderRadius: '10px',  overflow: 'scroll', maxWidth: '95vw',
+                        '&::-webkit-scrollbar': {
+                            display: 'none'
+                        },
+                        '-ms-overflow-style': 'none',
+                        'scrollbar-width': 'none' }}>
               <Table>
                 <TableHead sx={{ backgroundColor: '#d1edff' }}>
                   <TableRow>
