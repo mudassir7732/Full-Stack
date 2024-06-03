@@ -140,27 +140,50 @@ const Transactions = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {data?.map((item, index) => (
-                                    // item?.month === month && (
-                                        <TableRow key={index}>
-                                            <TableCell>
-                                                {index + 1}
-                                            </TableCell>
-                                            <TableCell>
-                                                {item?.type}
-                                            </TableCell>
-                                            <TableCell>
-                                                {item?.amount}
-                                            </TableCell>
-                                            <TableCell>
-                                                {item.day + ", " + item.month}
-                                            </TableCell>
-                                            <TableCell sx={{ maxWidth: '25vw' }}>
-                                                {item?.description}
-                                            </TableCell>
-                                        </TableRow>
-                                    // )
-                                ))}
+                                {data?.map((item, index) => {
+                                    if (month !== 'Select Month' && item?.month === month) {
+                                        return (
+                                            <TableRow key={index}>
+                                                <TableCell>
+                                                    {index + 1}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {item?.type}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {item?.amount}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {item.day + ", " + item.month}
+                                                </TableCell>
+                                                <TableCell sx={{ maxWidth: '25vw' }}>
+                                                    {item?.description}
+                                                </TableCell>
+                                            </TableRow>
+                                        );
+                                    }
+                                    else if (month === 'Select Month') {
+                                        return (
+                                            <TableRow key={index}>
+                                                <TableCell>
+                                                    {index + 1}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {item?.type}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {item?.amount}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {item.day + ", " + item.month}
+                                                </TableCell>
+                                                <TableCell sx={{ maxWidth: '25vw' }}>
+                                                    {item?.description}
+                                                </TableCell>
+                                            </TableRow>
+                                        )
+                                    }
+                                })}
                             </TableBody>
                         </Table>
                     </TableContainer>
