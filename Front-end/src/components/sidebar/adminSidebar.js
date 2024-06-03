@@ -5,11 +5,11 @@ import Cookies from 'js-cookie';
 
 const ADMIN_ROUTES = [
     { label: 'Add Product', path: '/add-product', icon: '/assets/icons/add_icon.png' },
-    { label: 'Products', path: '/products', icon: '/assets/icons/view.png' },
+    { label: 'Products', path: '/products', icon: '/assets/icons/items.png' },
     { label: 'Add User', path: '/add-user', icon: '/assets/icons/add-user2.png' },    
-    { label: 'Users', path: '/users', icon: '/assets/icons/add-user2.png' },    
-    { label: 'Add Transaction', path: '/add-transaction', icon: '/assets/icons/invoice.png' },
-    { label: 'Transactions', path: '/transactions', icon: '/assets/icons/invoice.png' },
+    { label: 'Users', path: '/users', icon: '/assets/icons/users2.png' },    
+    { label: 'Add Transaction', path: '/add-transaction', icon: '/assets/icons/add-transaction.png' },
+    { label: 'Transactions', path: '/transactions', icon: '/assets/icons/transactions3.png' },
     { label: 'Sign-Out', path: '/', icon: '/assets/icons/signout.png' },
 ]
 
