@@ -6,7 +6,7 @@ import Loader from '../../components/loader';
 import axios from 'axios';
 import styles2 from '../add-product/styles';
 import { useNavigate } from 'react-router-dom'
-import { DATE_OPTIONS, MONTH_OPTIONS, TYPE_OPTIONS } from '../../constants/month_options';
+import { DATE_OPTIONS, MONTH_OPTIONS, TYPE_OPTIONS } from '../../constants';
 import styles from './styles';
 
 

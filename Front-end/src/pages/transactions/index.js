@@ -5,7 +5,7 @@ import axios from 'axios';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 import Loader from '../../components/loader';
 import CustomSnackbar from '../../components/snackbar';
-import { MONTH_OPTIONS } from '../../constants/month_options';
+import { MONTH_OPTIONS } from '../../constants';
 
 
 const Transactions = () => {
