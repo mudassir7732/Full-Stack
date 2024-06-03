@@ -95,9 +95,11 @@ const AddProducts = () => {
                     <p className={styles.title}>
                       Product Name
                     </p>
-                    <input name='name' value={values.name} placeholder='Enter name...'
+                    <input name='name'
+                      value={values.name} placeholder='Enter name...'
                       className={`${styles.input} rounded-r-[5px]`}
-                      onChange={handleChange} />
+                      onChange={handleChange}
+                    />
                     {errors.name && touched.name && errors.name && (
                       <p className={styles.error}>
                         {errors.name}
@@ -127,7 +129,9 @@ const AddProducts = () => {
                     <p className={styles.title}>
                       Product Description
                     </p>
-                    <textarea name='description' value={values.description} placeholder='Enter description...'
+                    <textarea name='description'
+                      value={values.description}
+                      placeholder='Enter description...'
                       className={`${styles.input} min-h-[80px] rounded-r-[5px]`}
                       onChange={handleChange} />
                     {errors.description && touched.description && (
