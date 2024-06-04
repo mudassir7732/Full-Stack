@@ -10,12 +10,15 @@ const ErrorPage = () => {
     <div className={styles.container}>
 
       <p className={styles.title}>
-        Un-Authorized Page
+        Something Went Wrong!
+      </p>
+      <p className='font-sans'>
+        The page you are looking for is not found!
       </p>
 
       <button className={styles.button}
         onClick={() => navigate('/')}>
-        Go Back to Sign-In
+        Back to Sign-in
       </button>
 
     </div>
