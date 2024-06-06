@@ -30,17 +30,9 @@ const Signin = () => {
         if (userString !== null) {
             parsedUser = JSON.parse(userString);
         }
-        // setUser(parsedUser);
         console.log(parsedUser, ' = Parsed User')
         setEmail(parsedUser?.email)
-        // setEmail(parsedUser?.email)
     }, [])
-
-    // useEffect(() => {
-    //     setEmail(user?.email);
-    //     setPassword(user?.password)
-    //     console.log(user)
-    // }, [user])
 
     const INTIIAL_VALUES = {
         email: email,
