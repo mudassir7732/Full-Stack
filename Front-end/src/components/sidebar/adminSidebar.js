@@ -19,7 +19,7 @@ const AdminSidebar = () => {
 
     const handleClick = async (path) => {
         if (path === '/') {
-            Cookies.remove('access_token');
+            // Cookies.remove('access_token');
         }
         else {
             setSelected(path);
