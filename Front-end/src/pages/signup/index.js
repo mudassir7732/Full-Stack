@@ -64,10 +64,11 @@ const Signup = () => {
             }
             {loading && <Loader />}
 
-
-            <div className={styles.container}>
-                <div className={styles.formWrapper}>
-                    <div className={styles.card}>
+            <div className={`${styles.container} z-50`}>
+                <img src="/assets/curved.jpg" className="z-0  h-[50vh] mx-[1%] rounded-xl w-[98%] fixed top-0" />
+                {/* <div className="bg-cover bg-center min-h-[30vh] w-full border-8 z-0" style={{ backgroundImage: 'url("/assets/curved6.jpg")' }} /> */}
+                <div className={`${styles.formWrapper} z-50`}>
+                    <div className={`${styles.card} shadow-lg`}>
                         <Formik initialValues={INTIIAL_VALUES} validationSchema={ValidationSchema} onSubmit={handleSignup}>
                             {({ handleChange, values, errors, touched }) => (
                                 <Form>
@@ -134,14 +135,7 @@ const Signup = () => {
                                 Sign in
                             </p>
                         </div>
-
                     </div>
-
-                    {/* <img
-                    alt='imag'
-                    src="/assets/curved.jpg"
-                    className={styles.bgImage}
-                /> */}
                 </div>
             </div>
         </>
