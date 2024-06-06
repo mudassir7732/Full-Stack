@@ -21,7 +21,7 @@ const AdminSidebar = () => {
         setSelected(path);
         if (path === '/') {
             Cookies.remove('access_token');
-            localStorage.setItem('user', null);
+            localStorage.setItem('user', JSON.stringify({email:'', password:''}));
         }
         else {
         }
