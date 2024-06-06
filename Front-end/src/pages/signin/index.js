@@ -16,10 +16,6 @@ const ValidationSchema = yup.object().shape({
 })
 
 const Signin = () => {
-    // const localData = localStorage.getItem("user") !== null
-    //     ? JSON.parse(localStorage.getItem("user"))
-    //     : { email: '', password: '' };
-    // const [initialValues, setInitialValues] = useState(localData);
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const [remember, setRemember] = useState(false);
@@ -28,39 +24,18 @@ const Signin = () => {
     const getInitialValues = () => {
         const localData = localStorage.getItem("user");
         if (localData) {
-          try {
-            const parsedData = JSON.parse(localData);
-            return parsedData ? parsedData : { email: '', password: '' };
-          } catch (error) {
-            console.error('Error parsing user data from localStorage', error);
-            return { email: '', password: '' };
-          }
+            try {
+                const parsedData = JSON.parse(localData);
+                return parsedData ? parsedData : { email: '', password: '' };
+            } catch (error) {
+                console.error('Error parsing user data from localStorage', error);
+                return { email: '', password: '' };
+            }
         }
         return { email: '', password: '' };
-      };
-    
-      const [initialValues, setInitialValues] = useState(getInitialValues);
-    
-    //   useEffect(() => {
-    //     const localData = localStorage.getItem("user");
-    //     if (localData) {
-    //       try {
-    //         const parsedUser = JSON.parse(localData);
-    //         if (parsedUser) {
-    //           setInitialValues({ email: parsedUser.email || '', password: '' });
-    //         } else {
-    //           setInitialValues({ email: '', password: '' });
-    //         }
-    //       } catch (error) {
-    //         console.error('Error parsing user data from localStorage', error);
-    //         setInitialValues({ email: '', password: '' });
-    //       }
-    //     } else {
-    //       setInitialValues({ email: '', password: '' });
-    //     }
-    //   }, []);
-    
+    };
 
+    const [initialValues, setInitialValues] = useState(getInitialValues);
 
     const handleSignin = async (values) => {
         setLoading(true)
