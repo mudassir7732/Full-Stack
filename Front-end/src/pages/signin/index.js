@@ -24,16 +24,16 @@ const Signin = () => {
     const [remember, setRemember] = useState(false);
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     const userString = localStorage.getItem('user');
-    //     let parsedUser;
-    //     if (userString !== null) {
-    //         parsedUser = JSON.parse(userString);
-    //     }
-    //     // setUser(parsedUser);
-    //     // console.log(parsedUser, ' = Parsed User')
-    //     // setEmail(parsedUser?.email)
-    // }, [])
+    useEffect(() => {
+        const userString = localStorage.getItem('user');
+        let parsedUser;
+        if (userString !== null) {
+            parsedUser = JSON.parse(userString);
+        }
+        // setUser(parsedUser);
+        console.log(parsedUser, ' = Parsed User')
+        // setEmail(parsedUser?.email)
+    }, [])
 
     // useEffect(() => {
     //     setEmail(user?.email);
@@ -55,7 +55,7 @@ const Signin = () => {
             })
             .then((res) => {
                 if (remember) {
-                    // localStorage.setItem('user', { email: values?.email, password: values?.password });
+                    localStorage.setItem('user', JSON.stringify({ email: values?.email, password: values?.password }));
                 }
                 const a = res?.data?.message;
                 setMessage(a);
