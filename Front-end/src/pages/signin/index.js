@@ -16,6 +16,8 @@ const ValidationSchema = yup.object().shape({
 })
 
 const Signin = () => {
+
+    const [initialValues, setInitialValues] = useState({ email: '', password: '' });
     const [user, setUser] = useState();
     const [message, setMessage] = useState('');
     const [email, setEmail] = useState('');
@@ -26,13 +28,24 @@ const Signin = () => {
 
     useEffect(() => {
         const userString = localStorage.getItem('user');
-        let parsedUser;
         if (userString !== null) {
-            parsedUser = JSON.parse(userString);
+            const parsedUser = JSON.parse(userString);
+            setInitialValues({ email: parsedUser?.email || '', password: '' });
         }
-        console.log(parsedUser, ' = Parsed User')
-        setEmail(parsedUser?.email)
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        console.log(initialValues, ' = Initial Values')
+    }, [initialValues])
+    // useEffect(() => {
+    //     const userString = localStorage.getItem('user');
+    //     let parsedUser;
+    //     if (userString !== null) {
+    //         parsedUser = JSON.parse(userString);
+    //     }
+    //     console.log(parsedUser, ' = Parsed User')
+    //     setEmail(parsedUser?.email)
+    // }, [])
 
     const INTIIAL_VALUES = {
         email: email,
@@ -85,7 +98,7 @@ const Signin = () => {
             }
             <div className={styles.container}>
                 <div className={styles.card}>
-                    <Formik initialValues={INTIIAL_VALUES} validationSchema={ValidationSchema} onSubmit={handleSignin}>
+                    <Formik initialValues={initialValues} validationSchema={ValidationSchema} onSubmit={handleSignin}>
                         {({ handleChange, values, errors, touched }) => (
                             <Form>
                                 <div>
