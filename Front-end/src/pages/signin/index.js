@@ -32,6 +32,7 @@ const Signin = () => {
         }
         // setUser(parsedUser);
         console.log(parsedUser, ' = Parsed User')
+        setEmail(parsedUser?.email)
         // setEmail(parsedUser?.email)
     }, [])
 
@@ -42,7 +43,7 @@ const Signin = () => {
     // }, [user])
 
     const INTIIAL_VALUES = {
-        email: user?.email,
+        email: email,
         password: password
     }
 
