@@ -82,75 +82,78 @@ const Signin = () => {
                 <CustomSnackbar message={message} />
             }
             <div className={styles.container}>
-                <div className={styles.card}>
-                    <Formik initialValues={initialValues} validationSchema={ValidationSchema} onSubmit={handleSignin}>
-                        {({ handleChange, values, errors, touched }) => (
-                            <Form>
-                                <div>
-                                    <p className={styles.welcome}>
-                                        Welcome back
-                                    </p>
-
-                                    <p className={styles.desc}>
-                                        Enter your email and password to sign in
-                                    </p>
-
-                                    <p className={styles.title}>
-                                        Email
-                                    </p>
-                                    <input name='email' value={values.email} onChange={handleChange} placeholder='Email'
-                                        className={styles.input} />
-
-                                    {errors.email && touched.email && (
-                                        <p className={styles2.error}>
-                                            {errors.email?.toString()}
+                <div className={styles.formWrapper}>
+                    <div className={styles.card}>
+                        <Formik initialValues={initialValues} validationSchema={ValidationSchema} onSubmit={handleSignin}>
+                            {({ handleChange, values, errors, touched }) => (
+                                <Form>
+                                    <div>
+                                        <p className={styles.welcome}>
+                                            Welcome back
                                         </p>
-                                    )}
 
-                                    <p className={styles.title}>
-                                        Password
-                                    </p>
-                                    <input name='password' value={values.password} onChange={handleChange} placeholder='Password'
-                                        className={styles.input} />
-
-                                    {errors.password && touched.password && (
-                                        <p className={styles2.error}>
-                                            {errors.password?.toString()}
+                                        <p className={styles.desc}>
+                                            Enter your email and password to sign in
                                         </p>
-                                    )}
 
-                                    <div className={styles.switchWrapper}>
-                                        <label className="switch">
-                                            <input
-                                                type="checkbox"
-                                                checked={remember}
-                                                onChange={(e) => setRemember(e.target.checked)}
-                                            />
-                                            <span className="slider"></span>
-                                        </label>
-                                        <p className={styles.switch}>
-                                            Remember me
+                                        <p className={styles.title}>
+                                            Email
                                         </p>
+                                        <input name='email' value={values.email} onChange={handleChange} placeholder='Email'
+                                            className={styles.input} />
+
+                                        {errors.email && touched.email && (
+                                            <p className={styles2.error}>
+                                                {errors.email?.toString()}
+                                            </p>
+                                        )}
+
+                                        <p className={styles.title}>
+                                            Password
+                                        </p>
+                                        <input name='password' value={values.password} onChange={handleChange} placeholder='Password'
+                                            className={styles.input} />
+
+                                        {errors.password && touched.password && (
+                                            <p className={styles2.error}>
+                                                {errors.password?.toString()}
+                                            </p>
+                                        )}
+
+                                        <div className={styles.switchWrapper}>
+                                            <label className="switch">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={remember}
+                                                    onChange={(e) => setRemember(e.target.checked)}
+                                                />
+                                                <span className="slider"></span>
+                                            </label>
+                                            <p className={styles.switch}>
+                                                Remember me
+                                            </p>
+                                        </div>
+
+                                        <button type='submit' className={styles.signin}>
+                                            SIGN IN
+                                        </button>
                                     </div>
+                                </Form>
+                            )}
+                        </Formik>
 
-                                    <button type='submit' className={styles.signin}>
-                                        SIGN IN
-                                    </button>
-                                </div>
-                            </Form>
-                        )}
-                    </Formik>
-
-                    <div className={styles.singupWrapper}>
-                        <p className="text-[#67748e] text-[14px] font-sans">
-                            Don't have an account?
-                        </p>
-                        <p className={styles.signup}
-                            onClick={() => navigate('/signup')}>
-                            Sign up
-                        </p>
+                        <div className={styles.singupWrapper}>
+                            <p className="text-[#67748e] text-[14px] font-sans">
+                                Don't have an account?
+                            </p>
+                            <p className={styles.signup}
+                                onClick={() => navigate('/signup')}>
+                                Sign up
+                            </p>
+                        </div>
                     </div>
                 </div>
+
 
                 <img
                     alt='imag'

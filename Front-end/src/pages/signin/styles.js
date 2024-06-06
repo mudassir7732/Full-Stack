@@ -1,6 +1,7 @@
 const styles = {
     container:'bg-white min-h-screen flex flex-row items-center justify-between w-full overflow-x-hidden',
-    card:'flex flex-col items-center bg-white px-12 py-6 rounded-xl min-w-[50%] ml-20',    
+    formWrapper:'w-full h-screen flex items-center justify-center',
+    card:' border-2 flex flex-col items-center bg-white rounded-xl',    
     welcome:'text-[30px] font-bold mb-[8px] gradient-text font-sans',
     desc:'text-[#67748e] font-normal text-[16px] font-sans mb-[14px]',
     title:'text-[13px] text-[#344767] font-semibold ml-1 mt-[8px] font-sans mb-1',

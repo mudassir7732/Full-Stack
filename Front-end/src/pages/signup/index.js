@@ -138,11 +138,11 @@ const Signup = () => {
 
                 </div>
 
-                <img
+                {/* <img
                     alt='imag'
                     src="/assets/curved.jpg"
                     className={styles.bgImage}
-                />
+                /> */}
 
             </div>
         </>
