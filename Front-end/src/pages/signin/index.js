@@ -37,15 +37,6 @@ const Signin = () => {
     useEffect(() => {
         console.log(initialValues, ' = Initial Values')
     }, [initialValues])
-    // useEffect(() => {
-    //     const userString = localStorage.getItem('user');
-    //     let parsedUser;
-    //     if (userString !== null) {
-    //         parsedUser = JSON.parse(userString);
-    //     }
-    //     console.log(parsedUser, ' = Parsed User')
-    //     setEmail(parsedUser?.email)
-    // }, [])
 
     const INTIIAL_VALUES = {
         email: email,
