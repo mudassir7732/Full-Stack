@@ -16,10 +16,9 @@ const ValidationSchema = yup.object().shape({
 })
 
 const Signin = () => {
-    // const initialValues = {email:'', password:''}
-    const localData = localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user"))
-    : {email:'',password:''};
+    const localData = localStorage.getItem("user") !== null
+        ? JSON.parse(localStorage.getItem("user"))
+        : { email: '', password: '' };
     const [initialValues, setInitialValues] = useState(localData);
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
