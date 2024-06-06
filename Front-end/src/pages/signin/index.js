@@ -30,13 +30,16 @@ const Signin = () => {
         if (userString !== null) {
             parsedUser = JSON.parse(userString);
         }
-        setUser(parsedUser);
+        // setUser(parsedUser);
+        console.log(parsedUser, ' = Parsed User')
+        setEmail(parsedUser?.email)
     }, [])
 
-    useEffect(() => {
-        setEmail(user?.email);
-        setPassword(user?.password)
-    }, [user])
+    // useEffect(() => {
+    //     setEmail(user?.email);
+    //     setPassword(user?.password)
+    //     console.log(user)
+    // }, [user])
 
     const INTIIAL_VALUES = {
         email: user?.email,
@@ -51,6 +54,9 @@ const Signin = () => {
                 password: values.password,
             })
             .then((res) => {
+                if (remember) {
+                    localStorage.setItem('user', { email: values?.email, password: values?.password });
+                }
                 const a = res?.data?.message;
                 setMessage(a);
                 if (res?.data?.message === 'Sign-in Successful') {
