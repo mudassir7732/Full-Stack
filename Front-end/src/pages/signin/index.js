@@ -17,7 +17,7 @@ const ValidationSchema = yup.object().shape({
 
 const Signin = () => {
 
-    const [initialValues, setInitialValues] = useState({ email: '', password: '' });
+    const [initialValues, setInitialValues] = useState(JSON.parse(localStorage.getItem('user')));
     const [user, setUser] = useState();
     const [message, setMessage] = useState('');
     const [email, setEmail] = useState('');
@@ -26,13 +26,13 @@ const Signin = () => {
     const [remember, setRemember] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const userString = localStorage.getItem('user');
-        if (userString !== null) {
-            const parsedUser = JSON.parse(userString);
-            setInitialValues({ email: parsedUser?.email || '', password: '' });
-        }
-    }, []);
+    // useEffect(() => {
+    //     const userString = localStorage.getItem('user');
+    //     if (userString) {
+    //         const parsedUser = JSON.parse(userString);
+    //         setInitialValues({ email: parsedUser?.email , password: '' });
+    //     }
+    // }, []);
 
     useEffect(() => {
         console.log(initialValues, ' = Initial Values')
