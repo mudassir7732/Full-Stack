@@ -64,86 +64,85 @@ const Signup = () => {
             }
             {loading && <Loader />}
 
+
             <div className={styles.container}>
-                <div className={styles.card}>
-                    <Formik initialValues={INTIIAL_VALUES} validationSchema={ValidationSchema} onSubmit={handleSignup}>
-                        {({ handleChange, values, errors, touched }) => (
-                            <Form>
-                                <div className="flex flex-col w-fit items-center">
-                                    <div className="flex flex-col items-start">
-                                        <p className={styles.welcome}>
-                                            Sign up here!
-                                        </p>
-
-                                        <p className={styles.desc}>
-                                            Enter your credentials to sign up
-                                        </p>
-
-                                        <p className={styles.title}>
-                                            Name
-                                        </p>
-                                        <input name='name' value={values.name} onChange={handleChange} placeholder='Name'
-                                            className={styles.input} />
-
-                                        {errors.name && touched.name && (
-                                            <p className={styles2.error}>
-                                                {errors.name?.toString()}
+                <div className={styles.formWrapper}>
+                    <div className={styles.card}>
+                        <Formik initialValues={INTIIAL_VALUES} validationSchema={ValidationSchema} onSubmit={handleSignup}>
+                            {({ handleChange, values, errors, touched }) => (
+                                <Form>
+                                    <div className="flex flex-col w-fit items-center">
+                                        <div className="flex flex-col items-start">
+                                            <p className={styles.welcome}>
+                                                Sign up here!
                                             </p>
-                                        )}
 
-                                        <p className={styles.title}>
-                                            Email
-                                        </p>
-                                        <input name='email' value={values.email} onChange={handleChange} placeholder='Email'
-                                            className={styles.input} />
-
-
-                                        {errors.email && touched.email && (
-                                            <p className={styles2.error}>
-                                                {errors.email?.toString()}
+                                            <p className={styles.desc}>
+                                                Enter your credentials to sign up
                                             </p>
-                                        )}
 
-                                        <p className={styles.title}>
-                                            Password
-                                        </p>
-                                        <input name='password' value={values.password} onChange={handleChange} placeholder='Password'
-                                            className={styles.input} />
-
-                                        {errors.password && touched.password && (
-                                            <p className={styles2.error}>
-                                                {errors.password?.toString()}
+                                            <p className={styles.title}>
+                                                Name
                                             </p>
-                                        )}
 
-                                        <button type="submit" className={styles.signin}>
-                                            SIGN UP
-                                        </button>
+                                            <input name='name' value={values.name} onChange={handleChange} placeholder='Name'
+                                                className={styles.input} />
+                                            {errors.name && touched.name && (
+                                                <p className={styles2.error}>
+                                                    {errors.name?.toString()}
+                                                </p>
+                                            )}
+
+                                            <p className={styles.title}>
+                                                Email
+                                            </p>
+                                            <input name='email' value={values.email} onChange={handleChange} placeholder='Email'
+                                                className={styles.input} />
+                                            {errors.email && touched.email && (
+                                                <p className={styles2.error}>
+                                                    {errors.email?.toString()}
+                                                </p>
+                                            )}
+
+                                            <p className={styles.title}>
+                                                Password
+                                            </p>
+                                            <input name='password' value={values.password} onChange={handleChange} placeholder='Password'
+                                                className={styles.input} />
+                                            {errors.password && touched.password && (
+                                                <p className={styles2.error}>
+                                                    {errors.password?.toString()}
+                                                </p>
+                                            )}
+
+                                            <button type="submit" className={styles.signin}>
+                                                SIGN UP
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                            </Form>
-                        )}
-                    </Formik>
+                                </Form>
+                            )}
+                        </Formik>
 
-                    <div className={styles.singupWrapper}
-                    >
-                        <p className="text-[#67748e] text-[14px]v font-sans">
-                            Don't have an account?
-                        </p>
-                        <p className={styles.signup}
-                            onClick={() => navigate('/')}>
-                            Sign in
-                        </p>
+                        <div className={styles.singupWrapper}
+                        >
+                            <p className="text-[#67748e] text-[14px]v font-sans">
+                                Don't have an account?
+                            </p>
+                            <p className={styles.signup}
+                                onClick={() => navigate('/')}>
+                                Sign in
+                            </p>
+                        </div>
+
                     </div>
 
-                </div>
-
-                {/* <img
+                    {/* <img
                     alt='imag'
                     src="/assets/curved.jpg"
                     className={styles.bgImage}
                 /> */}
-
+                </div>
             </div>
         </>
     )
