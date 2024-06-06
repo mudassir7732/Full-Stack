@@ -18,11 +18,11 @@ const AdminSidebar = () => {
     const navigate = useNavigate();
 
     const handleClick = async (path) => {
+        setSelected(path);
         if (path === '/') {
-            // Cookies.remove('access_token');
+            Cookies.remove('access_token');
         }
         else {
-            setSelected(path);
         }
         navigate(path);
     }
