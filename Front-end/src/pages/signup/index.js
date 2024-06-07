@@ -65,16 +65,18 @@ const Signup = () => {
             {loading && <Loader />}
 
             <div className={`${styles.container} z-50`}>
-                <div className="relative">
+                {/* <div className="relative"> */}
                     <img
                         src="/assets/curved.jpg"
                         className="z-0 h-[70vh] m-[1%] rounded-xl w-[98%] fixed top-0"
                         alt="Background"
                     />
-                    <div className="absolute flex items-center justify-center">
-                        <h1 className="text-white text-4xl font-bold">Your Text Here</h1>
+                    <div className="absolute inset-0 overflow-auto">
+                        <div className="flex items-center justify-center h-full">
+                            <h1 className="text-white text-4xl font-bold">Your Text Here</h1>
+                        </div>
                     </div>
-                </div>
+                {/* </div> */}
 
                 <div className={`${styles.formWrapper} z-50 mt-[30vh]`}>
                     <div className={`${styles.card} shadow-lg`}>
