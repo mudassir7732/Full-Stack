@@ -71,7 +71,7 @@ const Signup = () => {
                         </div>
                     </div>
 
-                <div className={`${styles.formWrapper} z-50`}>
+                <div className={styles.formWrapper}>
                     <div className={`${styles.card} shadow-lg`}>
                         <Formik initialValues={INTIIAL_VALUES} validationSchema={ValidationSchema} onSubmit={handleSignup}>
                             {({ handleChange, values, errors, touched }) => (
