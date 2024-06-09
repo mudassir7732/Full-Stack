@@ -65,8 +65,6 @@ const Signup = () => {
             {loading && <Loader />}
 
             <div className={styles.container}>
-                    <div className="absolute inset-0 overflow-auto">
-                    </div>
 
                 <div className={styles.formWrapper}>
                     <div className={styles.card}>
