@@ -67,7 +67,6 @@ const Signup = () => {
             <div className={styles.container}>
                     <div className="absolute inset-0 overflow-auto">
                         <div className="flex items-center justify-center h-full">
-                            <h1 className="text-white text-4xl font-bold">Your Text Here</h1>
                         </div>
                     </div>
 
