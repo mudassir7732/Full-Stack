@@ -63,6 +63,7 @@ const Signup = () => {
             {loading && <Loader />}
 
             <div className={styles.container}>
+                <div className={styles.formWrapper}>
                     <div className={styles.card}>
                         <Formik initialValues={INTIIAL_VALUES} validationSchema={ValidationSchema} onSubmit={handleSignup}>
                             {({ handleChange, values, errors, touched }) => (
@@ -130,6 +131,7 @@ const Signup = () => {
                                 Sign in
                             </p>
                         </div>
+                    </div>
                 </div>
             </div>
         </>
