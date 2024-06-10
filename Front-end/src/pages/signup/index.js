@@ -75,7 +75,7 @@ const Signup = () => {
                                             </p>
 
                                             <p className={styles.desc}>
-                                                Enter your credentials to sign up
+                                                Sign Up here!
                                             </p>
 
                                             <p className={styles.title}>
