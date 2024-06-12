@@ -77,7 +77,7 @@ const Transactions = () => {
                 <div className={styles.container}>
                     <div className={styles.header}>
                         <p className='font-sans font-bold text-[#000080] text-[20px]'>
-                            All Transactions
+                            Transactions
                         </p>
                         <select
                             value={month}
