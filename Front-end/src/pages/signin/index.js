@@ -39,39 +39,40 @@ const Signin = () => {
 
     const handleSignin = async (values) => {
         setLoading(true)
-        await axios
-            .post(`/routes/auth/signin`, {
-                email: values.email,
-                password: values.password,
-            })
-            .then((res) => {
-                if (remember) {
-                    localStorage.setItem('user', JSON.stringify({ email: values?.email, password: values?.password }));
-                }
-                const a = res?.data?.message;
-                setMessage(a);
-                if (res?.data?.message === 'Sign-in Successful') {
-                    Cookies.set('access_token', res?.data?.access_token, { expires: 1 / 24 });
+        // await axios
+        //     .post(`/routes/auth/signin`, {
+        //         email: values.email,
+        //         password: values.password,
+        //     })
+        //     .then((res) => {
+        //         if (remember) {
+        //             localStorage.setItem('user', JSON.stringify({ email: values?.email, password: values?.password }));
+        //         }
+        //         const a = res?.data?.message;
+        //         setMessage(a);
+        //         if (res?.data?.message === 'Sign-in Successful') {
+        //             Cookies.set('access_token', res?.data?.access_token, { expires: 1 / 24 });
 
-                    if (res?.data?.role === 'User') {
+        //             if (res?.data?.role === 'User') {
                         navigate('/dashboard');
-                    }
-                    else if (res?.data?.role === 'Admin') {
-                        navigate('/add-product');
-                    }
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                setMessage(error?.message)
+                        setMessage("Successfully Logged in");
+            //         }
+            //         else if (res?.data?.role === 'Admin') {
+            //             navigate('/add-product');
+            //         }
+            //     }
+            // })
+            // .catch((error) => {
+            //     console.error('Error:', error);
+            //     setMessage(error?.message)
 
-            })
-            .finally(() => {
-                setLoading(false);
-                setTimeout(() => {
-                    setMessage('');
-                }, 5000);
-            });
+            // })
+            // .finally(() => {
+            //     setLoading(false);
+            //     setTimeout(() => {
+            //         setMessage('');
+            //     }, 5000);
+            // });
     }
 
 

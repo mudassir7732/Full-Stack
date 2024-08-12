@@ -3,12 +3,13 @@ import UserDashboard from "./userDashboard";
 import {useAuth} from '../../AuthContext';
 
 const Dashboard = () => {
-    const { userRole } = useAuth();
+    // const { userRole } = useAuth();
   
     return (
       <div>
-        {userRole === 'Admin' && <AdminDashboard />}
-        {userRole === 'User' && <UserDashboard />}
+        {/* {userRole === 'Admin' && <AdminDashboard />} */}
+        <AdminDashboard />
+        {/* {userRole === 'User' && <UserDashboard />} */}
       </div>
     );
   };

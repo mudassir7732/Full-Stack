@@ -10,9 +10,9 @@ const Layout = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        handleAuthentication();
-    }, []);
+    // useEffect(() => {
+    //     handleAuthentication();
+    // }, []);
 
     const handleAuthentication = async () => {
         try {
@@ -34,17 +34,17 @@ const Layout = ({ children }) => {
 
     return (
         <div className="flex flex-row bg-[#f8f8f8] min-h-screen">
-            {role === 'User' && (
+            {/* {role === 'User' && (
                 <div className="fixed top-0 left-0 h-full w-fit bg-white shadow-md z-[1000]">
                     <Sidebar />
                 </div>
             )}
-            {role === 'Admin' && (
+            {role === 'Admin' && ( */}
 
                 <div className="fixed top-0 left-0 h-full w-fit bg-white shadow-md z-[1000]">
                     <AdminSidebar />
                 </div>
-            )}
+            {/* )} */}
             <div className="flex flex-col items-center justify-center w-full lg:ml-[250px] xl:ml-[300px]">
                 <div className="flex flex-col items-center justify-center py-4 w-fit max-w-[95vw] h-full">
                     {children}
